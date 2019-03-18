@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/mypage"
+        android:icon="@drawable/menu_user"
+        android:title=""
+        android:enabled="true"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/alarm"
+        android:icon="@drawable/menu_alarm"
+        android:title=""
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/remote"
+        android:icon="@drawable/menu_remote"
+        android:title=""
+        android:enabled="true"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/emotion"
+        android:icon="@drawable/menu_emotion"
+        android:title=""
+        android:enabled="true"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/setting"
+        android:icon="@drawable/menu_set"
+        android:title=""
+        app:showAsAction="ifRoom"/>
+
+</menu>
+
