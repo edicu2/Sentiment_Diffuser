@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="mypage" type="id" />
+    <item name="remote" type="id" />
+    <item name="emotion" type="id" />
+    <item name="alarm" type="id" />
+    <item name="setting" type="id" />
+</resources>
