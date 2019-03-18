@@ -24,7 +24,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name="org.eclipse.paho.android.service.MqttService"></service>
+
+        <service android:name="org.eclipse.paho.android.service.MqttService" />
+
+        <activity android:name=".Activity.MainActivity_fragment.Setting_alarm" />
+        <activity
+            android:label="@string/title_activity_settings__alarm"></activity>
     </application>
 
 </manifest>

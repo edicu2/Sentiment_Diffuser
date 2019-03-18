@@ -15,6 +15,9 @@ public class MenuAlarm extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.menu_alarm, container, false);
+        View view = inflater.inflate(R.layout.menu_emotion, container, false);
+
+
+        return view;
     }
 }

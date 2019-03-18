@@ -10,9 +10,7 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.example.aromind.Activity.MenuRemote_RecyclerView.PieDataSetCustom;
 import com.example.aromind.CustomView.CustomGradientCardButton;
