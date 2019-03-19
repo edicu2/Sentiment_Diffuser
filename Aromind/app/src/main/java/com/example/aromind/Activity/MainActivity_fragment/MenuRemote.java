@@ -148,9 +148,15 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
         itemList.add(pie3);
         itemList2.add(new int[]{Color.WHITE,Color.BLUE, Color.GREEN, Color.RED,Color.WHITE});
 
+        pie4.add(new PieEntry(40f,"color"));
+        pie4.add(new PieEntry(40f,"aroma1"));
+        pie4.add(new PieEntry(40f,"aroma2"));
+        pie4.add(new PieEntry(40f,"aroma3"));
+        itemList.add(pie4);
+        itemList2.add(new int[]{Color.WHITE,Color.BLUE, Color.GREEN, Color.RED,Color.WHITE});
+
         adapter = new RecyclerViewAdapter(getContext(), itemList, itemList2, onClickItem);
         listview.setAdapter(adapter);
-
         ListDecoration decoration = new ListDecoration();
         listview.addItemDecoration(decoration);
     }

@@ -15,7 +15,7 @@
 
     <declare-styleable name="CustomGradientCardButton" parent="CustomButton">
         <attr name="circleColor"/>
-        <attr name="circleLabel">sd</attr>
+        <attr name="circleLabel"></attr>
         <attr name="labelColor" ></attr>
 
     </declare-styleable>

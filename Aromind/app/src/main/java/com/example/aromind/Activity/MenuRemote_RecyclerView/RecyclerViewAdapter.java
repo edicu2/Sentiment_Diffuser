@@ -2,6 +2,8 @@ package com.example.aromind.Activity.MenuRemote_RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.SweepGradient;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
@@ -75,6 +77,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                             context.getResources().getColor(R.color.trans)
         );
 
+        Animation fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setInterpolator(new DecelerateInterpolator()); // add this
+        fadeIn.setDuration(3000);
+        holder.gradient.setAnimation(fadeIn);
+        holder.gradient.setCircleColors(new SweepGradient(170,170,item2,null));
+        //holder.gradient.setCircleColor(Color.RED);
 
         //dataSet.setSliceSpace(0.5f);
         dataSet.setSelectionShift(0);
@@ -87,17 +95,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.pieChart.setOnClickListener(onClickItem);
 
 
-        Animation fadeIn = new AlphaAnimation(0, 1);
-        fadeIn.setInterpolator(new DecelerateInterpolator()); // add this
-        fadeIn.setDuration(3000);
-        holder.gradient.setAnimation(fadeIn);
-        holder.gradient.setCircleColors(item2);
-
     }
 
     @Override
     public int getItemCount() {
-        return itemList.size();
+
+        return (null != itemList ? itemList.size() : 0);
     }
 
 

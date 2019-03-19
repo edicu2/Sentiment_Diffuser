@@ -18,8 +18,8 @@ import com.example.aromind.R;
 public class CustomGradientButton extends View{
     //circle and text colors
     private int  labelCol;
-    private String circleCol;
-    private int[] circleCols;
+    private int circleCol;
+    private SweepGradient sweep = null;
     //label text
     private String circleText;
     //paint for drawing custom view
@@ -35,7 +35,7 @@ public class CustomGradientButton extends View{
         try {
             //get the text and colors specified using the names in attrs.xml
             circleText = a.getString(R.styleable.CustomGradientButton_circleLabel);
-            circleCol = a.getString(R.styleable.CustomGradientButton_circleColor);//0 is default
+            circleCol = a.getInteger(R.styleable.CustomGradientButton_circleColor,0);//0 is default
             labelCol = a.getInteger(R.styleable.CustomGradientButton_labelColor, 0);
         } finally {
             a.recycle();
@@ -46,6 +46,7 @@ public class CustomGradientButton extends View{
         //get half of the width and height as we are working with a circle
         int viewWidthHalf = this.getMeasuredWidth()/2;
         int viewHeightHalf = this.getMeasuredHeight()/2;
+
         //get the radius as half of the width or height, whichever is smaller
 //subtract ten so that it has some space around it
         int radius = 0;
@@ -53,19 +54,14 @@ public class CustomGradientButton extends View{
             radius=viewHeightHalf-10;
         else
             radius=viewWidthHalf-10;
+
         circlePaint.setStyle(Style.FILL);
         circlePaint.setAntiAlias(true);
         //set the paint color using the circle color specified
         //circlePaint.setColor(circleCol);
-        circlePaint.setShader(new SweepGradient(170, 170, circleCols,null));
+        circlePaint.setShader(sweep);
         canvas.drawCircle(viewWidthHalf, viewHeightHalf, radius, circlePaint);
-        //set the text color using the color specified
-        circlePaint.setColor(labelCol);
-        //set text properties
-        circlePaint.setTextAlign(Paint.Align.CENTER);
-        circlePaint.setTextSize(50);
-        //draw the text using the string attribute and chosen properties
-        canvas.drawText(circleText, viewWidthHalf, viewHeightHalf, circlePaint);
+
 
 
     }
@@ -85,7 +81,7 @@ public class CustomGradientButton extends View{
         return circleText;
     }
 
-    public void setCircleColor(String newColor){
+    public void setCircleColor(int newColor){
         //update the instance variable
         circleCol=newColor;
         //redraw the view
@@ -107,10 +103,11 @@ public class CustomGradientButton extends View{
         requestLayout();
     }
 
-    public void setCircleColors(int colors[]){
-        this.circleCols=colors;
+    public void setCircleColors(SweepGradient sweep){
+        this.sweep = sweep;
         //redraw the view
         invalidate();
         requestLayout();
     }
+
 }
