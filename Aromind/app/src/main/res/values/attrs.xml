@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomButton">
+        <attr name="circleColor" format="color" />
+        <attr name="circleLabel" format="string"></attr>
+        <attr name="labelColor" format="color"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="CustomGradientButton" parent="CustomButton">
+        <attr name="circleColor"/>
+        <attr name="circleLabel"></attr>
+        <attr name="labelColor" ></attr>
+    </declare-styleable>
+
+    <declare-styleable name="CustomGradientCardButton" parent="CustomButton">
+        <attr name="circleColor"/>
+        <attr name="circleLabel"></attr>
+        <attr name="labelColor" ></attr>
+    </declare-styleable>
+
+    <declare-styleable name="SeekCircle">
+        <attr name="min" format="integer" value="0" />
+        <attr name="max" format="integer" value="100" />
+        <attr name="progress" format="integer" value="0" />
+        <attr name="startColor" format="color" />
+        <attr name="endColor" format="color" />
+        <attr name="inactiveColor" format="color" />
+        <attr name="ringBias" format="float" />
+        <attr name="sectionRatio" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="SeekCircle1" parent="SeekCircle">
+        <attr name="min"/>
+        <attr name="max"/>
+        <attr name="progress" />
+        <attr name="startColor" />
+        <attr name="endColor" />
+        <attr name="inactiveColor" />
+        <attr name="ringBias"  />
+        <attr name="sectionRatio"  />
+    </declare-styleable>
+
+    <declare-styleable name="SeekCircle2"  parent="SeekCircle">
+        <attr name="min"/>
+        <attr name="max"/>
+        <attr name="progress" />
+        <attr name="startColor" />
+        <attr name="endColor" />
+        <attr name="inactiveColor" />
+        <attr name="ringBias"  />
+        <attr name="sectionRatio"  />
+    </declare-styleable>
+
+
+
+
+</resources>
