@@ -26,6 +26,7 @@ import android.widget.ToggleButton;
 import com.example.aromind.Activity.MenuRemote_RecyclerView.ListDecoration;
 import com.example.aromind.Activity.MenuRemote_RecyclerView.RecyclerViewAdapter;
 import com.example.aromind.CustomView.CustomButton;
+import com.example.aromind.Model.Custom_power_DBHelper;
 import com.example.aromind.Model.Mqtt;
 import com.example.aromind.R;
 import com.github.mikephil.charting.data.PieEntry;
@@ -66,6 +67,9 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
     // Mqtt String
     private String payload;
 
+    // DB
+    private Custom_power_DBHelper coustomCard_power;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -102,6 +106,11 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
         matrix.setSaturation(0);
         filter = new ColorMatrixColorFilter(matrix);
         color.setColorFilter(filter);
+
+
+        // DB
+        coustomCard_power = new Custom_power_DBHelper(getContext(), "customcard_power", null, 1);
+
 
         return view;
     }

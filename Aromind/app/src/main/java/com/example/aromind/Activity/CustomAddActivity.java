@@ -39,10 +39,13 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 
-public class CustomAddActivity extends AppCompatActivity implements View.OnClickListener {
+public class CustomAddActivity extends AppCompatActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
     private ColorAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -59,7 +62,9 @@ public class CustomAddActivity extends AppCompatActivity implements View.OnClick
     private Button saveBtn, backBtn;
     private View blur;
     private TextView gradientAdd;
-    private SeekBar positive,netural,negative;
+    private SeekBar positive,neutral,negative,bright;
+    private TextView positive_value, neutral_value, negative_value,bright_value;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,9 +78,22 @@ public class CustomAddActivity extends AppCompatActivity implements View.OnClick
         blur.setVisibility(View.GONE);
 
         positive = (SeekBar)findViewById(R.id.positive);
-        netural = (SeekBar)findViewById(R.id.neutral);
+        positive.setOnSeekBarChangeListener(this);
+        neutral = (SeekBar)findViewById(R.id.neutral);
+        neutral.setOnSeekBarChangeListener(this);
         negative = (SeekBar)findViewById(R.id.negative);
+        negative.setOnSeekBarChangeListener(this);
+        bright = (SeekBar)findViewById(R.id.bright);
+        bright.setOnSeekBarChangeListener(this);
 
+        positive_value =(TextView)findViewById(R.id.positive_value);
+        positive_value.setText(""+positive.getProgress());
+        neutral_value =(TextView)findViewById(R.id.neutral_value);
+        neutral_value.setText(""+neutral.getProgress());
+        negative_value =(TextView)findViewById(R.id.negative_value);
+        negative_value.setText(""+negative.getProgress());
+        bright_value = (TextView)findViewById(R.id.bright_value);
+        bright_value.setText(""+bright.getProgress());
 
         gradientAdd = (TextView)findViewById(R.id.gradientAdd);
         gradientAdd.setOnClickListener(this);
@@ -84,9 +102,9 @@ public class CustomAddActivity extends AppCompatActivity implements View.OnClick
         ArrayList<String> title = new ArrayList<>();
         ArrayList<PieEntry> pie = new ArrayList<PieEntry>();
 
-        pie.add(new PieEntry(40f, "aroma1"));
-        pie.add(new PieEntry(40f, "aroma2"));
-        pie.add(new PieEntry(70f, "aroma3"));;
+        pie.add(new PieEntry(positive.getProgress(), "aroma3"));
+        pie.add(new PieEntry(neutral.getProgress(), "aroma2"));
+        pie.add(new PieEntry(negative.getProgress(), "aroma1"));;
         colors = new int[]{Color.WHITE, R.color.aroma1, R.color.aroma2, R.color.aroma3, Color.WHITE};
         title.add("Rose Temple");
 
@@ -171,6 +189,10 @@ public class CustomAddActivity extends AppCompatActivity implements View.OnClick
             return;
 
         if (requestCode == REQUEST_CODE_ALPHA) {
+            if(bright.getProgress() == 0) {
+                bright.setProgress(255);
+                bright_value.setText("255");
+            }
             int r = data.getIntExtra("r", 0);
             int g = data.getIntExtra("g", 0);
             int b = data.getIntExtra("b", 0);
@@ -180,6 +202,7 @@ public class CustomAddActivity extends AppCompatActivity implements View.OnClick
             item6.setB(b);
             mAdapter.add(item6);
             gradient.setCircleColors(mAdapter.getColors());
+            gradient.setAlpha(bright.getProgress());
 
         }
     }
@@ -193,7 +216,46 @@ public class CustomAddActivity extends AppCompatActivity implements View.OnClick
     }
 
 
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
+        if(seekBar.getId() == R.id.bright) {
+            bright_value.setText(""+bright.getProgress());
+            if(mAdapter.getItemCount()!=0)
+                gradient.setAlpha((bright.getProgress()));
+        }else {
+            ArrayList<String> title = new ArrayList<>();
+            ArrayList<PieEntry> pie = new ArrayList<PieEntry>();
 
+            pie.add(new PieEntry(positive.getProgress(), "aroma3"));
+            pie.add(new PieEntry(neutral.getProgress(), "aroma2"));
+            pie.add(new PieEntry(negative.getProgress(), "aroma1"));
+            ;
+            PieDataSet dataSet = new PieDataSetCustom(pie, " ");
 
+            dataSet.setColors(getResources().getColor(R.color.aroma1),
+                    getResources().getColor(R.color.aroma2),
+                    getResources().getColor(R.color.aroma3),
+                    getResources().getColor(R.color.trans)
+            );
+
+            dataSet.setSelectionShift(0);
+            dataSet.setValueTextSize(0);
+            PieData data = new PieData((dataSet));
+            data.setDrawValues(false);
+            pieChart.setData(data);
+            pieChart.setTag(pie);
+            pieChart.invalidate();
+            positive_value.setText("" + positive.getProgress());
+            neutral_value.setText("" + neutral.getProgress());
+            negative_value.setText("" + negative.getProgress());
+        }
+    }
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+    }
 }

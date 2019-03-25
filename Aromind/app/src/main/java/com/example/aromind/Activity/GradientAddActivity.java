@@ -43,7 +43,6 @@ public class GradientAddActivity extends AppCompatActivity implements View.OnCli
         getWindow().setAttributes(layoutParams);
         setContentView(R.layout.activity_gradient_add);
 
-
         color = (ImageView)findViewById(R.id.color);
         color.setDrawingCacheEnabled(true);
         color.buildDrawingCache(true);
