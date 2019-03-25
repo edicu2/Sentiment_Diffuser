@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Aromind</string>
+    <string name="new_custom_name"><font color="#FFFFFF">New Custom \n</font> <font size="10" color="#FFE400">  create your mood name </font></string>
 </resources>

@@ -24,6 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.CustomAddActivity" android:windowSoftInputMode="adjustNothing" />
+        <activity android:name=".Activity.GradientAddActivity" android:launchMode="singleInstance" android:theme="@style/TransparentTheme"
+            />
         <service android:name="org.eclipse.paho.android.service.MqttService"></service>
     </application>
 

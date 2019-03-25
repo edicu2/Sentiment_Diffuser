@@ -2,7 +2,6 @@ package com.example.aromind.Activity.MainActivity_fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,22 +11,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
-import com.eftimoff.viewpagertransformers.AccordionTransformer;
 import com.eftimoff.viewpagertransformers.CubeOutTransformer;
 import com.example.aromind.Activity.MenuEmotion_ImageSlider.SliderAdapter;
 import com.example.aromind.R;
 import com.github.mikephil.charting.data.PieEntry;
-
 import java.util.ArrayList;
-
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 public class MenuEmotion extends Fragment implements View.OnClickListener {
 
     private SliderAdapter adapter;
-    ViewPager viewPager;
+    private ViewPager viewPager;
     private Button btn_right, btn_left;
 
     @Nullable
@@ -69,50 +64,55 @@ public class MenuEmotion extends Fragment implements View.OnClickListener {
         ArrayList<PieEntry> pie6 = new ArrayList<PieEntry>();
 
 
-        pie1.add(new PieEntry(40f, "color"));
         pie1.add(new PieEntry(40f, "aroma1"));
         pie1.add(new PieEntry(40f, "aroma2"));
-
+        pie1.add(new PieEntry(70f, "aroma3"));
         itemList.add(pie1);
         itemList2.add(new int[]{Color.WHITE, R.color.aroma1, R.color.aroma2, R.color.aroma3, Color.WHITE});
         title.add("Rose Temple");
 
-        pie2.add(new PieEntry(40f, "color"));
+
         pie2.add(new PieEntry(40f, "aroma1"));
+        pie2.add(new PieEntry(40f, "aroma2"));
         pie2.add(new PieEntry(40f, "aroma3"));
         itemList.add(pie2);
         itemList2.add(new int[]{Color.WHITE, Color.BLUE, Color.BLACK, Color.GREEN, Color.WHITE});
         title.add("Purple");
 
-        pie3.add(new PieEntry(40f, "color"));
-        pie3.add(new PieEntry(40f, "aroma1"));
-        pie3.add(new PieEntry(40f, "aroma2"));
+
+        pie3.add(new PieEntry(10f, "aroma1"));
+        pie3.add(new PieEntry(20f, "aroma2"));
         pie3.add(new PieEntry(40f, "aroma3"));
         itemList.add(pie3);
         itemList2.add(new int[]{Color.WHITE, Color.BLUE, Color.GREEN, Color.RED, Color.WHITE});
         title.add("Rainbow");
 
-        pie4.add(new PieEntry(40f, "color"));
-        pie4.add(new PieEntry(40f, "aroma1"));
-        pie4.add(new PieEntry(40f, "aroma2"));
+
+        pie4.add(new PieEntry(30f, "aroma1"));
+        pie4.add(new PieEntry(70f, "aroma2"));
 
         itemList.add(pie4);
         itemList2.add(new int[]{Color.WHITE, R.color.aroma1, R.color.aroma2, R.color.aroma3, Color.WHITE});
         title.add("Spectrum");
 
-        pie5.add(new PieEntry(40f, "color"));
-        pie5.add(new PieEntry(40f, "aroma1"));
-        pie5.add(new PieEntry(40f, "aroma2"));
+        pie5.add(new PieEntry(20f, "aroma1"));
+        pie5.add(new PieEntry(20f, "aroma2"));
+        pie5.add(new PieEntry(10f, "aroma3"));
 
         itemList.add(pie5);
         itemList2.add(new int[]{Color.WHITE, R.color.aroma1, R.color.aroma2, R.color.aroma3, Color.WHITE});
         title.add("Purple");
+
+        itemList.add(pie6);
+        itemList2.add(new int[]{Color.WHITE, R.color.aroma1, R.color.aroma2, R.color.aroma3, Color.WHITE});
+        title.add("New Custom Add");
 
 
         adapter = new SliderAdapter(getContext(), itemList, itemList2, title);
         viewPager.setAdapter(adapter);
         viewPager.setPageTransformer(true, new CubeOutTransformer());
         viewPager.setCurrentItem(2);
+        viewPager.setOffscreenPageLimit(4);
         sliderBtnLeftRight();
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

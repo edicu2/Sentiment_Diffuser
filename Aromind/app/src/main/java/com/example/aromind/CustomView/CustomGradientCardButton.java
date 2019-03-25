@@ -12,6 +12,7 @@ import android.graphics.SweepGradient;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.example.aromind.Activity.Gradient.ColorItem;
 import com.example.aromind.R;
 
 public class CustomGradientCardButton extends View{
@@ -56,7 +57,7 @@ public class CustomGradientCardButton extends View{
         circlePaint.setAntiAlias(true);
         //set the paint color using the circle color specified
         //circlePaint.setColor(circleCol);
-        circlePaint.setShader(new SweepGradient(350, 350, circleCols,null));
+        circlePaint.setShader(new SweepGradient(500, 500, circleCols,null));
         canvas.drawCircle(viewWidthHalf, viewHeightHalf, radius, circlePaint);
         //set the text color using the color specified
         //set text properties

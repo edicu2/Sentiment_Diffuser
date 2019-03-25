@@ -71,8 +71,6 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.menu_remote, container, false);
         // temp,humidity
-        temp = (TextView)view.findViewById(R.id.temp);
-        humidity = (TextView)view.findViewById(R.id.humidity);
 
         // Total Power
         totalPower = (ToggleButton)view.findViewById(R.id.totalPower);
@@ -119,6 +117,7 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
         listview.setLayoutManager(layoutManager);
         ArrayList<ArrayList> itemList = new ArrayList<ArrayList>();
         ArrayList<int[]> itemList2 = new ArrayList<int[]>();
+        ArrayList<String> title = new ArrayList<>();
         ArrayList<PieEntry> pie1 = new ArrayList<PieEntry>();
         ArrayList<PieEntry> pie2 = new ArrayList<PieEntry>();
         ArrayList<PieEntry> pie3 = new ArrayList<PieEntry>();
@@ -127,35 +126,35 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
         ArrayList<PieEntry> pie6 = new ArrayList<PieEntry>();
 
 
-        pie1.add(new PieEntry(40f,"color"));
         pie1.add(new PieEntry(40f,"aroma1"));
         pie1.add(new PieEntry(40f,"aroma2"));
+        pie1.add(new PieEntry(40f,"aroma3"));
 
         itemList.add(pie1);
         itemList2.add(new int[]{Color.WHITE,R.color.aroma1,R.color.aroma2,R.color.aroma3,Color.WHITE});
+        title.add("blue Ocean");
 
-
-        pie2.add(new PieEntry(40f,"color"));
         pie2.add(new PieEntry(40f,"aroma1"));
         pie2.add(new PieEntry(40f,"aroma3"));
         itemList.add(pie2);
-        itemList2.add(new int[]{Color.WHITE,Color.BLUE, Color.BLACK, Color.GREEN,Color.WHITE});
+        itemList2.add(new int[]{Color.WHITE,Color.RED, Color.CYAN, Color.LTGRAY,Color.WHITE});
+        title.add("empty");
 
-        pie3.add(new PieEntry(40f,"color"));
         pie3.add(new PieEntry(40f,"aroma1"));
         pie3.add(new PieEntry(40f,"aroma2"));
         pie3.add(new PieEntry(40f,"aroma3"));
         itemList.add(pie3);
         itemList2.add(new int[]{Color.WHITE,Color.BLUE, Color.GREEN, Color.RED,Color.WHITE});
+        title.add("Rose Temple");
 
-        pie4.add(new PieEntry(40f,"color"));
         pie4.add(new PieEntry(40f,"aroma1"));
         pie4.add(new PieEntry(40f,"aroma2"));
         pie4.add(new PieEntry(40f,"aroma3"));
         itemList.add(pie4);
         itemList2.add(new int[]{Color.WHITE,Color.BLUE, Color.GREEN, Color.RED,Color.WHITE});
+        title.add("complex");
 
-        adapter = new RecyclerViewAdapter(getContext(), itemList, itemList2, onClickItem);
+        adapter = new RecyclerViewAdapter(getContext(), itemList, itemList2, onClickItem, title);
         listview.setAdapter(adapter);
         ListDecoration decoration = new ListDecoration();
         listview.addItemDecoration(decoration);
@@ -178,8 +177,7 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
                 Log.i("mqttCollback",new String(message.getPayload()));
-                temp.setText(new String(message.getPayload()).split("_")[0]+"℃");
-                humidity.setText(new String(message.getPayload()).split("_")[1]+"％");
+
                 if(new String(message.getPayload()).split("_")[1].equals("low") ||
                         new String(message.getPayload()).split("_")[1].equals("enough"));
             }

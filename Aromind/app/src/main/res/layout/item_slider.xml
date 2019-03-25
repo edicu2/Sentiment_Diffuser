@@ -8,8 +8,8 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="269dp"
-            android:layout_height="286dp"
+            android:layout_width="330dp"
+            android:layout_height="330dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
@@ -24,8 +24,8 @@
 
         <com.example.aromind.CustomView.CustomGradientCardButton xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/gradientCard"
-            android:layout_width="175dp"
-            android:layout_height="175dp"
+            android:layout_width="249dp"
+            android:layout_height="249dp"
             android:gravity="center|center"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/piechart"
@@ -35,66 +35,97 @@
 
         </com.example.aromind.CustomView.CustomGradientCardButton>
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:background="@drawable/custom_card_radius2"
+            app:layout_constraintBottom_toBottomOf="@+id/gradientCard"
+            app:layout_constraintEnd_toEndOf="@+id/gradientCard"
+            app:layout_constraintStart_toStartOf="@+id/gradientCard"
+            app:layout_constraintTop_toTopOf="@+id/gradientCard" />
+
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/piechart"
-            android:layout_width="190dp"
-            android:layout_height="190dp"
+            android:layout_width="170dp"
+            android:layout_height="173dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
             android:gravity="center|center"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/textView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.409"
+            app:layout_constraintHorizontal_bias="0.435"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.499">
+            app:layout_constraintTop_toTopOf="@+id/textView"
+            app:layout_constraintVertical_bias="0.592">
 
         </com.github.mikephil.charting.charts.PieChart>
 
         <TextView
-            android:id="@+id/custom_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/as_btn1"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="TextView"
-            android:textColor="#fff"
-            android:textSize="15dp"
-            app:layout_constraintBottom_toTopOf="@+id/piechart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.987" />
+            android:background="@drawable/custom_card_small_aroma1"
+            app:layout_constraintBottom_toTopOf="@+id/as_btn2"
+            app:layout_constraintEnd_toStartOf="@+id/as_btn3"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/as_btn2"
+            app:layout_constraintTop_toTopOf="@+id/textView"
+            app:layout_constraintVertical_bias="0.727" />
+
+        <TextView
+            android:id="@+id/as_btn2"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/custom_card_small_aroma2"
+            app:layout_constraintEnd_toStartOf="@+id/custom_title"
+            app:layout_constraintHorizontal_bias="0.34"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toTopOf="@+id/textView" />
+
+        <TextView
+            android:id="@+id/as_btn3"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/custom_card_small_aroma3"
+            app:layout_constraintEnd_toStartOf="@+id/custom_title"
+            app:layout_constraintHorizontal_bias="0.097"
+            app:layout_constraintStart_toEndOf="@+id/as_btn2"
+            app:layout_constraintTop_toTopOf="@+id/textView" />
 
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="12dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="48dp"
             app:layout_constraintBottom_toBottomOf="@+id/textView"
             app:layout_constraintEnd_toEndOf="@+id/textView"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.586"
             app:layout_constraintStart_toEndOf="@+id/piechart"
             app:layout_constraintTop_toBottomOf="@+id/verticalSeekBarWrapper"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/seek_bright" />
 
+
         <com.h6ah4i.android.widget.verticalseekbar.VerticalSeekBarWrapper
             android:id="@+id/verticalSeekBarWrapper"
             android:layout_width="36dp"
-            android:layout_height="183dp"
+            android:layout_height="225dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="56dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.763"
+            app:layout_constraintHorizontal_bias="0.838"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView">
 
@@ -106,8 +137,43 @@
                     android:progress="0"
                     android:splitTrack="false"
                     app:seekBarRotation="CW270" /> <!-- Rotation: CW90 or CW270 -->
+
         </com.h6ah4i.android.widget.verticalseekbar.VerticalSeekBarWrapper>
 
+        <TextView
+            android:id="@+id/add_move"
+            android:layout_width="330dp"
+            android:layout_height="330dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/custom_card_radius"
+            android:text="+"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:textSize="70dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.498" />
 
+        <TextView
+            android:id="@+id/custom_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="TextView"
+            android:textColor="#fff"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView"
+            app:layout_constraintVertical_bias="0.016" />
 
 </android.support.constraint.ConstraintLayout>
