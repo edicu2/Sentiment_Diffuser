@@ -26,6 +26,7 @@ import android.widget.ToggleButton;
 import com.example.aromind.Activity.MenuRemote_RecyclerView.ListDecoration;
 import com.example.aromind.Activity.MenuRemote_RecyclerView.RecyclerViewAdapter;
 import com.example.aromind.CustomView.CustomButton;
+import com.example.aromind.Model.Custom_gradient_DBHelper;
 import com.example.aromind.Model.Custom_power_DBHelper;
 import com.example.aromind.Model.Mqtt;
 import com.example.aromind.R;
@@ -34,8 +35,12 @@ import com.github.mikephil.charting.data.PieEntry;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+
 
 
 public class MenuRemote extends Fragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
@@ -68,13 +73,15 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
     private String payload;
 
     // DB
-    private Custom_power_DBHelper coustomCard_power;
-
+    private Custom_power_DBHelper custom_powerDB;
+    private Custom_gradient_DBHelper custom_gradient_DB;
+    private ArrayList<int[]> itemList2 ;
+    private ArrayList<ArrayList> itemList ;
+    private ArrayList<String> title ;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.menu_remote, container, false);
-        // temp,humidity
 
         // Total Power
         totalPower = (ToggleButton)view.findViewById(R.id.totalPower);
@@ -107,10 +114,9 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
         filter = new ColorMatrixColorFilter(matrix);
         color.setColorFilter(filter);
 
-
         // DB
-        coustomCard_power = new Custom_power_DBHelper(getContext(), "customcard_power", null, 1);
-
+        custom_powerDB = new Custom_power_DBHelper(getContext(), "custom_power", null, 1);
+        custom_gradient_DB = new Custom_gradient_DBHelper(getContext(),"custom_color", null, 1);
 
         return view;
     }
@@ -124,44 +130,55 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
         listview = (RecyclerView)view.findViewById(R.id.main_listview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         listview.setLayoutManager(layoutManager);
-        ArrayList<ArrayList> itemList = new ArrayList<ArrayList>();
-        ArrayList<int[]> itemList2 = new ArrayList<int[]>();
-        ArrayList<String> title = new ArrayList<>();
-        ArrayList<PieEntry> pie1 = new ArrayList<PieEntry>();
-        ArrayList<PieEntry> pie2 = new ArrayList<PieEntry>();
-        ArrayList<PieEntry> pie3 = new ArrayList<PieEntry>();
-        ArrayList<PieEntry> pie4 = new ArrayList<PieEntry>();
-        ArrayList<PieEntry> pie5 = new ArrayList<PieEntry>();
-        ArrayList<PieEntry> pie6 = new ArrayList<PieEntry>();
 
+        itemList = new ArrayList<ArrayList>();
+        itemList2 = new ArrayList<>();
+        title = new ArrayList<>();
 
-        pie1.add(new PieEntry(40f,"aroma1"));
-        pie1.add(new PieEntry(40f,"aroma2"));
-        pie1.add(new PieEntry(40f,"aroma3"));
+        ArrayList<PieEntry> pie;
+        int custom_power_DB_size = (int)custom_powerDB.getDataSize();
+        JSONArray json_db = custom_powerDB.getRecentData(custom_power_DB_size);
 
-        itemList.add(pie1);
-        itemList2.add(new int[]{Color.WHITE,R.color.aroma1,R.color.aroma2,R.color.aroma3,Color.WHITE});
-        title.add("blue Ocean");
+        int[] color = null;
+        Log.i("custom_power_size", String.valueOf(custom_power_DB_size));
+        for(int i=0 ; i < custom_power_DB_size  ; i++){
+            try {
+                JSONObject power_object = (JSONObject) json_db.get(i);
+                pie = new ArrayList<PieEntry>();
+                pie.add(new PieEntry(Integer.parseInt((String) power_object.get("positive")),"aroma1"));
+                pie.add(new PieEntry(Integer.parseInt((String) power_object.get("neutral")),"aroma2"));
+                pie.add(new PieEntry(Integer.parseInt((String) power_object.get("negative")),"aroma3"));
+                itemList.add(pie);
+                title.add((String) power_object.get("custom_name"));
+                JSONArray json_db_color = custom_gradient_DB.getData((String) power_object.get("custom_name"));
+                Log.i("custom_color_size", String.valueOf(json_db_color.length()));
+                if(json_db_color.length() != 0) {
+                    for (int j = 0; j < json_db_color.length(); j++) {
+                        JSONObject color_object = (JSONObject)json_db_color.get(j);
+                        Log.i("colors", (String) color_object.get("color"));
+                        if (j == 0) {
+                            color = new int[json_db_color.length()+1];
+                        }
+                        color[j] =Integer.parseInt((String)color_object.get("color"));
+                        Log.i("color_teki", String.valueOf(color[j]));
+                    }
+                    JSONObject last = (JSONObject)json_db_color.get(0);
+                    color[json_db_color.length()] = Integer.parseInt((String)last.get("color"));
+                    itemList2.add(color);
+                }else{
+                    itemList2.add(new int[]{Color.WHITE,Color.BLACK,Color.WHITE});
+                    Log.i("custom_color", "null");
+                }
+                Log.i("colors", String.valueOf(itemList2));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        pie = new ArrayList<PieEntry>();
+        itemList.add(pie);
+        itemList2.add(new int[]{Color.WHITE, R.color.aroma1, R.color.aroma2, R.color.aroma3, Color.WHITE});
+        title.add("New Custom Add");
 
-        pie2.add(new PieEntry(40f,"aroma1"));
-        pie2.add(new PieEntry(40f,"aroma3"));
-        itemList.add(pie2);
-        itemList2.add(new int[]{Color.WHITE,Color.RED, Color.CYAN, Color.LTGRAY,Color.WHITE});
-        title.add("empty");
-
-        pie3.add(new PieEntry(40f,"aroma1"));
-        pie3.add(new PieEntry(40f,"aroma2"));
-        pie3.add(new PieEntry(40f,"aroma3"));
-        itemList.add(pie3);
-        itemList2.add(new int[]{Color.WHITE,Color.BLUE, Color.GREEN, Color.RED,Color.WHITE});
-        title.add("Rose Temple");
-
-        pie4.add(new PieEntry(40f,"aroma1"));
-        pie4.add(new PieEntry(40f,"aroma2"));
-        pie4.add(new PieEntry(40f,"aroma3"));
-        itemList.add(pie4);
-        itemList2.add(new int[]{Color.WHITE,Color.BLUE, Color.GREEN, Color.RED,Color.WHITE});
-        title.add("complex");
 
         adapter = new RecyclerViewAdapter(getContext(), itemList, itemList2, onClickItem, title);
         listview.setAdapter(adapter);

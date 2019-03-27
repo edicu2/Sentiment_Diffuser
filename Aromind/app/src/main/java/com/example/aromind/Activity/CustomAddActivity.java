@@ -1,32 +1,21 @@
 package com.example.aromind.Activity;
 
-import android.content.ClipData;
-import android.content.ClipDescription;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
-import android.view.DragEvent;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.aromind.Activity.Gradient.ColorAdapter;
@@ -34,14 +23,13 @@ import com.example.aromind.Activity.Gradient.ColorItem;
 import com.example.aromind.Activity.Gradient.ColorItemTouchHelperCallback;
 import com.example.aromind.Activity.MenuRemote_RecyclerView.PieDataSetCustom;
 import com.example.aromind.CustomView.CustomGradientCardButton;
+import com.example.aromind.Model.Custom_gradient_DBHelper;
+import com.example.aromind.Model.Custom_power_DBHelper;
 import com.example.aromind.R;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 
@@ -57,13 +45,17 @@ public class CustomAddActivity extends AppCompatActivity implements View.OnClick
     private PieChart pieChart;
     private CustomGradientCardButton gradient;
     private int[] colors;
-    private EditText et;
+    private EditText custom_name;
     private InputMethodManager imm;
     private Button saveBtn, backBtn;
     private View blur;
     private TextView gradientAdd;
     private SeekBar positive,neutral,negative,bright;
     private TextView positive_value, neutral_value, negative_value,bright_value;
+    private Custom_power_DBHelper custom_powerDB;
+    private Custom_gradient_DBHelper custom_gradient_DB;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +65,9 @@ public class CustomAddActivity extends AppCompatActivity implements View.OnClick
         pieChart = (PieChart)findViewById(R.id.piechart);
         gradient = (CustomGradientCardButton)findViewById(R.id.gradientCard);
         saveBtn = (Button)findViewById(R.id.save_btn);
+        saveBtn.setOnClickListener(this);
         backBtn = (Button)findViewById(R.id.back_btn);
+        backBtn.setOnClickListener(this);
         blur = (View)findViewById(R.id.blur);
         blur.setVisibility(View.GONE);
 
@@ -97,6 +91,9 @@ public class CustomAddActivity extends AppCompatActivity implements View.OnClick
 
         gradientAdd = (TextView)findViewById(R.id.gradientAdd);
         gradientAdd.setOnClickListener(this);
+
+        custom_powerDB = new Custom_power_DBHelper(CustomAddActivity.this, "custom_power", null, 1);
+        custom_gradient_DB = new Custom_gradient_DBHelper(CustomAddActivity.this,"custom_color", null, 1);
 
 
         ArrayList<String> title = new ArrayList<>();
@@ -126,7 +123,6 @@ public class CustomAddActivity extends AppCompatActivity implements View.OnClick
                 getResources().getColor(R.color.trans)
         );
 
-
         dataSet.setSelectionShift(0);
         dataSet.setValueTextSize(0);
         PieData data = new PieData((dataSet));
@@ -136,9 +132,9 @@ public class CustomAddActivity extends AppCompatActivity implements View.OnClick
         pieChart.setTag(pie);
         gradient.setCircleColors(colors);
 
-        et = (EditText)findViewById(R.id.title);
+        custom_name = (EditText)findViewById(R.id.title);
         imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        et.setOnTouchListener(new View.OnTouchListener() {
+        custom_name.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View arg0, MotionEvent arg1)
             {
                 saveBtn.setVisibility(View.INVISIBLE);
@@ -147,15 +143,15 @@ public class CustomAddActivity extends AppCompatActivity implements View.OnClick
                 return false;
             }
         });
-        et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        custom_name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 saveBtn.setVisibility(View.VISIBLE);
                 backBtn.setVisibility(View.VISIBLE);
                 blur.setVisibility(View.GONE);
                 String inText = textView.getText().toString();
-                et.clearFocus();
-                imm.hideSoftInputFromWindow(et.getWindowToken(), 0);
+                custom_name.clearFocus();
+                imm.hideSoftInputFromWindow(custom_name.getWindowToken(), 0);
                 // Do Something...
 
                 return true;
@@ -172,11 +168,9 @@ public class CustomAddActivity extends AppCompatActivity implements View.OnClick
         ColorItemTouchHelperCallback mCallback = new ColorItemTouchHelperCallback(mAdapter);
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(mCallback);
 
-
         mItemTouchHelper.attachToRecyclerView(mRecyclerView);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-
 
     }
 
@@ -212,7 +206,22 @@ public class CustomAddActivity extends AppCompatActivity implements View.OnClick
             Intent intent = new Intent(this, GradientAddActivity.class);
             intent.putExtra("key", "value");
             startActivityForResult(intent, REQUEST_CODE_ALPHA);
+        } else if(v.getId() == R.id.save_btn){
+            if(custom_name.getText().toString().equals("")) {
+                Toast.makeText(CustomAddActivity.this," Custom 카드 이름을 설정해주세요.",
+                        Toast.LENGTH_LONG).show();
+            }else{
+                int[] colors = mAdapter.getColors();
+                for (int i = 0; i < mAdapter.getColors().length; i++) {
+                    custom_gradient_DB.insert(custom_name.getText().toString(), colors[i]);
+                }
+                custom_powerDB.insert(custom_name.getText().toString(), positive.getProgress(), neutral.getProgress(), negative.getProgress(), bright.getProgress());
+                finish();
+            }
+        }else if(v.getId() == R.id.back_btn){
+            finish();
         }
+
     }
 
 
