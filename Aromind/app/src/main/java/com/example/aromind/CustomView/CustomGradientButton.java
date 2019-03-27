@@ -24,6 +24,8 @@ public class CustomGradientButton extends View{
     private String circleText;
     //paint for drawing custom view
     private Paint circlePaint;
+    private int[] circleCols;
+    private int alpha = 255;
 
     public CustomGradientButton(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -40,6 +42,8 @@ public class CustomGradientButton extends View{
         } finally {
             a.recycle();
         }
+
+
     }
     @Override
     protected void onDraw(Canvas canvas) {
@@ -59,11 +63,15 @@ public class CustomGradientButton extends View{
         circlePaint.setAntiAlias(true);
         //set the paint color using the circle color specified
         //circlePaint.setColor(circleCol);
-        circlePaint.setShader(sweep);
+        circlePaint.setAlpha(alpha);
+        circlePaint.setShader(new SweepGradient(170, 170, circleCols,null));
         canvas.drawCircle(viewWidthHalf, viewHeightHalf, radius, circlePaint);
+    }
 
-
-
+    public void setAlpha(int alpha){
+        this.alpha = alpha;
+        invalidate();
+        requestLayout();
     }
     public  Shader getCircleColor(){
         //return new RadialGradient(80, 80, 70,Integer.parseInt(circleCol.split("_")[0]),Integer.parseInt(circleCol.split("_")[1]), Shader.TileMode.CLAMP);
@@ -103,8 +111,8 @@ public class CustomGradientButton extends View{
         requestLayout();
     }
 
-    public void setCircleColors(SweepGradient sweep){
-        this.sweep = sweep;
+    public void setCircleColors(int colors[]){
+        this.circleCols=colors;
         //redraw the view
         invalidate();
         requestLayout();

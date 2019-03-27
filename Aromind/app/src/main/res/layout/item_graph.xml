@@ -58,4 +58,14 @@
         android:textAlignment="center"
         android:text=" " />
 
+    <TextView
+        android:id="@+id/add_move"
+        android:layout_width="match_parent"
+        android:layout_height="101dp"
+        android:background="@color/colorPrimary"
+        android:textColor="#ffffff"
+        android:textSize="30dp"
+        android:gravity="center|center_horizontal"
+        android:text="+" />
+
 </FrameLayout>

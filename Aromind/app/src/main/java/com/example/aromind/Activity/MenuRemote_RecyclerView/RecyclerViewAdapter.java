@@ -2,6 +2,7 @@ package com.example.aromind.Activity.MenuRemote_RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.SweepGradient;
 import android.os.Build;
@@ -15,6 +16,7 @@ import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
+import com.example.aromind.Activity.CustomAddActivity;
 import com.example.aromind.CustomView.CustomGradientButton;
 import com.example.aromind.R;
 import com.github.mikephil.charting.animation.Easing;
@@ -23,7 +25,10 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
@@ -60,6 +65,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         int[] item2 = itemList2.get(position);
 
         String custom_name = title.get(position);
+        if(!custom_name.equals("New Custom Add")) {
+            holder.moveAdd.setVisibility(View.GONE);
+        }
         holder.tvTitle.setText(custom_name);
         holder.pieChart.getLegend().setEnabled(false); // 하단바 없앰
         holder.pieChart.setDrawSliceText(false);
@@ -82,8 +90,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         fadeIn.setInterpolator(new DecelerateInterpolator()); // add this
         fadeIn.setDuration(3000);
         holder.gradient.setAnimation(fadeIn);
-        holder.gradient.setCircleColors(new SweepGradient(170,170,item2,null));
-        //holder.gradient.setCircleColor(Color.RED);
+        holder.gradient.setCircleColors(item2);
 
         dataSet.setSelectionShift(0);
         dataSet.setValueTextSize(0);
@@ -109,15 +116,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public PieChart pieChart;
         public CustomGradientButton gradient;
-
         public TextView tvTitle;
-
+        public TextView moveAdd;
         public ViewHolder(View itemView) {
             super(itemView);
             pieChart = itemView.findViewById(R.id.piechart);
             gradient = (CustomGradientButton)itemView.findViewById(R.id.gradient);
             tvTitle = (TextView)itemView.findViewById(R.id.custom_title);
-
+            moveAdd = (TextView)itemView.findViewById(R.id.add_move);
+            moveAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, CustomAddActivity.class);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }

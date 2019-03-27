@@ -96,7 +96,6 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> 
 
         public ViewHolder(View itemView) {
             super(itemView);
-
             color = (TextView) itemView.findViewById(R.id.color_item);
 
         }

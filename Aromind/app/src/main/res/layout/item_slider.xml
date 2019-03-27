@@ -7,7 +7,7 @@
         ​
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/box"
             android:layout_width="330dp"
             android:layout_height="330dp"
             android:layout_marginStart="8dp"
@@ -52,11 +52,11 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:gravity="center|center"
-            app:layout_constraintBottom_toBottomOf="@+id/textView"
+            app:layout_constraintBottom_toBottomOf="@+id/box"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.435"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView"
+            app:layout_constraintTop_toTopOf="@+id/box"
             app:layout_constraintVertical_bias="0.592">
 
         </com.github.mikephil.charting.charts.PieChart>
@@ -73,7 +73,7 @@
             app:layout_constraintEnd_toStartOf="@+id/as_btn3"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/as_btn2"
-            app:layout_constraintTop_toTopOf="@+id/textView"
+            app:layout_constraintTop_toTopOf="@+id/box"
             app:layout_constraintVertical_bias="0.727" />
 
         <TextView
@@ -86,8 +86,8 @@
             android:background="@drawable/custom_card_small_aroma2"
             app:layout_constraintEnd_toStartOf="@+id/custom_title"
             app:layout_constraintHorizontal_bias="0.34"
-            app:layout_constraintStart_toStartOf="@+id/textView"
-            app:layout_constraintTop_toTopOf="@+id/textView" />
+            app:layout_constraintStart_toStartOf="@+id/box"
+            app:layout_constraintTop_toTopOf="@+id/box" />
 
         <TextView
             android:id="@+id/as_btn3"
@@ -100,7 +100,7 @@
             app:layout_constraintEnd_toStartOf="@+id/custom_title"
             app:layout_constraintHorizontal_bias="0.097"
             app:layout_constraintStart_toEndOf="@+id/as_btn2"
-            app:layout_constraintTop_toTopOf="@+id/textView" />
+            app:layout_constraintTop_toTopOf="@+id/box" />
 
         <ImageView
             android:id="@+id/imageView3"
@@ -109,8 +109,8 @@
             android:layout_marginStart="12dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="48dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView"
-            app:layout_constraintEnd_toEndOf="@+id/textView"
+            app:layout_constraintBottom_toBottomOf="@+id/box"
+            app:layout_constraintEnd_toEndOf="@+id/box"
             app:layout_constraintHorizontal_bias="0.586"
             app:layout_constraintStart_toEndOf="@+id/piechart"
             app:layout_constraintTop_toBottomOf="@+id/verticalSeekBarWrapper"
@@ -127,7 +127,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.838"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView">
+            app:layout_constraintTop_toTopOf="@+id/box">
 
                 <com.h6ah4i.android.widget.verticalseekbar.VerticalSeekBar
                     android:id="@+id/brightness"
@@ -160,6 +160,20 @@
             app:layout_constraintVertical_bias="0.498" />
 
         <TextView
+            android:id="@+id/trash"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/garbage"
+            app:layout_constraintBottom_toTopOf="@+id/verticalSeekBarWrapper"
+            app:layout_constraintEnd_toEndOf="@+id/verticalSeekBarWrapper"
+            app:layout_constraintHorizontal_bias="0.694"
+            app:layout_constraintStart_toEndOf="@+id/custom_title"
+            app:layout_constraintTop_toTopOf="@+id/box"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
             android:id="@+id/custom_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -173,7 +187,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView"
+            app:layout_constraintTop_toTopOf="@+id/box"
             app:layout_constraintVertical_bias="0.016" />
 
 </android.support.constraint.ConstraintLayout>
