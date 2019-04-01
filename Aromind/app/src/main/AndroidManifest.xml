@@ -16,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionDark">
+
         <activity android:name=".Activity.LoadingActivity" />
+
         <activity android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,10 +26,43 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.CustomAddActivity" android:windowSoftInputMode="adjustNothing" />
-        <activity android:name=".Activity.GradientAddActivity" android:launchMode="singleInstance" android:theme="@style/TransparentTheme"
-            />
-        <service android:name="org.eclipse.paho.android.service.MqttService"></service>
+
+        <activity
+            android:name=".Activity.CustomAddActivity"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".Activity.GradientAddActivity"
+            android:launchMode="singleInstance"
+            android:theme="@style/TransparentTheme" />
+
+        <!--alarm popup KSW-->
+
+        <activity
+            android:name=".Activity.MenuAlarm_Activity.Setting_Alarm"
+            android:launchMode="singleInstance"
+            android:theme="@style/CustomTimePicker"/>
+
+        <activity
+            android:name=".Activity.MenuAlarm_Activity.Popup_alarmSound"
+            android:launchMode="singleInstance"
+            android:theme="@style/TransparentTheme" />
+
+        <activity
+            android:name=".Activity.MenuAlarm_Activity.Popup_alarmInterval"
+            android:launchMode="singleInstance"
+            android:theme="@style/TransparentTheme" />
+
+        <activity
+            android:name=".Activity.MenuAlarm_Activity.Popup_alarmName"
+            android:launchMode="singleInstance"
+            android:theme="@style/TransparentTheme"/>
+
+        <service android:name="org.eclipse.paho.android.service.MqttService" />
+        <receiver android:name=".Activity.MunuAlarm_AlarmManager.AlarmReceiver"/>
+        <service android:name=".Activity.MunuAlarm_AlarmManager.AlarmService"/>
+
+
     </application>
 
 </manifest>
