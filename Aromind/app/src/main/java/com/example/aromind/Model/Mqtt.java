@@ -62,7 +62,6 @@ public class Mqtt {
     }
 
     public static void clientPub(final Activity activity,String payload){
-        Log.i("Mqtt",payload);
         byte[] encodedPayload = new byte[0];
         try {
             encodedPayload = payload.getBytes("UTF-8");
@@ -83,7 +82,7 @@ public class Mqtt {
                 public void onSuccess(IMqttToken asyncActionToken) {
 
                     Log.i("MQTT","subConnected");
-                    //Mqtt.clientPub(null,"temp_humidity");
+                    Mqtt.clientPub(null,"temp_humidity");
                 }
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {

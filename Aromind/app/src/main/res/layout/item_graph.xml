@@ -1,17 +1,16 @@
-<com.example.aromind.CustomView.FocusFixFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/FrameLayout"
-    android:layout_width="125dp"
-    android:layout_height="130dp"
-    android:clipToPadding="false"
-    android:layout_marginHorizontal="3dp">
+    android:layout_width="130dp"
+    android:layout_height="120dp"
+    android:clipToPadding="false">
+
 
 
     <View
-        android:id="@+id/frame"
+        android:id="@+id/view5"
+        android:background="@color/colorPrimary"
         android:layout_width="wrap_content"
-        android:layout_height="110dp"
-        android:background="@color/colorPrimary" />
+        android:layout_height="101dp"/>
 
 
     <com.example.aromind.CustomView.CustomGradientButton
@@ -31,7 +30,7 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/custom_card_radius1" />
 
     <com.github.mikephil.charting.charts.PieChart
@@ -39,7 +38,7 @@
         android:layout_width="110dp"
         android:layout_height="80dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -51,33 +50,22 @@
 
     <TextView
         android:id="@+id/custom_title"
+        android:textColor="#fff"
+        android:textSize="10dp"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_gravity="bottom|center"
-        android:text=" "
         android:textAlignment="center"
-        android:textColor="#fff"
-        android:textSize="10dp" />
+        android:text=" " />
 
     <TextView
         android:id="@+id/add_move"
         android:layout_width="match_parent"
         android:layout_height="101dp"
         android:background="@color/colorPrimary"
-        android:gravity="center|center_horizontal"
-        android:text="+"
         android:textColor="#ffffff"
-        android:textSize="30dp" />
+        android:textSize="30dp"
+        android:gravity="center|center_horizontal"
+        android:text="+" />
 
-    <ToggleButton
-        android:id="@+id/focus"
-        android:layout_width="125dp"
-        android:layout_height="110dp"
-        android:background="@drawable/custom_focus"
-        android:checked="false"
-        android:textOn=""
-        android:textOff=""
-        android:descendantFocusability="blocksDescendants"
-        android:focusable="true" />
-
-</com.example.aromind.CustomView.FocusFixFrameLayout>
+</FrameLayout>
