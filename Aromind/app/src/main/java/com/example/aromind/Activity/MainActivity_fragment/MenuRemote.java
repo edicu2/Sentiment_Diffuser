@@ -1,7 +1,5 @@
 package com.example.aromind.Activity.MainActivity_fragment;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.ColorMatrix;
@@ -18,7 +16,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -26,7 +23,6 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 
-import com.example.aromind.Activity.MainActivity;
 import com.example.aromind.Activity.MenuRemote_RecyclerView.ListDecoration;
 import com.example.aromind.Activity.MenuRemote_RecyclerView.RecyclerViewAdapter;
 import com.example.aromind.CustomView.CustomButton;
@@ -49,6 +45,8 @@ import java.util.ArrayList;
 
 public class MenuRemote extends Fragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
     View view;
+    // temp, humidity
+    private TextView temp, humidity;
 
     //color Pick
     private int r=255,g=255,b=255,bright=0;
@@ -59,6 +57,7 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
     private CustomButton colorCheck;
     private ColorMatrix matrix;
     private ColorMatrixColorFilter filter;
+    // temp, humidity
 
     // aroma power
     private ToggleButton aromaBtn1, aromaBtn2, aromaBtn3;
@@ -67,8 +66,8 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
     private ToggleButton totalPower;
 
     //Custom
-    private static RecyclerView listview;
-    private static RecyclerViewAdapter adapter;
+    private RecyclerView listview;
+    private RecyclerViewAdapter adapter;
 
     // Mqtt String
     private String payload;
@@ -79,13 +78,10 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
     private ArrayList<int[]> itemList2 ;
     private ArrayList<ArrayList> itemList ;
     private ArrayList<String> title ;
-    private static SharedPreferences pref;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.menu_remote, container, false);
-
 
         // Total Power
         totalPower = (ToggleButton)view.findViewById(R.id.totalPower);
@@ -121,7 +117,7 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
         // DB
         custom_powerDB = new Custom_power_DBHelper(getContext(), "custom_power", null, 1);
         custom_gradient_DB = new Custom_gradient_DBHelper(getContext(),"custom_color", null, 1);
-        pref = getContext().getSharedPreferences("Sentiment", 0);
+
         return view;
     }
 
@@ -131,21 +127,10 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
     }
     public void onResume() {
         super.onResume();
-        Mqtt mqttConnect = new Mqtt(getActivity());
-        if(CustomButton.tempcircleCols != null) {
-            colorCheck.setCircleColors(CustomButton.tempcircleCols);
-            String p = "gradient_"+CustomButton.tempcircleCols[0];
-            for(int i=1 ; i<CustomButton.tempcircleCols.length ; i++){
-                p +=","+CustomButton.tempcircleCols[i];
-            }
-            p+=","+CustomButton.tempcircleCols[0];
-            Mqtt.clientPub(getActivity(),p);
-        }
-
-
         listview = (RecyclerView)view.findViewById(R.id.main_listview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         listview.setLayoutManager(layoutManager);
+
         itemList = new ArrayList<ArrayList>();
         itemList2 = new ArrayList<>();
         title = new ArrayList<>();
@@ -154,8 +139,8 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
         int custom_power_DB_size = (int)custom_powerDB.getDataSize();
         JSONArray json_db = custom_powerDB.getRecentData(custom_power_DB_size);
 
-        int[] colors = null;
-
+        int[] color = null;
+        Log.i("custom_power_size", String.valueOf(custom_power_DB_size));
         for(int i=0 ; i < custom_power_DB_size  ; i++){
             try {
                 JSONObject power_object = (JSONObject) json_db.get(i);
@@ -172,16 +157,17 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
                         JSONObject color_object = (JSONObject)json_db_color.get(j);
                         Log.i("colors", (String) color_object.get("color"));
                         if (j == 0) {
-                            colors = new int[json_db_color.length()+1];
+                            color = new int[json_db_color.length()+1];
                         }
-                        colors[j] =Integer.parseInt((String)color_object.get("color"));
-                        Log.i("color_teki", String.valueOf(colors[j]));
+                        color[j] =Integer.parseInt((String)color_object.get("color"));
+                        Log.i("color_teki", String.valueOf(color[j]));
                     }
                     JSONObject last = (JSONObject)json_db_color.get(0);
-                    colors[json_db_color.length()] = Integer.parseInt((String)last.get("color"));
-                    itemList2.add(colors);
+                    color[json_db_color.length()] = Integer.parseInt((String)last.get("color"));
+                    itemList2.add(color);
                 }else{
                     itemList2.add(new int[]{Color.WHITE,Color.BLACK,Color.WHITE});
+                    Log.i("custom_color", "null");
                 }
                 Log.i("colors", String.valueOf(itemList2));
             } catch (JSONException e) {
@@ -194,40 +180,19 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
         title.add("New Custom Add");
 
 
-        adapter = new RecyclerViewAdapter(getContext(),getActivity(), aromaBtn1 ,aromaBtn2,aromaBtn3,color,colorPower, colorCheck,totalPower,itemList, itemList2, title);
-        listview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listToggleSetFalse();
-            }
-        });
+        adapter = new RecyclerViewAdapter(getContext(), itemList, itemList2, onClickItem, title);
         listview.setAdapter(adapter);
-        listview.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                listToggleSetFalse();
-            }
-        });
-
-
+        ListDecoration decoration = new ListDecoration();
+        listview.addItemDecoration(decoration);
     }
-    public static void listToggleSetFalse(){
-        Log.i("count", String.valueOf(listview.getChildCount()));
-        for(int i=0; i<listview.getChildCount() ; i++){
-            ToggleButton tg = listview.getChildAt(i).findViewById(R.id.focus);
-            TextView ct = listview.getChildAt(i).findViewById(R.id.custom_title);
-            Log.i("remote",pref.getString("remote_set",""));
-            if(pref.getString("remote_set","").equals(ct.getText())) {
-                Log.i("remot", "ok");
-                tg.setChecked(true);
-            }else{
-                Log.i("remot", "no");
-                tg.setChecked(false);
-            }
 
+    private View.OnClickListener onClickItem = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            String str = (String) v.getTag();
+            Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT).show();
         }
-    }
+    };
 
 
     public void mqttSubCallback(){
@@ -261,7 +226,6 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
         }else{
             if(event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE){
                 setColorOn();
-                colorCheck.tempcircleCols=null;
                 colorPower.setChecked(true);
                 bitmap = color.getDrawingCache();
                 int px = bitmap.getPixel((int)event.getX(),(int)event.getY());
@@ -280,6 +244,7 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
                     Mqtt.clientPub(getActivity(), payload);
                 }
             }
+
         }
         return false;
     }
@@ -287,45 +252,26 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
 
     @Override
     public void onCheckedChanged(CompoundButton v, boolean isChecked) {
-        Log.i("mqtt",getView().getResources().getResourceEntryName(v.getId()));
-        // total 버튼이 눌렸는지 아닌지 확인하고 ON, OFF인지 확인
-        // total 버튼이 아닐 때 ->
-        if(v.getId() == R.id.totalPower){
-            if(isChecked == true){
-                aromaBtn1.setClickable(true);
-                aromaBtn2.setClickable(true);
-                aromaBtn3.setClickable(true);
-                colorPower.setClickable(true);
-                payload = v.getResources().getResourceEntryName(v.getId()) + "_ON";
-            }else{
-                aromaBtn1.setChecked(false);
-                aromaBtn2.setChecked(false);
-                aromaBtn3.setChecked(false);
-                colorPower.setChecked(false);
-                aromaBtn1.setClickable(false);
-                aromaBtn2.setClickable(false);
-                aromaBtn3.setClickable(false);
-                colorPower.setClickable(false);
-                setColorOff();
-                CustomButton.tempcircleCols=null;
-                brightness.setProgress(0);
-                payload = v.getResources().getResourceEntryName(v.getId())+"_OFF";
-            }
-        }else if (v.getId() == R.id.colorPower) {
-            if (isChecked == true) {
-                setColorOn();
-                brightness.setProgress(125);
-            } else {
-                setColorOff();
-                brightness.setProgress(0);
-            }
-
-        }else{
-            if (isChecked == true) {
-                payload = v.getResources().getResourceEntryName(v.getId())+"_100";
-            } else {
-                payload = v.getResources().getResourceEntryName(v.getId())+"_0";
-            }
+        Log.i("msg",getView().getResources().getResourceEntryName(v.getId()));
+        if (totalPower.isChecked() == true) {
+                if (v.getId() == R.id.colorPower) {
+                    if (isChecked == true) {
+                        setColorOn();
+                        brightness.setProgress(20);
+                    } else {
+                        setColorOff();
+                        brightness.setProgress(0);
+                    }
+                }
+                if (isChecked == true) {
+                    payload = v.getResources().getResourceEntryName(v.getId()) + "_ON";
+                } else {
+                    setColorOff();
+                    payload = v.getResources().getResourceEntryName(v.getId()) + "_OFF";
+                }
+        }else {
+            setAllStop();
+            payload = v.getResources().getResourceEntryName(v.getId()) + "_OFF";
         }
         Log.i("mqtt", payload);
         Mqtt.clientPub(getActivity(), payload);
@@ -360,11 +306,7 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-        bright = seekBar.getProgress();
-        payload = "colorPicker_"+r+","+g+","+b+","+(float)bright/255;
-        colorCheck.setCircleColor(Color.argb(bright,r, g, b));
-        Log.i("mqtt",payload);
-        Mqtt.clientPub(getActivity(), payload);
+
     }
 
     public void setAllStop(){
@@ -380,7 +322,6 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
         matrix.setSaturation(1);
         filter = new ColorMatrixColorFilter(matrix);
         color.setColorFilter(filter);
-        colorCheck.circleCols=null;
     }
 
     public void setColorOff(){
@@ -388,7 +329,6 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
         matrix.setSaturation(0);
         filter = new ColorMatrixColorFilter(matrix);
         color.setColorFilter(filter);
-        colorCheck.circleCols = null;
         colorCheck.setCircleColor(Color.argb(0,0, 0, 0));
     }
 }

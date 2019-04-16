@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="85dp"
+    android:background="@drawable/alarm_recycleview_underline"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <TextView
+        android:id="@+id/set_am_pm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/colorPrimaryfont"
+        android:textSize="25dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/set_day" />
+
+    <TextView
+        android:id="@+id/set_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/colorPrimaryfont"
+        android:textSize="35dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="60dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/on_off"
+        app:layout_constraintStart_toEndOf="@id/set_am_pm"/>
+
+    <Switch
+        android:id="@+id/on_off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:switchMinWidth="50dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/set_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/set_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/colorPrimaryfont"
+        android:textSize="18dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/set_am_pm"
+        app:layout_constraintStart_toStartOf="@id/set_am_pm"/>
+
+    <TextView
+        android:id="@+id/set_alarm_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/colorPrimaryfont"
+        android:textSize="18dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="15dp"
+        app:layout_constraintTop_toBottomOf="@id/set_am_pm"
+        app:layout_constraintStart_toEndOf="@id/set_day" />
+
+</android.support.constraint.ConstraintLayout>

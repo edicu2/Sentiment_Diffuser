@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.MenuAlarm_Activity.Popup_alarmInterval">
+
+    <FrameLayout
+        android:layout_width="300dp"
+        android:layout_height="400dp"
+        android:background="@drawable/custom_card_button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/interval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="간격"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="left|top"/>
+
+        <RadioGroup
+            android:id="@+id/interval_Group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|top"
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="20dp">
+
+            <RadioButton
+                android:id="@+id/interval_5m"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5분" />
+
+            <RadioButton
+                android:id="@+id/interval_10m"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10분"
+                android:layout_marginTop="5dp"/>
+
+            <RadioButton
+                android:id="@+id/interval_15m"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15분"
+                android:layout_marginTop="5dp"/>
+
+            <RadioButton
+                android:id="@+id/interval_30m"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="30분"
+                android:layout_marginTop="5dp"/>
+        </RadioGroup>
+
+
+
+
+        <TextView
+            android:id="@+id/repeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="반복"
+            android:layout_gravity="left|center"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"/>
+
+        <RadioGroup
+            android:id="@+id/repeat_Group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center"
+            android:layout_marginTop="72dp"
+            android:layout_marginStart="20dp">
+
+            <RadioButton
+                android:id="@+id/repeat_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="반복 없음" />
+
+            <RadioButton
+                android:id="@+id/repeat_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2회"
+                android:layout_marginTop="5dp"/>
+
+            <RadioButton
+                android:id="@+id/repeat_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3회"
+                android:layout_marginTop="5dp"/>
+
+        </RadioGroup>
+
+
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:text="확인"
+            android:textSize="20dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorPrimaryfont"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="right|bottom" />
+
+        <Button
+            android:id="@+id/cancle"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:text="취소"
+            android:textSize="20dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorPrimaryfont"
+            android:layout_marginEnd="70dp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="right|bottom"/>
+
+
+
+
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -161,16 +161,19 @@ public class CustomAddActivity extends AppCompatActivity implements View.OnClick
         ColorItem item1 = new ColorItem();
         item1.setR(0);
         item1.setG(0);
-        item1.setB(0);
+        item1.setB(0);;
         mAdapter = new ColorAdapter(this, gradient);
         mRecyclerView = (RecyclerView)findViewById(R.id.recycler_color);
         mLayoutManager = new LinearLayoutManager(this);
         ColorItemTouchHelperCallback mCallback = new ColorItemTouchHelperCallback(mAdapter);
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(mCallback);
+
         mItemTouchHelper.attachToRecyclerView(mRecyclerView);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
     }
+
 
     /* intent 보낸 것 다시 수신하는 부분 */
     @Override

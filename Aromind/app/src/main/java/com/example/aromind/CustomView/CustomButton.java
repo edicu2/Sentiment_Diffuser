@@ -3,12 +3,9 @@ package com.example.aromind.CustomView;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
-import android.graphics.SweepGradient;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import com.example.aromind.R;
@@ -20,11 +17,6 @@ public class CustomButton extends View{
     private String circleText;
     //paint for drawing custom view
     private Paint circlePaint;
-    private boolean check;
-    public static int[] circleCols;
-    public static int[] tempcircleCols;
-    private int alpha = 255;
-
 
     public CustomButton(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -57,27 +49,16 @@ public class CustomButton extends View{
         circlePaint.setStyle(Style.FILL);
         circlePaint.setAntiAlias(true);
         //set the paint color using the circle color specified
-        Log.i("mqtt_Color", String.valueOf(circleCols));
-        circlePaint.setAlpha(alpha);
-        circlePaint.setColor(Color.argb(255,255,255,255));
-        if(circleCols != null) {
-            circlePaint.setShader(new SweepGradient(170, 170, circleCols, null));
-        }else{
-            circlePaint.setShader(null);
-            circlePaint.setColor(circleCol);
-        }
-        /*
-        if(circleCols != null) {
-            circlePaint.setShader(new SweepGradient(170, 170, circleCols, null));
-            circleCols = null;
-        }else {
-            circlePaint.setShader(null);
-            circlePaint.setColor(circleCol);
-        }
-
-*/
+        circlePaint.setColor(circleCol);
         canvas.drawCircle(viewWidthHalf, viewHeightHalf, radius, circlePaint);
-        circlePaint.setShader(null);
+        //set the text color using the color specified
+        circlePaint.setColor(labelCol);
+        //set text properties
+        circlePaint.setTextAlign(Paint.Align.CENTER);
+        circlePaint.setTextSize(50);
+        //draw the text using the string attribute and chosen properties
+        canvas.drawText(circleText, viewWidthHalf, viewHeightHalf, circlePaint);
+
 
     }
     public int getCircleColor(){
@@ -109,14 +90,6 @@ public class CustomButton extends View{
     public void setLabelText(String newLabel){
         //update the instance variable
         circleText=newLabel;
-        //redraw the view
-        invalidate();
-        requestLayout();
-    }
-
-    public void setCircleColors(int colors[]){
-        this.circleCols=colors;
-        this.tempcircleCols = colors;
         //redraw the view
         invalidate();
         requestLayout();

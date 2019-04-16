@@ -95,7 +95,7 @@ public class Custom_power_DBHelper extends SQLiteOpenHelper {
     public JSONObject getData(String custom_name) {
         Log.i("ID", custom_name);
         SQLiteDatabase db = getReadableDatabase();
-        String query = "SELECT * FROM " + tb_name + " WHERE custom_name = ?";
+        String query = "SELECT * FROM " + tb_name + " WHERE cusom_name = ?";
         Cursor cursor = db.rawQuery(query, new String[]{custom_name});
         cursor.moveToPosition(0);
 
