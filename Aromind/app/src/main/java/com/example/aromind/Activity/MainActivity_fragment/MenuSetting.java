@@ -17,22 +17,11 @@ import com.example.aromind.R;
 
 public class MenuSetting extends Fragment {
 
-    private Button add_alarm;
-    private RecyclerView list;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.menu_setting, container, false);
-
-        add_alarm = (Button) view.findViewById(R.id.add_alarm);
-        add_alarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Setting_Alarm.class);
-                startActivity(intent);
-            }
-        });
 
         return view;
     }

@@ -71,6 +71,12 @@ public class Setting_Alarm extends AppCompatActivity implements View.OnClickList
         colorPrimaryfont = (this).getResources().getColor(R.color.colorPrimaryfont);
         colorPrimaryDark = (this).getResources().getColor(R.color.colorPrimaryDark);
 
+        submit = findViewById(R.id.submit);
+        cancle =  findViewById(R.id.cancle);
+
+        submit.setOnClickListener(this);
+        cancle.setOnClickListener(this);
+
         days_btn[0] = findViewById(R.id.sun);
         days_btn[1] = findViewById(R.id.mon);
         days_btn[2] = findViewById(R.id.tue);
@@ -99,7 +105,6 @@ public class Setting_Alarm extends AppCompatActivity implements View.OnClickList
             adapter.addItem("알람 이름", alarm_name);
         }
 
-        adapter.addItem("알람 소리", "");
         adapter.addItem("카드 설정", "");
         adapter.addItem("분사 설정", "");
 
@@ -114,11 +119,7 @@ public class Setting_Alarm extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(Setting_Alarm.this, "Sorry Bro", Toast.LENGTH_SHORT).show();
 //                    Intent intent = new Intent(Setting_Alarm.this, Popup_alarmSound.class);
 //                    startActivityForResult(intent, REQ_NUM);
-                }else if (position == 2){
-                    Toast.makeText(Setting_Alarm.this, "Sorry Bro", Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(Setting_Alarm.this, Popup_alarmName.class);
-//                    startActivityForResult(intent, REQ_NUM);
-                }else if(position == 3){
+                }else if(position == 2){
                     Intent intent = new Intent(Setting_Alarm.this, Popup_alarmInterval.class);
                     startActivityForResult(intent, REQ_NUM);
                 }
@@ -156,12 +157,6 @@ public class Setting_Alarm extends AppCompatActivity implements View.OnClickList
                 }
             }
         });
-
-        submit = findViewById(R.id.submit);
-        cancle =  findViewById(R.id.cancle);
-
-        submit.setOnClickListener(this);
-        cancle.setOnClickListener(this);
 
         setResult(MenuAlarm.RESULT_NG);
     }
