@@ -33,13 +33,11 @@ public class MainActivity extends AppCompatActivity {
     private MenuEmotion p_emotion = new MenuEmotion();
     private MenuSetting p_setting = new MenuSetting();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Mqtt Connect
-        //Mqtt mqttConnect = new Mqtt(this);
 
         Intent intent = new Intent(this, LoadingActivity.class);
         startActivity(intent);
