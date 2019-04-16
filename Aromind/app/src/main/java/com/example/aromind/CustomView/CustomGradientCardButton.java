@@ -24,6 +24,7 @@ public class CustomGradientCardButton extends View{
     private String circleText;
     //paint for drawing custom view
     private Paint circlePaint;
+    private int alpha = 255;
 
     public CustomGradientCardButton(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -57,6 +58,7 @@ public class CustomGradientCardButton extends View{
         circlePaint.setAntiAlias(true);
         //set the paint color using the circle color specified
         //circlePaint.setColor(circleCol);
+        circlePaint.setAlpha(alpha);
         circlePaint.setShader(new SweepGradient(500, 500, circleCols,null));
         canvas.drawCircle(viewWidthHalf, viewHeightHalf, radius, circlePaint);
         //set the text color using the color specified
@@ -89,6 +91,12 @@ public class CustomGradientCardButton extends View{
         invalidate();
         requestLayout();
     }
+    public void setAlpha(int alpha){
+        this.alpha = alpha;
+        invalidate();
+        requestLayout();
+    }
+
     public void setLabelColor(int newColor){
         //update the instance variable
         labelCol=newColor;
