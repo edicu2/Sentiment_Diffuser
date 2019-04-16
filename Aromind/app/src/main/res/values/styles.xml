@@ -24,5 +24,20 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowAnimationStyle">@null</item>
-        <item name="windowNoTitle">true</item></style>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!--editText  KSW -->
+    <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:colorControlNormal">#FFFFFF</item>
+    </style>
+
+    <style name="CustomTimePicker" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/colorPrimaryDark</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textColor">@color/colorPrimaryfont</item>
+    </style>
 </resources>
