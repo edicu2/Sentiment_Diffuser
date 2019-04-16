@@ -1,8 +1,4 @@
 <resources>
     <string name="app_name">Aromind</string>
-    <string name="new_custom_name"><font color="#FFFFFF">New Custom \n</font> <font color="#FFE400" size="10">  create your mood name </font></string>
-    <string name="watson_apiKey">o0zW-sXrq1_NsnbrhWlxXpU3DDBA4weVvbuuJ5jyt9aq</string>
-    <string name="watson_url">https://gateway.watsonplatform.net/natural-language-understanding/api</string>
-    <string name="watson_userName">SangWon Keum</string>
-    <string name="watson_password">Vbwjs7456@</string>
+    <string name="new_custom_name"><font color="#FFFFFF">New Custom \n</font> <font size="10" color="#FFE400">  create your mood name </font></string>
 </resources>

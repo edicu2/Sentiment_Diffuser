@@ -15,7 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class Custom_power_DBHelper extends SQLiteOpenHelper {
+public class Custom_sentiment_DBHelper extends SQLiteOpenHelper {
 
     Context context;
     MainActivity activity;
@@ -24,7 +24,7 @@ public class Custom_power_DBHelper extends SQLiteOpenHelper {
     SQLiteDatabase.CursorFactory factory;
 
     // DBHelper 생성자로 관리할 DB 이름과 버전 정보를 받음
-    public Custom_power_DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public Custom_sentiment_DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
         this.context = context;
         tb_name = name;
@@ -33,10 +33,9 @@ public class Custom_power_DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("CREATE TABLE IF NOT EXISTS " + name +
                 " (custom_name VARCHAR2(100) PRIMARY KEY ," +
-                " positive INT," +
-                " neutral INT, " +
-                "negative INT, " +
-                "bright INT );" );
+                " positive VARCHAR2(100)," +
+                " neutral VARCHAR2(100), " +
+                "negative VARCHAR2(100) );" );
     }
 
     @Override
@@ -55,6 +54,36 @@ public class Custom_power_DBHelper extends SQLiteOpenHelper {
         long count = DatabaseUtils.queryNumEntries(db, tb_name);
         db.close();
         return count;
+    }
+
+    //새로운 데이터 입력
+    public void positiveInsert( String custom_name, int positive, int neutral, int negative, int bright) {
+        // 읽고 쓰기가 가능하게 DB 열기
+        SQLiteDatabase db = getWritableDatabase();
+        // DB에 입력한 값으로 행 추가
+        ContentValues values = new ContentValues();
+        values.put("custom_name", custom_name);
+        values.put("positive", positive);
+        values.put("neutral", neutral);
+        values.put("negative", negative);
+        values.put("bright", bright);
+        db.insert(tb_name, null, values);
+        db.close();
+    }
+
+    //새로운 데이터 입력
+    public void neutralInsert( String custom_name, int positive, int neutral, int negative, int bright) {
+        // 읽고 쓰기가 가능하게 DB 열기
+        SQLiteDatabase db = getWritableDatabase();
+        // DB에 입력한 값으로 행 추가
+        ContentValues values = new ContentValues();
+        values.put("custom_name", custom_name);
+        values.put("positive", positive);
+        values.put("neutral", neutral);
+        values.put("negative", negative);
+        values.put("bright", bright);
+        db.insert(tb_name, null, values);
+        db.close();
     }
 
     //새로운 데이터 입력
@@ -95,7 +124,7 @@ public class Custom_power_DBHelper extends SQLiteOpenHelper {
     public JSONObject getData(String custom_name) {
         Log.i("ID", custom_name);
         SQLiteDatabase db = getReadableDatabase();
-        String query = "SELECT * FROM " + tb_name + " WHERE custom_name = ?";
+        String query = "SELECT * FROM " + tb_name + " WHERE cusom_name = ?";
         Cursor cursor = db.rawQuery(query, new String[]{custom_name});
         cursor.moveToPosition(0);
 

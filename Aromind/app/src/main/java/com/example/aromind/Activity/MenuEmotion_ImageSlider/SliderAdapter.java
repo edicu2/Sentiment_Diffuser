@@ -4,6 +4,7 @@ package com.example.aromind.Activity.MenuEmotion_ImageSlider;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
@@ -75,6 +76,11 @@ public class SliderAdapter extends PagerAdapter{
     @Override
     public boolean isViewFromObject(View view, Object object) {
         return view == ((ConstraintLayout) object);
+    }
+
+    public String getPositionCustom_name(int position){
+        title.get(position);
+        return title.get(position);
     }
 
     @Override
@@ -152,7 +158,6 @@ public class SliderAdapter extends PagerAdapter{
         pieChart.setData(data);
         pieChart.setTag(item);
         gradient.setCircleColors(item2);
-
 
         container.addView(v);
         return v;

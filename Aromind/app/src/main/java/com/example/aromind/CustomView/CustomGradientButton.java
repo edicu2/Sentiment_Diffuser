@@ -64,7 +64,12 @@ public class CustomGradientButton extends View{
         //set the paint color using the circle color specified
         //circlePaint.setColor(circleCol);
         circlePaint.setAlpha(alpha);
-        circlePaint.setShader(new SweepGradient(170, 170, circleCols,null));
+        if(circleCols != null) {
+            circlePaint.setShader(new SweepGradient(170, 170, circleCols,null));
+        }else {
+            circlePaint.setShader(new SweepGradient(170, 170, new int[]{ Color.WHITE,Color.BLACK, Color.WHITE}, null));
+        }
+
         canvas.drawCircle(viewWidthHalf, viewHeightHalf, radius, circlePaint);
     }
 
