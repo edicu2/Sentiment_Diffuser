@@ -19,9 +19,10 @@ public class Mqtt {
 
     private static String clientId;
     public static MqttAndroidClient client;
-
+    private static Activity activity;
 
     public Mqtt(final Activity activity){
+        this.activity = activity;
         clientId = MqttClient.generateClientId();
         client = new MqttAndroidClient(activity, URL.MQTTURL, clientId);
         try {
@@ -60,7 +61,7 @@ public class Mqtt {
 
     }
 
-    public static void clientPub(final Activity activity,String payload){
+    public static void clientPub(final Activity acQtivity,String payload){
         Log.i("Mqtt",payload);
         byte[] encodedPayload = new byte[0];
         try {
@@ -91,6 +92,10 @@ public class Mqtt {
         } catch (MqttException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Activity getActivity(){
+        return activity;
     }
 
 }

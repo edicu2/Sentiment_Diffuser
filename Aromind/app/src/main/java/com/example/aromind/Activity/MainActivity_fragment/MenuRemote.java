@@ -131,6 +131,10 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
     }
     public void onResume() {
         super.onResume();
+<<<<<<< Updated upstream
+=======
+        Mqtt mqttConnect = new Mqtt(getActivity());
+>>>>>>> Stashed changes
         if(CustomButton.tempcircleCols != null) {
             colorCheck.setCircleColors(CustomButton.tempcircleCols);
             String p = "gradient_"+CustomButton.tempcircleCols[0];

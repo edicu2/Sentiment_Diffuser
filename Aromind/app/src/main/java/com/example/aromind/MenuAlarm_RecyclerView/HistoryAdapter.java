@@ -15,7 +15,12 @@ import android.widget.Toast;
 import com.example.aromind.Activity.MainActivity;
 import com.example.aromind.Activity.MainActivity_fragment.MenuAlarm;
 import com.example.aromind.Activity.MunuAlarm_AlarmManager.AlarmReceiver;
+import com.example.aromind.Model.Custom_gradient_DBHelper;
+import com.example.aromind.Model.Custom_power_DBHelper;
 import com.example.aromind.R;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,6 +36,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     private Context context;
     private boolean isRepeat = false;
     private String card_title;
+
+//    //향/무드라이트 가져오는 부분
+//    private Custom_power_DBHelper custom_powerDB;
+//    private Custom_gradient_DBHelper custom_gradient_DB;
 
 
     //recycle부분
@@ -60,6 +69,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<ItemViewHolder> {
         itemViewHolder.set_day.setText(bean.getSet_day());
         itemViewHolder.set_alarm_name.setText(bean.getSet_alarm_name());
         itemViewHolder.set_alarm_card_title.setText(bean.getCard_title());
+
+        //카드이름 찾기
+        card_title = bean.getCard_title();
 
         //버튼클릭시 동작
         itemViewHolder.on_off.setOnClickListener(new View.OnClickListener() {
@@ -105,12 +117,22 @@ public class HistoryAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     private void startAlarm(Calendar calendar){
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmReceiver.class);
+//        custom_powerDB = new Custom_power_DBHelper(context, "custom_power", null, 1);
+//        custom_gradient_DB = new Custom_gradient_DBHelper(context,"custom_color", null, 1);
+//        JSONObject power_object = (JSONObject)custom_powerDB.getData(card_title);
+//        JSONArray json_db_color = custom_gradient_DB.getData((card_title));
+//        Log.i("후후후후후", power_object.toString());
+//        Log.i("후후후후후", json_db_color.toString());
+//        Log.i("후후후후후", card_title);
+
 
         if (isRepeat){
             intent.putExtra("week", week);
             intent.putExtra("one_time", false);
+            intent.putExtra("card_title", card_title);
         }else {
             intent.putExtra("one_time", true);
+            intent.putExtra("card_title", card_title);
         }
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
