@@ -2,19 +2,29 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 28
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.example.aromind"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
     }
 }
 repositories {
@@ -39,9 +49,24 @@ dependencies {
     //watson NaturalLanguage
     implementation 'com.ibm.watson.developer_cloud:java-sdk:6.11.0'
 
+    //facebook
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+    implementation 'com.facebook.android:facebook-login:[4,5)'
+
     //graph
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+    //microsoft azure face
+    implementation 'com.microsoft.projectoxford:face:1.4.3'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation group: 'org.apache.httpcomponents' , name: 'httpclient-android' , version: '4.3.5.1'
+    implementation'com.squareup.retrofit2:retrofit:2.1.0'
+    implementation'com.squareup.okhttp:okhttp:2.4.0'
+    implementation'com.google.code.gson:gson:1.7.2'
+    implementation'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+    implementation'com.squareup.okhttp3:logging-interceptor:3.3.1'
 
     //slider tranformer
     implementation 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'

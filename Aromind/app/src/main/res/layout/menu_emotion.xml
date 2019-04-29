@@ -353,5 +353,4 @@
         app:layout_constraintTop_toTopOf="@+id/frame"
         app:layout_constraintVertical_bias="0.482" />
 
-
 </android.support.constraint.ConstraintLayout>

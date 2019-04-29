@@ -1,8 +1,10 @@
 package com.example.aromind.Model;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.aromind.Sentiment.Sentiment_HistoryHelper;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.NaturalLanguageUnderstanding;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.AnalysisResults;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.AnalyzeOptions;
@@ -18,11 +20,15 @@ public class NaturalLanguage {
 
         private final String APIKEY_WATSON = "o0zW-sXrq1_NsnbrhWlxXpU3DDBA4weVvbuuJ5jyt9aq";
         private final String URL_WATSON = "https://gateway.watsonplatform.net/natural-language-understanding/api";
-        private String document;
+        private Double score;
+        private Context context;
+        //DB에 넣기
+         Sentiment_HistoryHelper sentiment_historyHelper;
 
-        public NaturalLanguage(ArrayList<String> text){
+        public NaturalLanguage(Context context, ArrayList<String> text){
+            this.context = context;
             if (text == null || text.size()<1){
-                Log.i("TTTERROR", "ERROR");
+                Log.i("TTTERROR", "NODATA NATURALLANGUAGE");
                 return;
             }
 
@@ -31,13 +37,15 @@ public class NaturalLanguage {
                 Log.i("TTT3", text.get(i));
             }
         }
+        //DB에 넣기
+       // Sentiment_HistoryHelper sentiment_historyHelper;
 
         private void connectNL(final String text){
 
             String url = URL_WATSON;
-            new AsyncTask<String, Void, String>() {
+            new AsyncTask<String, Void, Double>() {
                 @Override
-                protected String doInBackground(String... urls) {
+                protected Double doInBackground(String... urls) {
                     Log.i("TTT4", urls[0].toString());
                     String result = new String();
                     if (urls == null || urls.length < 1) {
@@ -73,22 +81,25 @@ public class NaturalLanguage {
                     DocumentSentimentResults documentSentimentResults = sentimentResult.getDocument();
                     String label = documentSentimentResults.getLabel();
                     Double score = documentSentimentResults.getScore();
-                    result = label+" : "+String.valueOf(score);
-                    Log.i("TTT7", documentSentimentResults.toString());
-                    return result;
+                    Log.i("TTT7", String.valueOf(score));
+                    return score;
                 }
 
                 @Override
-                protected void onPostExecute(String result) {
+                protected void onPostExecute(Double result) {
                     super.onPostExecute(result);
-                    document = result;
-                    Log.i("TTT8", document);
+                    score = result;
+
+                    sentiment_historyHelper = new Sentiment_HistoryHelper(context, "sentiment", null ,1);
+                    long now = System.currentTimeMillis();
+                    sentiment_historyHelper.insert(score, now);
+                    Log.i("TTT8", String.valueOf(score));
                 }
             }.execute(url);
         }
 
-        public String getDocument(){
-            return document;
+        public Double getDocument(){
+            return score;
         }
 
     }

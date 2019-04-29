@@ -5,6 +5,7 @@ public class HistoryBean {
     private String set_am_pm, set_Tiem, set_day, set_alarm_name;
     private int set_hour, set_min;
     private boolean[] set_week;
+    private String card_title;
 
     public String getSet_am_pm() {
         return set_am_pm;
@@ -61,4 +62,8 @@ public class HistoryBean {
     public void setSet_week(boolean[] set_week) {
         this.set_week = set_week;
     }
+
+    public String getCard_title() { return card_title; }
+
+    public void setCard_title(String card_title) { this.card_title = card_title; }
 }

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.MenuAlarm_Activity.Popup_alarmCustomCard">
+
+
+    <FrameLayout
+        android:layout_width="330dp"
+        android:layout_height="450dp"
+        android:background="@drawable/custom_card_button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+    <TextView
+        android:id="@+id/interval"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Steeing Card"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_gravity="left|top"/>
+
+
+        <view
+            android:id="@+id/view"
+            class="android.support.v4.view.ViewPager"
+            android:layout_width="401dp"
+            android:layout_height="358dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/customCardLeft"
+            android:layout_width="20dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/custom_card_left1"
+            android:layout_gravity="center|left"
+            />
+
+        <Button
+            android:id="@+id/customCardRight"
+            android:layout_width="20dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/custom_card_right1"
+            android:layout_gravity="center|right"
+             />
+
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:text="확인"
+        android:textSize="20dp"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorPrimaryfont"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="right|bottom" />
+
+    <Button
+        android:id="@+id/cancle"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:text="취소"
+        android:textSize="20dp"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorPrimaryfont"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="right|bottom"/>
+
+    </FrameLayout>
+
+
+</android.support.constraint.ConstraintLayout>

@@ -31,7 +31,7 @@ public class AsyntTaskEx extends AsyncTask<String,Void,String>{
         OutputStream out;
         try {
             File file = new File(String.valueOf(s));
-            URL url = new URL("http://carmarts.shop");
+            URL url = new URL("http://ec2-54-180-103-228.ap-northeast-2.compute.amazonaws.com/S3/upload_ok.php");
             URLConnection httpConn = url.openConnection();
             httpConn.setDoOutput(true);
             httpConn.setUseCaches(false);

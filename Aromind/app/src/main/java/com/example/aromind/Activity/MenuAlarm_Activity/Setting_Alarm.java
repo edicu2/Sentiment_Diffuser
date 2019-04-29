@@ -17,6 +17,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.aromind.Activity.MainActivity_fragment.MenuAlarm;
+import com.example.aromind.Activity.MainActivity_fragment.MenuEmotion;
 import com.example.aromind.R;
 
 import java.text.DecimalFormat;
@@ -62,6 +63,10 @@ public class Setting_Alarm extends AppCompatActivity implements View.OnClickList
     private int interval, repeat;
     private String alarm_name;
     private TextView timeView;
+    String card_title;
+
+    //change custom card
+    private MenuEmotion p_emotion = new MenuEmotion();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,9 +121,8 @@ public class Setting_Alarm extends AppCompatActivity implements View.OnClickList
                     Intent intent = new Intent(Setting_Alarm.this, Popup_alarmName.class);
                     startActivityForResult(intent, REQ_NUM);
                 }else if (position == 1){
-                    Toast.makeText(Setting_Alarm.this, "Sorry Bro", Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(Setting_Alarm.this, Popup_alarmSound.class);
-//                    startActivityForResult(intent, REQ_NUM);
+                    Intent intent = new Intent(Setting_Alarm.this,Popup_alarmCustomCard.class);
+                    startActivityForResult(intent, REQ_NUM);
                 }else if(position == 2){
                     Intent intent = new Intent(Setting_Alarm.this, Popup_alarmInterval.class);
                     startActivityForResult(intent, REQ_NUM);
@@ -181,6 +185,7 @@ public class Setting_Alarm extends AppCompatActivity implements View.OnClickList
                     String alarm_name = data.getStringExtra("alarm_name");
                     int interval = data.getIntExtra("interval", 0);
                     int repeat = data.getIntExtra("repeat", 0);
+                    String card_title = data.getStringExtra("card_title");
 
                     //alarm_name 받아오기
                     if (alarm_name != null) {
@@ -202,6 +207,13 @@ public class Setting_Alarm extends AppCompatActivity implements View.OnClickList
                         this.repeat = repeat;
                     } else {
                         this.repeat=0;
+                    }//end if (repeat !=0)
+
+                    if (card_title != null) {
+                        Toast.makeText(this, card_title, Toast.LENGTH_SHORT).show();
+                        this.card_title = card_title;
+                    } else {
+                        this.card_title="";
                     }//end if (repeat !=0)
                 } else
                     Toast.makeText(this, "null data", LENGTH_SHORT).show();
@@ -246,6 +258,7 @@ public class Setting_Alarm extends AppCompatActivity implements View.OnClickList
             data.putExtra("hour", hour);
             data.putExtra("min", min);
             data.putExtra("week", week);
+            data.putExtra("card_title", card_title);
             setResult(MenuAlarm.RESULT_OK, data);
             finish();
 

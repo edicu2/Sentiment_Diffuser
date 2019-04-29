@@ -93,6 +93,9 @@ public class Custom_power_DBHelper extends SQLiteOpenHelper {
 
     //특정 id를 갖는 데이터를 json으로 출력
     public JSONObject getData(String custom_name) {
+        if(custom_name == null){
+            return null;
+        }
         Log.i("ID", custom_name);
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT * FROM " + tb_name + " WHERE custom_name = ?";

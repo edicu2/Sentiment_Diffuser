@@ -5,4 +5,6 @@
     <string name="watson_url">https://gateway.watsonplatform.net/natural-language-understanding/api</string>
     <string name="watson_userName">SangWon Keum</string>
     <string name="watson_password">Vbwjs7456@</string>
+    <string name="facebook_app_id">2250882588501429</string>
+    <string name="fb_login_protocol_scheme">fb2250882588501429</string>
 </resources>

@@ -36,7 +36,7 @@ public class Emotion_Face {
     private static final String subscriptionKey = "65dc80447ea0495c92ed496b0b682509";
 
     private static final String uriBase =
-            "https://koreacentral.api.cognitive.microsoft.com/face/v1.0/detect";
+            " ";
     private static final String imageWithFaces =
             "{\"url\":\"https://upload.wikimedia.org/wikipedia/commons/c/c3/RH_Louise_Lillian_Gish.jpg\"}";
 

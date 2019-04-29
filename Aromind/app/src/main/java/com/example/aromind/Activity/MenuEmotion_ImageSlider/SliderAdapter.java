@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.aromind.Activity.CustomAddActivity;
@@ -41,6 +42,7 @@ public class SliderAdapter extends PagerAdapter{
     private ArrayList<ArrayList> itemList ;
     private ArrayList<int[]> itemList2;
     private ArrayList<String> title;
+    private ArrayList<Integer> bright;
     private LayoutInflater inflater;
     private Context context;
     private PieChart pieChart;
@@ -49,21 +51,24 @@ public class SliderAdapter extends PagerAdapter{
     private TextView a_btn1, a_btn2, a_btn3;
     private TextView moveAdd;
     private TextView garbage;
+    private SeekBar verticalSeekbar;
     private ArrayList<PieEntry> item ;
     private int[] item2 ;
     private String custom_name ;
+    private int brightness;
     private View v;
     private MenuEmotion activity;
 
     private Custom_power_DBHelper custom_powerDB;
     private Custom_gradient_DBHelper custom_gradient_DB;
 
-    public SliderAdapter(MenuEmotion activity, Context context, ArrayList<ArrayList> itemList, ArrayList<int[]> itemList2, ArrayList<String> title){
+    public SliderAdapter(MenuEmotion activity, Context context, ArrayList<ArrayList> itemList, ArrayList<int[]> itemList2, ArrayList<String> title, ArrayList<Integer> bright){
         this.activity = activity;
         this.context = context;
         this.itemList = itemList;
         this.itemList2 = itemList2;
         this.title = title;
+        this.bright = bright;
         custom_powerDB = new Custom_power_DBHelper(context, "custom_power", null, 1);
         custom_gradient_DB = new Custom_gradient_DBHelper(context,"custom_color", null, 1);
     }
@@ -80,6 +85,7 @@ public class SliderAdapter extends PagerAdapter{
 
     public String getPositionCustom_name(int position){
         title.get(position);
+        Log.i("후후후후후", title.toString());
         return title.get(position);
     }
 
@@ -91,6 +97,7 @@ public class SliderAdapter extends PagerAdapter{
         pieChart = v.findViewById(R.id.piechart);
         gradient = (CustomGradientCardButton)v.findViewById(R.id.gradientCard);
         tvTitle = (TextView)v.findViewById(R.id.custom_title);
+
         a_btn1 = (TextView)v.findViewById(R.id.as_btn1);
         a_btn2 = (TextView)v.findViewById(R.id.as_btn2);
         a_btn3 = (TextView)v.findViewById(R.id.as_btn3);
@@ -103,9 +110,13 @@ public class SliderAdapter extends PagerAdapter{
                 context.startActivity(intent);
             }
         });
+
+        verticalSeekbar = v.findViewById(R.id.brightness);
+
         item = itemList.get(position);
         item2 = itemList2.get(position);
         custom_name = title.get(position);
+        brightness = bright.get(position);
         garbage = (TextView)v.findViewById(R.id.trash);
         garbage.setVisibility(View.GONE);
         garbage.setOnClickListener(new View.OnClickListener() {
@@ -133,6 +144,8 @@ public class SliderAdapter extends PagerAdapter{
             garbage.setVisibility(View.VISIBLE);
         }
         tvTitle.setText(custom_name);
+        verticalSeekbar.setProgress(brightness);
+//        verticalSeekbar.setEnabled(false);
         pieChart.getLegend().setEnabled(false); // 하단바 없앰
         pieChart.setDrawSliceText(false);
         pieChart.getDescription().setEnabled(false);
@@ -144,9 +157,9 @@ public class SliderAdapter extends PagerAdapter{
         PieDataSet dataSet = new PieDataSetCustom(item ," ");
 
 
-        dataSet.setColors( context.getResources().getColor(R.color.aroma1),
+        dataSet.setColors( context.getResources().getColor(R.color.aroma3),
                 context.getResources().getColor(R.color.aroma2),
-                context.getResources().getColor(R.color.aroma3),
+                context.getResources().getColor(R.color.aroma1),
                 context.getResources().getColor(R.color.trans)
         );
 

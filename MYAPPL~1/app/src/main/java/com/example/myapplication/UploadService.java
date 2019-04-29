@@ -16,7 +16,7 @@ public interface UploadService {
             "User-Agent: Your-App-Name"
     })
     @Multipart
-    @POST("/testt")
+    @POST("upload")
     Call<ResponseBody> uploadFile(
             @Part("description") RequestBody description,
             @Part MultipartBody.Part file);

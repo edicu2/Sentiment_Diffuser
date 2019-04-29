@@ -50,6 +50,7 @@ public class MenuAlarm extends Fragment{
     private int hour, min;
     private boolean[] week = new boolean[8];
     private AlarmManager alarmManager;
+    private String card_title;
 
     @Nullable
     @Override
@@ -86,6 +87,7 @@ public class MenuAlarm extends Fragment{
                     int hour = data.getIntExtra("hour", 0);
                     int min = data.getIntExtra("min", 0);
                     boolean[] week = data.getBooleanArrayExtra("week");
+                    String card_title = data.getStringExtra("card_title");
 
                     Log.i("Timess", String.valueOf(week[1])+"  "+String.valueOf(week[2])+"  "+String.valueOf(week[3])+"  "+
                             String.valueOf(week[4])+"  "+String.valueOf(week[5])+"  "+String.valueOf(week[6])+"  "+String.valueOf(week[7]));
@@ -130,6 +132,10 @@ public class MenuAlarm extends Fragment{
                         this.week = week;
                     } else{
                         Toast.makeText(getActivity(), "null week", LENGTH_SHORT).show();
+                    }if (card_title != null){
+                        this.card_title = card_title;
+                    }else {
+                        Toast.makeText(getActivity(), "null card_title", LENGTH_SHORT).show();
                     }
 
                     settingList();
@@ -150,6 +156,7 @@ public class MenuAlarm extends Fragment{
         bean.setSet_hour(hour);
         bean.setSet_min(min);
         bean.setSet_week(week);
+        bean.setCard_title(card_title);
         data.add(bean);
     //일단 이부분에서 오류가 나는데 어뎁터에 무슨일이 생긴건가
         adapter = new HistoryAdapter(getActivity(), data);

@@ -30,6 +30,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     private int hour, min;
     private Context context;
     private boolean isRepeat = false;
+    private String card_title;
 
 
     //recycle부분
@@ -58,6 +59,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<ItemViewHolder> {
         itemViewHolder.set_time.setText(bean.getSet_Tiem());
         itemViewHolder.set_day.setText(bean.getSet_day());
         itemViewHolder.set_alarm_name.setText(bean.getSet_alarm_name());
+        itemViewHolder.set_alarm_card_title.setText(bean.getCard_title());
 
         //버튼클릭시 동작
         itemViewHolder.on_off.setOnClickListener(new View.OnClickListener() {
@@ -85,8 +87,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<ItemViewHolder> {
                             break;
                         }
                     }
-
-
                     startAlarm(calendar);
                 }else{
                     cancleAlarm();
@@ -119,7 +119,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     private void cancleAlarm(){
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmReceiver.class);
-        intent.putExtra("state", "off");
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);
     }

@@ -49,7 +49,8 @@ public class MenuEmotion extends Fragment implements View.OnClickListener {
     private Custom_gradient_DBHelper custom_gradient_DB;
     private ArrayList<int[]> itemList2 ;
     private ArrayList<ArrayList> itemList ;
-    private ArrayList<String> title ;
+    private ArrayList<String> title;
+    private ArrayList<Integer> bright;
     private String nowCustom_title;
     private CustomGradientButton gradient_positive,gradient_neutral, gradient_negative;
     private PieChart pieChart_positive, pieChart_neutral, pieChart_negative;
@@ -69,6 +70,7 @@ public class MenuEmotion extends Fragment implements View.OnClickListener {
         btn_positive = (Button)view.findViewById(R.id.positive_add);
         btn_positive.setOnClickListener(this);
         btn_neutral = (Button)view.findViewById(R.id.neutral_add);
+        btn_neutral.setOnClickListener(this);
         btn_neutral.setOnClickListener(this);
         btn_negative = (Button)view.findViewById(R.id.negative_add);
         btn_negative.setOnClickListener(this);
@@ -284,6 +286,7 @@ public class MenuEmotion extends Fragment implements View.OnClickListener {
         itemList = new ArrayList<ArrayList>();
         itemList2 = new ArrayList<int[]>();
         title = new ArrayList<>();
+        bright = new ArrayList<>();
         ArrayList<PieEntry> pie;
         int custom_power_DB_size = (int)custom_powerDB.getDataSize();
         JSONArray json_db = custom_powerDB.getRecentData(custom_power_DB_size);
@@ -297,6 +300,7 @@ public class MenuEmotion extends Fragment implements View.OnClickListener {
                 pie.add(new PieEntry(Integer.parseInt((String) power_object.get("negative")),"aroma3"));
                 itemList.add(pie);
                 title.add((String) power_object.get("custom_name"));
+                bright.add(Integer.parseInt((String)power_object.get("bright")));
                 JSONArray json_db_color = custom_gradient_DB.getData((String) power_object.get("custom_name"));
                 if((int)json_db_color.length() != 0) {
                     for (int j = 0; j < json_db_color.length(); j++) {
@@ -321,8 +325,9 @@ public class MenuEmotion extends Fragment implements View.OnClickListener {
         itemList.add(pie);
         itemList2.add(new int[]{Color.WHITE, R.color.aroma1, R.color.aroma2, R.color.aroma3, Color.WHITE});
         title.add("New Custom Add");
+        bright.add(0);
 
-        adapter = new SliderAdapter(this, getContext(), itemList, itemList2, title);
+        adapter = new SliderAdapter(this, getContext(), itemList, itemList2, title, bright);
         viewPager.setAdapter(adapter);
         viewPager.setPageTransformer(true, new CubeOutTransformer());
         sliderBtnLeftRight();

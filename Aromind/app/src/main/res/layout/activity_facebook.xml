@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".facebook.Facebook">
+    <FrameLayout
+        android:layout_width="300dp"
+        android:layout_height="400dp"
+        android:background="@drawable/custom_card_button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/interval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="facebook Login"
+            android:textColor="@color/colorPrimaryfont"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="left|top"/>
+
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="220dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:text="확인"
+            android:textSize="20dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorPrimaryfont"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="right|bottom" />
+
+        <Button
+            android:id="@+id/cancle"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:text="취소"
+            android:textSize="20dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorPrimaryfont"
+            android:layout_marginEnd="70dp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="right|bottom"/>
+
+
+
+
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -122,9 +122,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.pieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic); //애니메이션
 
         PieDataSet dataSet = new PieDataSetCustom(item ," ");
-        dataSet.setColors( context.getResources().getColor(R.color.aroma1),
+        dataSet.setColors( context.getResources().getColor(R.color.aroma3),
                            context.getResources().getColor(R.color.aroma2),
-                           context.getResources().getColor(R.color.aroma3),
+                           context.getResources().getColor(R.color.aroma1),
                             context.getResources().getColor(R.color.trans)
         );
 

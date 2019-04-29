@@ -68,7 +68,7 @@ public class MyJobService extends JobService {
                         return null;
                     }
                 }
-                imageUrl = "{\"url\":\"http://49.143.18.93:8000/storage/albumImage/"+file.getName()+"\"}";
+                imageUrl = "{\"url\":\"http://ec2-54-180-103-228.ap-northeast-2.compute.amazonaws.com/S3/"+file.getName()+"\"}";
                 return  null;
             }
 

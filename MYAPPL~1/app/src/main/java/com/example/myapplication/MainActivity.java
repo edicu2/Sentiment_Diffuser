@@ -31,6 +31,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -89,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv;
     private MyBroadCastReceiver my;
 
+    private final int REQUEST_PERMISSON_CODE = 1000;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,11 +120,40 @@ public class MainActivity extends AppCompatActivity {
         }
 
         MyJobService.startJob(getApplicationContext());
+        MyJobService.startJob(getApplicationContext());
         MyBroadCastReceiver my = new MyBroadCastReceiver();
         IntentFilter intentfilter = new IntentFilter(); intentfilter.addAction("com.dwfox.myapplication.SEND_BROAD_CAST");
         registerReceiver(my,intentfilter);
+        //종료가 안되서 나는 오류
+
+
+
+        //get permission checked
+        if (checkPermissionFromDevice()) {
+            Toast.makeText(getApplicationContext(), "Allow Permissions", Toast.LENGTH_SHORT).show();
+        } else {
+            requestPermissions();
+        }
 
     }
+
+
+    //Permissions Request Method
+    private void requestPermissions(){
+        ActivityCompat.requestPermissions(this, new String[]{
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        },REQUEST_PERMISSON_CODE);
+    }
+
+    private Boolean checkPermissionFromDevice() {
+        int write_external_storage_result = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        int record_audio_result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        return write_external_storage_result == PackageManager.PERMISSION_GRANTED &&
+                record_audio_result == PackageManager.PERMISSION_GRANTED;
+    }
+
+
     public static final int MY_BACKGROUND_JOB = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -158,7 +190,8 @@ public class MainActivity extends AppCompatActivity {
                     uploadImage(selectedImage);
                     final File file = new File(String.valueOf(getRealPathFromURI(selectedImage)));
                     Log.i("SelectResult",file.getName());
-                    String imageUrl = "{\"url\":\"http://49.143.18.93:8000/storage/albumImage/"+file.getName()+"\"}";
+                    String imageUrl = "{\"url\":\"http://ec2-54-180-103-228.ap-northeast-2.compute.amazonaws.com:8000/storage/albumImage/"+file.getName()+"\"}";
+                    Log.i("DD", imageUrl);
                     Face face = new Face(imageUrl);
                 }
             }).start();
@@ -184,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     public static final String MULTIPART_FORM_DATA = "multipart/form-data";
 
     @NonNull
@@ -235,6 +269,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(my);
+        //unregisterReceiver(my);
     }
 }
