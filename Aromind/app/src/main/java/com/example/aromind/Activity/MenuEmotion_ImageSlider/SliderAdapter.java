@@ -24,6 +24,7 @@ import com.example.aromind.Activity.MenuRemote_RecyclerView.PieDataSetCustom;
 import com.example.aromind.CustomView.CustomGradientCardButton;
 import com.example.aromind.Model.Custom_gradient_DBHelper;
 import com.example.aromind.Model.Custom_power_DBHelper;
+import com.example.aromind.Model.Http;
 import com.example.aromind.R;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -128,6 +129,8 @@ public class SliderAdapter extends PagerAdapter{
                 try {
                     custom_gradient_DB.delete(title.get(position));
                     custom_powerDB.delete(title.get(position));
+                    Http httpConnection = new Http();
+                    httpConnection.connect(title.get(position),null,null,null,null,null);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

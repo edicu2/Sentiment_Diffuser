@@ -218,5 +218,4 @@ public class Custom_gradient_DBHelper extends SQLiteOpenHelper {
                 "raw_file_path VARCHAR2(100));");
 
     }
-
 }

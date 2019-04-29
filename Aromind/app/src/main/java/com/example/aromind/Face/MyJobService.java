@@ -49,9 +49,11 @@ public class MyJobService extends JobService {
                 File file = null;
                 //if(String.valueOf(uri[0]).equals("content://media/external"){
                 if(uri.length <= 2){
-                    Log.i("jobService", String.valueOf(uri[uri.length-1]));
-                    uploadImage(uri[uri.length-1]);
-                    file = new File(String.valueOf(getRealPathFromURI(uri[uri.length-1])));
+                    if(!String.valueOf(uri[uri.length-1]).equals("content://media/external")) {
+                        Log.i("jobService", String.valueOf(uri[uri.length - 1]));
+                        uploadImage(uri[uri.length - 1]);
+                        file = new File(String.valueOf(getRealPathFromURI(uri[uri.length - 1])));
+                    }
                 }else {
                     Log.i("jobService", String.valueOf(uri[0]));
                     if(!String.valueOf(uri[0]).equals("content://media/external")){
@@ -61,7 +63,9 @@ public class MyJobService extends JobService {
                         return null;
                     }
                 }
-                imageUrl = "{\"url\":\"http://ec2-54-180-103-228.ap-northeast-2.compute.amazonaws.com:8000/storage/albumImage/"+file.getName()+"\"}";
+                if(!String.valueOf(uri[uri.length-1]).equals("content://media/external")) {
+                    imageUrl = "{\"url\":\"http://ec2-54-180-103-228.ap-northeast-2.compute.amazonaws.com:8000/storage/albumImage/" + file.getName() + "\"}";
+                }
 //                imageUrl = "{\"url\":\"http://ec2-54-180-103-228.ap-northeast-2.compute.amazonaws.com/storage/albumImage/"+file.getName()+"\"}";
                 return  null;
             }
@@ -155,6 +159,9 @@ public class MyJobService extends JobService {
 
 
     private String getRealPathFromURI(Uri contentURI) {
+        if(String.valueOf(Uri.parse(contentURI.toString())).equals("content://media/external")){
+            return null;
+        }
         Cursor c = getContentResolver().query(Uri.parse(contentURI.toString()), null,null,null,null);
         c.moveToNext();
         String absolutePath = c.getString(c.getColumnIndex(MediaStore.MediaColumns.DATA));

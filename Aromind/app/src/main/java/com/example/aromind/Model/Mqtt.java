@@ -21,7 +21,6 @@ public class Mqtt {
     public static MqttAndroidClient client;
 
 
-
     public Mqtt(final Activity activity){
         clientId = MqttClient.generateClientId();
         client = new MqttAndroidClient(activity, URL.MQTTURL, clientId);

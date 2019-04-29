@@ -2,11 +2,13 @@ package com.example.aromind.Activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,11 +27,28 @@ import com.example.aromind.Activity.MenuRemote_RecyclerView.PieDataSetCustom;
 import com.example.aromind.CustomView.CustomGradientCardButton;
 import com.example.aromind.Model.Custom_gradient_DBHelper;
 import com.example.aromind.Model.Custom_power_DBHelper;
+import com.example.aromind.Model.Http;
+import com.example.aromind.Model.Mqtt;
 import com.example.aromind.R;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -213,12 +232,39 @@ public class CustomAddActivity extends AppCompatActivity implements View.OnClick
                     custom_gradient_DB.insert(custom_name.getText().toString(), colors[i]);
                 }
                 custom_powerDB.insert(custom_name.getText().toString(), positive.getProgress(), neutral.getProgress(), negative.getProgress(), bright.getProgress());
-                finish();
+                try {
+                    JSONObject powers = custom_powerDB.getData(custom_name.getText().toString());
+                    JSONArray dbColors = custom_gradient_DB.getData(custom_name.getText().toString());
+                    int[] color_array = null;
+                    String gradient_payload = null;
+                    if ((int)dbColors.length() != 0) {
+                        for (int j = 0; j < dbColors.length(); j++) {
+                            JSONObject color_object = (JSONObject) dbColors.get(j);
+                            int int_c = Integer.parseInt((String) color_object.get("color"));
+                            int r = Color.red(int_c);
+                            int g = Color.green(int_c);
+                            int b = Color.blue(int_c);
+                            if (j == 0) {
+                                color_array = new int[dbColors.length() + 1];
+                                gradient_payload = r + "." + g + "." + b;
+                            } else {
+                                gradient_payload += "," + r + "." + g + "." + b;
+                            }
+                            color_array[j] = Integer.parseInt((String) color_object.get("color"));
+                        }
+                        // http로 데이터 전송부분
+                        Http httpConnect = new Http();
+                        httpConnect.connect(custom_name.getText().toString(), toString().valueOf(positive.getProgress()) ,toString().valueOf(neutral.getProgress()),
+                                toString().valueOf(negative.getProgress()), gradient_payload, toString().valueOf(bright.getProgress()));
+                        finish();
+                    }
+                }catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }else if(v.getId() == R.id.back_btn){
             finish();
         }
-
     }
 
 
