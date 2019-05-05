@@ -131,17 +131,22 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
     }
     public void onResume() {
         super.onResume();
-<<<<<<< Updated upstream
-=======
+
         Mqtt mqttConnect = new Mqtt(getActivity());
->>>>>>> Stashed changes
+
         if(CustomButton.tempcircleCols != null) {
             colorCheck.setCircleColors(CustomButton.tempcircleCols);
-            String p = "gradient_"+CustomButton.tempcircleCols[0];
-            for(int i=1 ; i<CustomButton.tempcircleCols.length ; i++){
-                p +=","+CustomButton.tempcircleCols[i];
+            String p = "gradient_";
+            for(int i=0 ; i<CustomButton.tempcircleCols.length-1 ; i++){
+                int r = Color.red(CustomButton.tempcircleCols[i]);
+                int g = Color.green(CustomButton.tempcircleCols[i]);
+                int b = Color.blue(CustomButton.tempcircleCols[i]);
+                if( i == 0 ){
+                    p +=r+"."+g+"."+b;
+                }else {
+                    p +=","+r+"."+g+"."+b;
+                }
             }
-            p+=","+CustomButton.tempcircleCols[0];
             Mqtt.clientPub(getActivity(),p);
         }
 
@@ -197,7 +202,7 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
         title.add("New Custom Add");
 
 
-        adapter = new RecyclerViewAdapter(getContext(),getActivity(), aromaBtn1 ,aromaBtn2,aromaBtn3,color,colorPower, colorCheck,totalPower,itemList, itemList2, title);
+        adapter = new RecyclerViewAdapter(getContext(),getActivity(), aromaBtn1 ,aromaBtn2,aromaBtn3,color, brightness, colorPower, colorCheck,totalPower,itemList, itemList2, title);
         listview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

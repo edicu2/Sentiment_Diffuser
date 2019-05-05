@@ -22,6 +22,7 @@ import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -64,8 +65,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
     private CustomButton colorCheck;
+    private SeekBar brightness;
 
-    public RecyclerViewAdapter(Context context, Activity activity, ToggleButton btn_positive, ToggleButton btn_neutral, ToggleButton btn_negative, ImageView color, ToggleButton colorPower , CustomButton colorCheck, ToggleButton totalButton,
+    public RecyclerViewAdapter(Context context, Activity activity, ToggleButton btn_positive, ToggleButton btn_neutral, ToggleButton btn_negative, ImageView color, SeekBar brightness, ToggleButton colorPower , CustomButton colorCheck, ToggleButton totalButton,
                                ArrayList<ArrayList> itemList, ArrayList<int[]> itemList2, ArrayList<String> title) {
 
         pref = context.getSharedPreferences("Sentiment", 0);
@@ -80,6 +82,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.btn_negative = btn_negative;
         this.totalButton = totalButton;
         this.color = color;
+        this.brightness = brightness;
         this.colorPower = colorPower;
         this.colorCheck = colorCheck;
         custom_powerDB = new Custom_power_DBHelper(context, "custom_power", null, 1);
@@ -190,6 +193,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                     try {
                         if(totalButton.isChecked() == true) {
+                            if(Integer.parseInt((String) powers.get("bright")) != 0) {
+                                colorPower.setChecked(true);
+                                brightness.setProgress(Integer.parseInt((String) powers.get("bright")));
+                            }else {
+                                colorPower.setChecked(false);
+                            }
                             if (Integer.parseInt((String) powers.get("positive"))!=  0) {
                                 btn_positive.setChecked(true);
                                 Mqtt.clientPub(activity, "aroma1_" + (String) powers.get("positive"));
@@ -226,16 +235,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                     }
                                     color_array[j] = Integer.parseInt((String) color_object.get("color"));
                                 }
+                               Mqtt.clientPub(activity,gradient_payload);
                                 JSONObject last = (JSONObject) colors.get(0);
                                 int r = Color.red(Integer.parseInt((String)last.get("color")));
                                 int g = Color.green(Integer.parseInt((String)last.get("color")));
                                 int b = Color.blue(Integer.parseInt((String)last.get("color")));
                                 gradient_payload +=","+r+"."+g+"."+b;;
                                 color_array[colors.length()] = Integer.parseInt((String) last.get("color"));
-                                colorPower.setChecked(true);
                                 colorCheck.setCircleColors(color_array);
-                                Mqtt.clientPub(activity,gradient_payload);
-                                //mqtt color gradient 전송하기
                             }else{
                                 colorPower.setChecked(false);
                             }

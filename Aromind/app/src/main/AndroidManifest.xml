@@ -59,19 +59,19 @@
         <activity
             android:name=".Activity.MenuAlarm_Activity.Popup_alarmInterval"
             android:launchMode="singleInstance"
-            android:theme="@style/TransparentTheme" />
+            android:theme="@style/TransparentThemeShadow" />
         <activity
             android:name=".Activity.MenuAlarm_Activity.Popup_alarmName"
             android:launchMode="singleInstance"
-            android:theme="@style/TransparentTheme" />
+            android:theme="@style/TransparentThemeShadow" />
         <activity
             android:name=".Activity.MenuAlarm_Activity.Popup_alarmCustomCard"
             android:launchMode="singleInstance"
-            android:theme="@style/TransparentTheme"/>
+            android:theme="@style/TransparentThemeShadow"/>
         <activity
             android:name=".facebook.Facebook"
             android:launchMode="singleInstance"
-            android:theme="@style/TransparentTheme" />
+            android:theme="@style/TransparentThemeShadow" />
 
         <service android:name="org.eclipse.paho.android.service.MqttService" />
 

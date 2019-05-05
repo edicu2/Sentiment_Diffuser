@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="@drawable/alarm_recycleview_underline"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
@@ -10,9 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textSize="20dp"
-        android:textColor="@color/colorPrimaryfont"
-        android:layout_marginTop="10dp"
+        android:textSize="23dp"
+        android:textColor="#DCDCDC"
         android:layout_marginStart="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
@@ -22,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textSize="10dp"
+        android:textSize="15dp"
         android:textColor="@color/colorPrimaryfont"
         android:layout_marginStart="10dp"
         app:layout_constraintTop_toBottomOf="@id/menu_name"

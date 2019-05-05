@@ -2,6 +2,7 @@ package com.example.aromind.Activity.MenuAlarm_Activity;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,10 +60,9 @@ public class Setting_Alarm_Adapter extends BaseAdapter {
     public void addItem(String menu_name, String menu_child){
 
         Setting_Alarm_item item = new Setting_Alarm_item();
-
+        Log.i("child", menu_child);
         item.setList_menu(menu_name);
         item.setList_child(menu_child);
-
         data.add(item);
     }
 

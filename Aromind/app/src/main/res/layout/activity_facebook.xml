@@ -45,7 +45,8 @@
             android:textColor="@color/colorPrimaryfont"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="20dp"
-            android:layout_gravity="right|bottom" />
+            android:layout_gravity="right|bottom"
+            style="?android:attr/borderlessButtonStyle"/>
 
         <Button
             android:id="@+id/cancle"
@@ -57,7 +58,8 @@
             android:textColor="@color/colorPrimaryfont"
             android:layout_marginEnd="70dp"
             android:layout_marginBottom="20dp"
-            android:layout_gravity="right|bottom"/>
+            android:layout_gravity="right|bottom"
+            style="?android:attr/borderlessButtonStyle"/>
 
 
 

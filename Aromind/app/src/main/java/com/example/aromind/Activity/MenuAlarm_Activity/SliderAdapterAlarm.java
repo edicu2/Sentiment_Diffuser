@@ -135,9 +135,9 @@ public class SliderAdapterAlarm extends PagerAdapter {
         PieDataSet dataSet = new PieDataSetCustom(item ," ");
 
 
-        dataSet.setColors( context.getResources().getColor(R.color.aroma1),
+        dataSet.setColors( context.getResources().getColor(R.color.aroma3),
                 context.getResources().getColor(R.color.aroma2),
-                context.getResources().getColor(R.color.aroma3),
+                context.getResources().getColor(R.color.aroma1),
                 context.getResources().getColor(R.color.trans)
         );
 

@@ -38,13 +38,11 @@ import com.example.aromind.Activity.MainActivity_fragment.MenuEmotion;
 import com.example.aromind.Activity.MainActivity_fragment.MenuMypage;
 import com.example.aromind.Activity.MainActivity_fragment.MenuRemote;
 import com.example.aromind.Activity.MainActivity_fragment.MenuSetting;
-import com.example.aromind.Face.MyBroadCastReceiver;
 import com.example.aromind.Face.MyJobService;
 import com.example.aromind.Face.MyRetrofit2;
 import com.example.aromind.Face.UploadService;
 import com.example.aromind.Model.Mqtt;
 import com.example.aromind.R;
-import com.example.aromind.facebook.FacebookBoradcast;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -72,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView title;
     private ImageView img;
-    private MyBroadCastReceiver my;
     private final int REQUEST_PERMISSON_CODE = 1000;
     public static final int MY_BACKGROUND_JOB = 0;
 
@@ -100,11 +97,8 @@ public class MainActivity extends AppCompatActivity {
         //페이스북 로그인 됬음을 알아오는 콜백 메서드
         callbackManager = CallbackManager.Factory.create();
 
-//        fb();
-        // Mqtt Connect
-
-        //Intent intent = new Intent(this, LoadingActivity.class);
-        //startActivity(intent);
+        Intent intent = new Intent(this, LoadingActivity.class);
+        startActivity(intent);
 
         title = (TextView)findViewById(R.id.title);
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
@@ -168,11 +162,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         MyJobService.startJob(getApplicationContext());
-//        MyBroadCastReceiver my = new MyBroadCastReceiver();
-//        IntentFilter intentfilter = new IntentFilter(); intentfilter.addAction("com.dwfox.myapplication.SEND_BROAD_CAST");
-//        registerReceiver(my,intentfilter);
-//        unregisterReceiver(my);
-//        종료가 안되서 나는 오류
 
     }//end onCreate
 
@@ -272,10 +261,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //unregisterReceiver(my);
     }
-
-    //azureface
 
     //Permissions Request Method
     private void requestPermissions(){
@@ -300,61 +286,6 @@ public class MainActivity extends AppCompatActivity {
                 receive_sms == PackageManager.PERMISSION_GRANTED &&
                 read_external_storage_result == PackageManager.PERMISSION_GRANTED;
     }
-
-    //facebook
-//    public void fb(){
-//
-//        callbackManager = CallbackManager.Factory.create();
-//        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-//        //facebook Token
-//        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-//
-//        //게시글 뽑아 오기
-//        final GraphRequest request = GraphRequest.newGraphPathRequest(
-//                accessToken,
-//                "/me/posts",
-//                new GraphRequest.Callback() {
-//                    @Override
-//                    public void onCompleted(GraphResponse response) {
-//                        // Insert your code here
-//
-//                        Log.i("AAAm", response.toString());
-//                        JSONObject jsonObject = response.getJSONObject();
-//                        if (jsonObject == null){
-//                            Log.i("AAAm", "bad");
-//                            return;
-//                        }
-//                        Log.i("AAAm1", jsonObject.toString());
-//                        String data = jsonObject.optString("data");
-//                        Log.i("AAAm2", data);
-//                        try {
-//                            JSONArray jsonArray = new JSONArray(data);
-//                            //게시글에서 첫번째 게시물만 가져오는것
-//                            JSONObject j = jsonArray.getJSONObject(0);
-//                            message = j.optString("message");
-//                            String time = j.optString("created_time");
-//                            Log.i("AAAMESSAGE", message);
-//                            Log.i("AAACREATETIME", time);
-//
-//                            FacebookBoradcast facebookBoradcast = new FacebookBoradcast();
-//                            IntentFilter intentFilter = new IntentFilter();
-//                            intentFilter.addAction("com.example.aromind.SEND_FACEBOOK");
-//                            registerReceiver(facebookBoradcast, intentFilter);
-//
-//                            Intent datas = new Intent("com.example.aromind.SEND_FACEBOOK");
-//                            datas.putExtra("message", message);
-//                            sendBroadcast(datas);
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
-//        Bundle parameters = new Bundle();
-//        parameters.putString("fields", "message,created_time");
-//        request.setParameters(parameters);
-//        request.executeAsync();
-//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -239,9 +239,9 @@ public class MenuEmotion extends Fragment implements View.OnClickListener {
                 PieDataSet dataSet = new PieDataSetCustom(pie3 ," ");
 
 
-                dataSet.setColors( getContext().getResources().getColor(R.color.aroma1),
+                dataSet.setColors( getContext().getResources().getColor(R.color.aroma3),
                         getContext().getResources().getColor(R.color.aroma2),
-                        getContext().getResources().getColor(R.color.aroma3),
+                        getContext().getResources().getColor(R.color.aroma1),
                         getContext().getResources().getColor(R.color.trans)
                 );
 
@@ -359,201 +359,206 @@ public class MenuEmotion extends Fragment implements View.OnClickListener {
         }else if(v.getId() == R.id.customCardLeft) {
             viewPager.setCurrentItem(viewPager.getCurrentItem() - 1, true);
         }else if(v.getId() == R.id.positive_add){
-            editor.putString("positive",nowCustom_title);
-            editor.apply();
-            ArrayList<PieEntry> pie;
-            if(pref.getString("positive",null) == null) {
-                gradient_positive.setVisibility(GONE);
-                pieChart_positive.setVisibility(GONE);
-            }else{
-                custom_name_positive.setText(pref.getString("positive",null));
-                JSONObject power_object = (JSONObject)custom_powerDB.getData(pref.getString("positive",null));
-                ArrayList pie1 = new ArrayList<PieEntry>();
-                int[] color = null;
-                try {
-                    pie1.add(new PieEntry(Integer.parseInt((String) power_object.get("positive")),"aroma1"));
-                    pie1.add(new PieEntry(Integer.parseInt((String) power_object.get("neutral")),"aroma2"));
-                    pie1.add(new PieEntry(Integer.parseInt((String) power_object.get("negative")),"aroma3"));
-                    pieChart_positive.getLegend().setEnabled(false); // 하단바 없앰
-                    pieChart_positive.setDrawSliceText(false);
-                    pieChart_positive.getDescription().setEnabled(false);
-                    pieChart_positive.setExtraOffsets(5,5,5,5);
-                    pieChart_positive.setDrawHoleEnabled(false);
-                    pieChart_positive.setHoleColor( getContext().getResources().getColor(R.color.trans));
-                    pieChart_positive.setTransparentCircleRadius(61f);
-                    pieChart_positive.setTouchEnabled(false);
-                    PieDataSet dataSet = new PieDataSetCustom(pie1 ," ");
+            if(!nowCustom_title.equals("New Custom Add")) {
+                editor.putString("positive", nowCustom_title);
+                editor.apply();
+                ArrayList<PieEntry> pie;
+                if (pref.getString("positive", null) == null) {
+                    gradient_positive.setVisibility(GONE);
+                    pieChart_positive.setVisibility(GONE);
+                } else {
+                    custom_name_positive.setText(pref.getString("positive", null));
+                    JSONObject power_object = (JSONObject) custom_powerDB.getData(pref.getString("positive", null));
+                    ArrayList pie1 = new ArrayList<PieEntry>();
+                    int[] color = null;
+                    try {
+                        pie1.add(new PieEntry(Integer.parseInt((String) power_object.get("positive")), "aroma1"));
+                        pie1.add(new PieEntry(Integer.parseInt((String) power_object.get("neutral")), "aroma2"));
+                        pie1.add(new PieEntry(Integer.parseInt((String) power_object.get("negative")), "aroma3"));
+                        pieChart_positive.getLegend().setEnabled(false); // 하단바 없앰
+                        pieChart_positive.setDrawSliceText(false);
+                        pieChart_positive.getDescription().setEnabled(false);
+                        pieChart_positive.setExtraOffsets(5, 5, 5, 5);
+                        pieChart_positive.setDrawHoleEnabled(false);
+                        pieChart_positive.setHoleColor(getContext().getResources().getColor(R.color.trans));
+                        pieChart_positive.setTransparentCircleRadius(61f);
+                        pieChart_positive.setTouchEnabled(false);
+                        PieDataSet dataSet = new PieDataSetCustom(pie1, " ");
 
 
-                    dataSet.setColors( getContext().getResources().getColor(R.color.aroma1),
-                            getContext().getResources().getColor(R.color.aroma2),
-                            getContext().getResources().getColor(R.color.aroma3),
-                            getContext().getResources().getColor(R.color.trans)
-                    );
+                        dataSet.setColors(getContext().getResources().getColor(R.color.aroma3),
+                                getContext().getResources().getColor(R.color.aroma2),
+                                getContext().getResources().getColor(R.color.aroma1),
+                                getContext().getResources().getColor(R.color.trans)
+                        );
 
-                    dataSet.setSelectionShift(0);
-                    dataSet.setValueTextSize(0);
-                    PieData data = new PieData((dataSet));
-                    data.setDrawValues(false);
-                    pieChart_positive.setData(data);
-                    pieChart_positive.setTag(pie1);
-                    pieChart_positive.animateY(1000, Easing.EasingOption.EaseInOutCubic);
-                    pieChart_positive.invalidate();
-                    JSONArray json_db_color = custom_gradient_DB.getData((String) power_object.get("custom_name"));
-                    if((int)json_db_color.length() != 0) {
-                        for (int j = 0; j < json_db_color.length(); j++) {
-                            JSONObject color_object = (JSONObject)json_db_color.get(j);
-                            if (j == 0) {
-                                color = new int[json_db_color.length()+1];
+                        dataSet.setSelectionShift(0);
+                        dataSet.setValueTextSize(0);
+                        PieData data = new PieData((dataSet));
+                        data.setDrawValues(false);
+                        pieChart_positive.setData(data);
+                        pieChart_positive.setTag(pie1);
+                        pieChart_positive.animateY(1000, Easing.EasingOption.EaseInOutCubic);
+                        pieChart_positive.invalidate();
+                        JSONArray json_db_color = custom_gradient_DB.getData((String) power_object.get("custom_name"));
+                        if ((int) json_db_color.length() != 0) {
+                            for (int j = 0; j < json_db_color.length(); j++) {
+                                JSONObject color_object = (JSONObject) json_db_color.get(j);
+                                if (j == 0) {
+                                    color = new int[json_db_color.length() + 1];
+                                }
+                                color[j] = Integer.parseInt((String) color_object.get("color"));
                             }
-                            color[j] =Integer.parseInt((String)color_object.get("color"));
+                            JSONObject last = (JSONObject) json_db_color.get(0);
+                            color[json_db_color.length()] = Integer.parseInt((String) last.get("color"));
+                            gradient_positive.setCircleColors(color);
+                        } else {
+                            color = null;
+                            gradient_positive.setCircleColors(color);
                         }
-                        JSONObject last = (JSONObject)json_db_color.get(0);
-                        color[json_db_color.length()] = Integer.parseInt((String)last.get("color"));
-                        gradient_positive.setCircleColors(color);
-                    }else {
-                        color = null;
-                        gradient_positive.setCircleColors(color);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    ConstraintLayout.LayoutParams params_positive = (ConstraintLayout.LayoutParams) btn_positive.getLayoutParams();
+                    params_positive.verticalBias = (float) 0.95;
+                    btn_positive.setText("change");
+                    btn_positive.setLayoutParams(params_positive);
+                    //btn_positive.setVisibility(GONE);
                 }
-                ConstraintLayout.LayoutParams params_positive = (ConstraintLayout.LayoutParams) btn_positive.getLayoutParams();
-                params_positive.verticalBias=(float) 0.95 ;
-                btn_positive.setText("change");
-                btn_positive.setLayoutParams(params_positive);
-                //btn_positive.setVisibility(GONE);
             }
-
         }else if(v.getId() == R.id.neutral_add){
-            editor.putString("neutral",nowCustom_title);
-            editor.apply();
-            ArrayList<PieEntry> pie;
-            if(pref.getString("neutral",null) == null) {
-                gradient_neutral.setVisibility(GONE);
-                pieChart_neutral.setVisibility(GONE);
-            }else {
-                custom_name_neutral.setText(pref.getString("neutral",null));
-                JSONObject power_object = (JSONObject) custom_powerDB.getData(pref.getString("neutral", null));
-                ArrayList pie1 = new ArrayList<PieEntry>();
-                int[] color = null;
-                try {
-                    pie1.add(new PieEntry(Integer.parseInt((String) power_object.get("positive")), "aroma1"));
-                    pie1.add(new PieEntry(Integer.parseInt((String) power_object.get("neutral")), "aroma2"));
-                    pie1.add(new PieEntry(Integer.parseInt((String) power_object.get("negative")), "aroma3"));
-                    pieChart_neutral.getLegend().setEnabled(false); // 하단바 없앰
-                    pieChart_neutral.setDrawSliceText(false);
-                    pieChart_neutral.getDescription().setEnabled(false);
-                    pieChart_neutral.setExtraOffsets(5, 5, 5, 5);
-                    pieChart_neutral.setDrawHoleEnabled(false);
-                    pieChart_neutral.setHoleColor(getContext().getResources().getColor(R.color.trans));
-                    pieChart_neutral.setTransparentCircleRadius(61f);
-                    pieChart_neutral.setTouchEnabled(false);
-                    PieDataSet dataSet = new PieDataSetCustom(pie1, " ");
+            if(!nowCustom_title.equals("New Custom Add")) {
+                editor.putString("neutral", nowCustom_title);
+                editor.apply();
+                ArrayList<PieEntry> pie;
+                if (pref.getString("neutral", null) == null) {
+                    gradient_neutral.setVisibility(GONE);
+                    pieChart_neutral.setVisibility(GONE);
+                } else {
+                    custom_name_neutral.setText(pref.getString("neutral", null));
+                    JSONObject power_object = (JSONObject) custom_powerDB.getData(pref.getString("neutral", null));
+                    ArrayList pie1 = new ArrayList<PieEntry>();
+                    int[] color = null;
+                    try {
+                        pie1.add(new PieEntry(Integer.parseInt((String) power_object.get("positive")), "aroma1"));
+                        pie1.add(new PieEntry(Integer.parseInt((String) power_object.get("neutral")), "aroma2"));
+                        pie1.add(new PieEntry(Integer.parseInt((String) power_object.get("negative")), "aroma3"));
+                        pieChart_neutral.getLegend().setEnabled(false); // 하단바 없앰
+                        pieChart_neutral.setDrawSliceText(false);
+                        pieChart_neutral.getDescription().setEnabled(false);
+                        pieChart_neutral.setExtraOffsets(5, 5, 5, 5);
+                        pieChart_neutral.setDrawHoleEnabled(false);
+                        pieChart_neutral.setHoleColor(getContext().getResources().getColor(R.color.trans));
+                        pieChart_neutral.setTransparentCircleRadius(61f);
+                        pieChart_neutral.setTouchEnabled(false);
+                        PieDataSet dataSet = new PieDataSetCustom(pie1, " ");
 
 
-                    dataSet.setColors(getContext().getResources().getColor(R.color.aroma1),
-                            getContext().getResources().getColor(R.color.aroma2),
-                            getContext().getResources().getColor(R.color.aroma3),
-                            getContext().getResources().getColor(R.color.trans)
-                    );
+                        dataSet.setColors(getContext().getResources().getColor(R.color.aroma3),
+                                getContext().getResources().getColor(R.color.aroma2),
+                                getContext().getResources().getColor(R.color.aroma1),
+                                getContext().getResources().getColor(R.color.trans)
+                        );
 
-                    dataSet.setSelectionShift(0);
-                    dataSet.setValueTextSize(0);
-                    PieData data = new PieData((dataSet));
-                    data.setDrawValues(false);
-                    pieChart_neutral.setData(data);
-                    pieChart_neutral.setTag(pie1);
-                    pieChart_neutral.animateY(1000, Easing.EasingOption.EaseInOutCubic);
-                    pieChart_neutral.invalidate();
-                    JSONArray json_db_color = custom_gradient_DB.getData((String) power_object.get("custom_name"));
-                    if ((int) json_db_color.length() != 0) {
-                        for (int j = 0; j < json_db_color.length(); j++) {
-                            JSONObject color_object = (JSONObject) json_db_color.get(j);
-                            if (j == 0) {
-                                color = new int[json_db_color.length() + 1];
+                        dataSet.setSelectionShift(0);
+                        dataSet.setValueTextSize(0);
+                        PieData data = new PieData((dataSet));
+                        data.setDrawValues(false);
+                        pieChart_neutral.setData(data);
+                        pieChart_neutral.setTag(pie1);
+                        pieChart_neutral.animateY(1000, Easing.EasingOption.EaseInOutCubic);
+                        pieChart_neutral.invalidate();
+                        JSONArray json_db_color = custom_gradient_DB.getData((String) power_object.get("custom_name"));
+                        if ((int) json_db_color.length() != 0) {
+                            for (int j = 0; j < json_db_color.length(); j++) {
+                                JSONObject color_object = (JSONObject) json_db_color.get(j);
+                                if (j == 0) {
+                                    color = new int[json_db_color.length() + 1];
+                                }
+                                color[j] = Integer.parseInt((String) color_object.get("color"));
                             }
-                            color[j] = Integer.parseInt((String) color_object.get("color"));
+                            JSONObject last = (JSONObject) json_db_color.get(0);
+                            color[json_db_color.length()] = Integer.parseInt((String) last.get("color"));
+                            gradient_neutral.setCircleColors(color);
+                        } else {
+                            color = null;
+                            gradient_neutral.setCircleColors(color);
                         }
-                        JSONObject last = (JSONObject) json_db_color.get(0);
-                        color[json_db_color.length()] = Integer.parseInt((String) last.get("color"));
-                        gradient_neutral.setCircleColors(color);
-                    } else {
-                        color = null;
-                        gradient_neutral.setCircleColors(color);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    ConstraintLayout.LayoutParams params_neutral = (ConstraintLayout.LayoutParams) btn_neutral.getLayoutParams();
+                    params_neutral.verticalBias = (float) 0.95;
+                    btn_neutral.setText("change");
+                    btn_neutral.setLayoutParams(params_neutral);
                 }
-                ConstraintLayout.LayoutParams params_neutral = (ConstraintLayout.LayoutParams) btn_neutral.getLayoutParams();
-                params_neutral.verticalBias = (float) 0.95;
-                btn_neutral.setText("change");
-                btn_neutral.setLayoutParams(params_neutral);
             }
         }else if(v.getId() == R.id.negative_add){
-            editor.putString("negative",nowCustom_title);
-            editor.apply();
-            ArrayList<PieEntry> pie;
-            if(pref.getString("negative",null) == null) {
-                gradient_negative.setVisibility(GONE);
-                pieChart_negative.setVisibility(GONE);
-            }else {
-                custom_name_negative.setText(pref.getString("negative",null));
-                JSONObject power_object = (JSONObject) custom_powerDB.getData(pref.getString("negative", null));
-                ArrayList pie1 = new ArrayList<PieEntry>();
-                int[] color = null;
-                try {
-                    pie1.add(new PieEntry(Integer.parseInt((String) power_object.get("positive")), "aroma1"));
-                    pie1.add(new PieEntry(Integer.parseInt((String) power_object.get("neutral")), "aroma2"));
-                    pie1.add(new PieEntry(Integer.parseInt((String) power_object.get("negative")), "aroma3"));
-                    pieChart_negative.getLegend().setEnabled(false); // 하단바 없앰
-                    pieChart_negative.setDrawSliceText(false);
-                    pieChart_negative.getDescription().setEnabled(false);
-                    pieChart_negative.setExtraOffsets(5, 5, 5, 5);
-                    pieChart_negative.setDrawHoleEnabled(false);
-                    pieChart_negative.setHoleColor(getContext().getResources().getColor(R.color.trans));
-                    pieChart_negative.setTransparentCircleRadius(61f);
-                    pieChart_negative.setTouchEnabled(false);
-                    PieDataSet dataSet = new PieDataSetCustom(pie1, " ");
+            if(!nowCustom_title.equals("New Custom Add")) {
+                editor.putString("negative", nowCustom_title);
+                editor.apply();
+                ArrayList<PieEntry> pie;
+                if (pref.getString("negative", null) == null) {
+                    gradient_negative.setVisibility(GONE);
+                    pieChart_negative.setVisibility(GONE);
+                } else {
+                    custom_name_negative.setText(pref.getString("negative", null));
+                    JSONObject power_object = (JSONObject) custom_powerDB.getData(pref.getString("negative", null));
+                    ArrayList pie1 = new ArrayList<PieEntry>();
+                    int[] color = null;
+                    try {
+                        pie1.add(new PieEntry(Integer.parseInt((String) power_object.get("positive")), "aroma1"));
+                        pie1.add(new PieEntry(Integer.parseInt((String) power_object.get("neutral")), "aroma2"));
+                        pie1.add(new PieEntry(Integer.parseInt((String) power_object.get("negative")), "aroma3"));
+                        pieChart_negative.getLegend().setEnabled(false); // 하단바 없앰
+                        pieChart_negative.setDrawSliceText(false);
+                        pieChart_negative.getDescription().setEnabled(false);
+                        pieChart_negative.setExtraOffsets(5, 5, 5, 5);
+                        pieChart_negative.setDrawHoleEnabled(false);
+                        pieChart_negative.setHoleColor(getContext().getResources().getColor(R.color.trans));
+                        pieChart_negative.setTransparentCircleRadius(61f);
+                        pieChart_negative.setTouchEnabled(false);
+                        PieDataSet dataSet = new PieDataSetCustom(pie1, " ");
 
 
-                    dataSet.setColors(getContext().getResources().getColor(R.color.aroma1),
-                            getContext().getResources().getColor(R.color.aroma2),
-                            getContext().getResources().getColor(R.color.aroma3),
-                            getContext().getResources().getColor(R.color.trans)
-                    );
+                        dataSet.setColors(getContext().getResources().getColor(R.color.aroma3),
+                                getContext().getResources().getColor(R.color.aroma2),
+                                getContext().getResources().getColor(R.color.aroma1),
+                                getContext().getResources().getColor(R.color.trans)
+                        );
 
-                    dataSet.setSelectionShift(0);
-                    dataSet.setValueTextSize(0);
-                    PieData data = new PieData((dataSet));
-                    data.setDrawValues(false);
-                    pieChart_negative.setData(data);
-                    pieChart_negative.setTag(pie1);
-                    pieChart_negative.animateY(1000, Easing.EasingOption.EaseInOutCubic);
-                    pieChart_negative.invalidate();
-                    JSONArray json_db_color = custom_gradient_DB.getData((String) power_object.get("custom_name"));
-                    if ((int) json_db_color.length() != 0) {
-                        for (int j = 0; j < json_db_color.length(); j++) {
-                            JSONObject color_object = (JSONObject) json_db_color.get(j);
-                            if (j == 0) {
-                                color = new int[json_db_color.length() + 1];
+                        dataSet.setSelectionShift(0);
+                        dataSet.setValueTextSize(0);
+                        PieData data = new PieData((dataSet));
+                        data.setDrawValues(false);
+                        pieChart_negative.setData(data);
+                        pieChart_negative.setTag(pie1);
+                        pieChart_negative.animateY(1000, Easing.EasingOption.EaseInOutCubic);
+                        pieChart_negative.invalidate();
+                        JSONArray json_db_color = custom_gradient_DB.getData((String) power_object.get("custom_name"));
+                        if ((int) json_db_color.length() != 0) {
+                            for (int j = 0; j < json_db_color.length(); j++) {
+                                JSONObject color_object = (JSONObject) json_db_color.get(j);
+                                if (j == 0) {
+                                    color = new int[json_db_color.length() + 1];
+                                }
+                                color[j] = Integer.parseInt((String) color_object.get("color"));
                             }
-                            color[j] = Integer.parseInt((String) color_object.get("color"));
+                            JSONObject last = (JSONObject) json_db_color.get(0);
+                            color[json_db_color.length()] = Integer.parseInt((String) last.get("color"));
+                            gradient_negative.setCircleColors(color);
+                        } else {
+                            color = null;
+                            gradient_negative.setCircleColors(color);
                         }
-                        JSONObject last = (JSONObject) json_db_color.get(0);
-                        color[json_db_color.length()] = Integer.parseInt((String) last.get("color"));
-                        gradient_negative.setCircleColors(color);
-                    } else {
-                        color = null;
-                        gradient_negative.setCircleColors(color);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    ConstraintLayout.LayoutParams params_negative = (ConstraintLayout.LayoutParams) btn_negative.getLayoutParams();
+                    params_negative.verticalBias = (float) 0.95;
+                    btn_negative.setText("change");
+                    btn_negative.setLayoutParams(params_negative);
                 }
-                ConstraintLayout.LayoutParams params_negative = (ConstraintLayout.LayoutParams) btn_negative.getLayoutParams();
-                params_negative.verticalBias = (float) 0.95;
-                btn_negative.setText("change");
-                btn_negative.setLayoutParams(params_negative);
             }
         }
     }

@@ -8,14 +8,15 @@
 
     <Button
         android:id="@+id/add_alarm"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginEnd="30dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:background="@drawable/add_btn"
+
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.7"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.85"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/alarm_list"

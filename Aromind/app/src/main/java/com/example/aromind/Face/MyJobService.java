@@ -16,6 +16,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 
+import com.example.aromind.Sentiment.Check_Sentiment_Thread;
 import com.example.aromind.facebook.afslkdfj;
 
 import java.io.File;
@@ -64,7 +65,7 @@ public class MyJobService extends JobService {
                     }
                 }
                 if(!String.valueOf(uri[uri.length-1]).equals("content://media/external")) {
-                    imageUrl = "{\"url\":\"http://ec2-54-180-103-228.ap-northeast-2.compute.amazonaws.com:8000/storage/albumImage/" + file.getName() + "\"}";
+                    imageUrl = "{\"url\":\"http://arominds.com:8000/storage/albumImage/" + file.getName() + "\"}";
                 }
 //                imageUrl = "{\"url\":\"http://ec2-54-180-103-228.ap-northeast-2.compute.amazonaws.com/storage/albumImage/"+file.getName()+"\"}";
                 return  null;

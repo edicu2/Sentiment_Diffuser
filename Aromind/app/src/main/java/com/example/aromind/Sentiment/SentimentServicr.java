@@ -45,6 +45,12 @@ public class SentimentServicr extends Service {
         }
         NaturalLanguage nl = new NaturalLanguage(context, arrayList);
 
+        Check_Sentiment_Thread check_sentiment_thread = new Check_Sentiment_Thread(context);
+        Thread t = new Thread(check_sentiment_thread);
+        t.setDaemon(true);
+        t.start();
+
+
         return START_NOT_STICKY;
     }
 }

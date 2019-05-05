@@ -259,7 +259,6 @@ public class Facebook extends AppCompatActivity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.submit){
-            JSONArray jsonArray = sentiment_historyHelper.getSentiment();
             finish();
         }else if (v.getId() == R.id.cancle){
             finish();

@@ -130,9 +130,10 @@ private Context context;
 
                     JSONObject emotion = faceAttribute.optJSONObject("emotion");
                     score = emotion.optDouble(emo[0]);
+                    emotionKey = emo[0];
                     Log.i("감정이다이쉐캬야s", String.valueOf(score));
 
-                    for (int i=0; i<emotion.length(); i++){
+                    for (int i=1; i<emotion.length(); i++){
 
                         emoScroe[i] = emotion.optDouble(emo[i]);
 
@@ -146,6 +147,7 @@ private Context context;
                         }
                     }
 
+                    //경우의 수 서프라이즈 긍정 놀람 부정놀람 판다곰
                     if (emotionKey.equals("surprise")){
                         Double score2 = emoScroe[0];
                         String emo2 = emo[0];

@@ -15,12 +15,20 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         boolean one_time = intent.getBooleanExtra("one_time", false);
         String card_title = intent.getStringExtra("card_title");
+        int interval = intent.getIntExtra("interval", 0);
+        int repeat = intent.getIntExtra("repeat", 0);
         Log.i("chk1", String.valueOf(one_time));
-
+        Log.i("인터벌과 리핏receive", String.valueOf(interval)+" / "+ String.valueOf(repeat));
         if (one_time){
 
             Intent service_Intent = new Intent(context, AlarmService.class);
             service_Intent.putExtra("card_title", card_title);
+            if (interval != 0){
+                service_Intent.putExtra("interval", interval);
+            }
+            if (repeat != 0){
+                service_Intent.putExtra("repeat", repeat);
+            }
             context.startService(service_Intent);
             Log.i("chk1", "서비스 전송");
 
@@ -38,6 +46,12 @@ public class AlarmReceiver extends BroadcastReceiver {
             }else {
                 Intent service_Intent = new Intent(context, AlarmService.class);
                 service_Intent.putExtra("card_title", card_title);
+                if (interval != 0){
+                    service_Intent.putExtra("interval", interval);
+                }
+                if (repeat != 0){
+                    service_Intent.putExtra("repeat", repeat);
+                }
                 context.startService(service_Intent);
                 Log.i("chk1", "요일 서비스 전송");
             }

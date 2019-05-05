@@ -37,6 +37,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     private boolean isRepeat = false;
     private String card_title;
 
+    //자동 분사 제어
+    private int interval, repeat;
+
 //    //향/무드라이트 가져오는 부분
 //    private Custom_power_DBHelper custom_powerDB;
 //    private Custom_gradient_DBHelper custom_gradient_DB;
@@ -70,6 +73,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<ItemViewHolder> {
         itemViewHolder.set_alarm_name.setText(bean.getSet_alarm_name());
         itemViewHolder.set_alarm_card_title.setText(bean.getCard_title());
 
+        interval = bean.getInterval();
+        repeat = bean.getRepeat();
+
         //카드이름 찾기
         card_title = bean.getCard_title();
 
@@ -79,6 +85,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<ItemViewHolder> {
             public void onClick(View v) {
                 Log.i("chk1", "On");
                 if (itemViewHolder.on_off.isChecked() == true) {
+
                     //몇번째 버튼을 클릭했고, 그 버튼에 맞는 값 가져오기기
                     week = data.get(i).getSet_week();
                     Log.i("chk1", String.valueOf(week[0] + " " + week[1] + " " + week[2] + " " + week[3] + " " + week[4] + " " + week[5] + " " + week[6] + " " + week[7]));
@@ -117,23 +124,22 @@ public class HistoryAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     private void startAlarm(Calendar calendar){
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmReceiver.class);
-//        custom_powerDB = new Custom_power_DBHelper(context, "custom_power", null, 1);
-//        custom_gradient_DB = new Custom_gradient_DBHelper(context,"custom_color", null, 1);
-//        JSONObject power_object = (JSONObject)custom_powerDB.getData(card_title);
-//        JSONArray json_db_color = custom_gradient_DB.getData((card_title));
-//        Log.i("후후후후후", power_object.toString());
-//        Log.i("후후후후후", json_db_color.toString());
-//        Log.i("후후후후후", card_title);
+
 
 
         if (isRepeat){
             intent.putExtra("week", week);
             intent.putExtra("one_time", false);
             intent.putExtra("card_title", card_title);
+            intent.putExtra("interval", interval);
+            intent.putExtra("repeat", repeat);
         }else {
             intent.putExtra("one_time", true);
             intent.putExtra("card_title", card_title);
+            intent.putExtra("interval", interval);
+            intent.putExtra("repeat", repeat);
         }
+        Log.i("인터벌과 리핏adapter", String.valueOf(interval)+" / "+ String.valueOf(repeat));
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }

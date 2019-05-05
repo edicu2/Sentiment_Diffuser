@@ -58,8 +58,12 @@ public class Popup_alarmInterval extends AppCompatActivity implements View.OnCli
                     case R.id.repeat_no:
                         repeat = 0;
                         break;
+                    case R.id.repeatInfinite:
+                        repeat = 9999;
+                        break;
                     case R.id.repeat_2:
                         repeat = 2;
+                        break;
                     case R.id.repeat_3:
                         repeat = 3;
                         break;
@@ -68,15 +72,6 @@ public class Popup_alarmInterval extends AppCompatActivity implements View.OnCli
                 }
             }
         });
-
-//        interval_5m = findViewById(R.id.interval_5m);
-//        interval_10m = findViewById(R.id.interval_10m);
-//        interval_15m = findViewById(R.id.interval_15m);
-//        interval_30m = findViewById(R.id.interval_30m);
-//
-//        repeat_no = findViewById(R.id.repeat_no);
-//        repeat_2 = findViewById(R.id.repeat_2);
-//        repeat_3 = findViewById(R.id.repeat_3);
 
         //button
         submit = findViewById(R.id.submit);
@@ -93,7 +88,11 @@ public class Popup_alarmInterval extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
 
         if (v.getId() == R.id.submit){
-            Toast.makeText(this, String.valueOf(interval)+String.valueOf(repeat), Toast.LENGTH_SHORT).show();
+            if (interval == 0){
+                Toast.makeText(this, "시간간격을 선택하세요", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Toast.makeText(this, String.valueOf(interval)+" / "+String.valueOf(repeat), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
             intent.putExtra("interval", interval);
             intent.putExtra("repeat", repeat);

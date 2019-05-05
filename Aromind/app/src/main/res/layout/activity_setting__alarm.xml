@@ -13,9 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:numbersSelectorColor="#00ffd4"
-        android:numbersTextColor="#00ffd4"
-        android:numbersBackgroundColor="#3b3d3f"
+        android:numbersSelectorColor="#FF6C89"
+        android:numbersTextColor="#FFFFFF"
+        android:numbersBackgroundColor="@color/colorPrimary"
         app:layout_constraintTop_toTopOf="parent">
     </TimePicker>
 
@@ -105,8 +105,10 @@
 
     <ListView
         android:id="@+id/menu_list"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         app:layout_constraintTop_toBottomOf="@id/sun" />
 
     <android.support.constraint.ConstraintLayout
@@ -125,7 +127,8 @@
             android:textColor="@color/colorPrimaryfont"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/submit"/>
+            app:layout_constraintEnd_toStartOf="@id/submit"
+            style="?android:attr/borderlessButtonStyle"/>
 
         <Button
             android:id="@+id/submit"
@@ -137,7 +140,8 @@
             android:textColor="@color/colorPrimaryfont"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            style="?android:attr/borderlessButtonStyle"/>
 
     </android.support.constraint.ConstraintLayout>
 

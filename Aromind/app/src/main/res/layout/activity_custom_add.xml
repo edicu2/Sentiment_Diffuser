@@ -26,15 +26,14 @@
 
     <Button
         android:id="@+id/back_btn"
-        android:layout_width="55dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="70dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="6dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:background="@color/colorPrimary"
         android:text="back"
         android:textColor="#ffffff"
-        android:textSize="10dp"
+        android:textSize="15dp"
         android:stateListAnimator="@null"
         android:shadowColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="@+id/title"
@@ -42,31 +41,31 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view"
-        app:layout_constraintVertical_bias="0.615" />
+        app:layout_constraintVertical_bias="0.9" />
 
     <Button
         android:id="@+id/save_btn"
-        android:layout_width="55dp"
-        android:layout_height="30dp"
+        android:layout_width="70dp"
+        android:layout_height="45dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="3dp"
         android:background="@color/colorPrimary"
+        android:shadowColor="@color/colorPrimary"
+        android:stateListAnimator="@null"
         android:text="save"
         android:textColor="#ffffff"
-        android:textSize="10dp"
-        android:stateListAnimator="@null"
-        android:shadowColor="@color/colorPrimary"
+        android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="@+id/title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.994"
+        app:layout_constraintHorizontal_bias="0.993"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view"
-        app:layout_constraintVertical_bias="0.615" />
+        app:layout_constraintVertical_bias="0.9" />
 
     <EditText
         android:id="@+id/title"
-        android:layout_width="277dp"
+        android:layout_width="250dp"
         android:layout_height="39dp"
         android:layout_marginTop="4dp"
         android:gravity="center"

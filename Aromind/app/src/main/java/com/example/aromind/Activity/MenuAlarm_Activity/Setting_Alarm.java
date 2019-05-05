@@ -1,12 +1,15 @@
 package com.example.aromind.Activity.MenuAlarm_Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -73,7 +76,7 @@ public class Setting_Alarm extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting__alarm);
 
-        colorPrimaryfont = (this).getResources().getColor(R.color.colorPrimaryfont);
+        colorPrimaryfont = (this).getResources().getColor(R.color.colorAccent);
         colorPrimaryDark = (this).getResources().getColor(R.color.colorPrimaryDark);
 
         submit = findViewById(R.id.submit);
@@ -104,14 +107,11 @@ public class Setting_Alarm extends AppCompatActivity implements View.OnClickList
 
         listView.setAdapter(adapter);
 
-        if (alarm_name != null || alarm_name==""){
-            adapter.addItem("알람 이름", "");
-        }else{
-            adapter.addItem("알람 이름", alarm_name);
-        }
-
+        adapter.addItem("알람 이름","");
         adapter.addItem("카드 설정", "");
         adapter.addItem("분사 설정", "");
+
+        listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -120,6 +120,7 @@ public class Setting_Alarm extends AppCompatActivity implements View.OnClickList
                 if (position == 0){
                     Intent intent = new Intent(Setting_Alarm.this, Popup_alarmName.class);
                     startActivityForResult(intent, REQ_NUM);
+
                 }else if (position == 1){
                     Intent intent = new Intent(Setting_Alarm.this,Popup_alarmCustomCard.class);
                     startActivityForResult(intent, REQ_NUM);
@@ -169,7 +170,7 @@ public class Setting_Alarm extends AppCompatActivity implements View.OnClickList
     public void onCheckedChanged(CompoundButton v, boolean isChecked) {
         if (isChecked){
             v.setBackgroundResource(R.drawable.toggle_circle_btn_on);
-            v.setTextColor(colorPrimaryDark);
+            v.setTextColor(colorPrimaryfont);
         }else{
             v.setBackgroundResource(R.drawable.toggle_circle_btn_off);
             v.setTextColor(colorPrimaryfont);
@@ -184,37 +185,87 @@ public class Setting_Alarm extends AppCompatActivity implements View.OnClickList
                     //data를 받아왔을때
                     String alarm_name = data.getStringExtra("alarm_name");
                     int interval = data.getIntExtra("interval", 0);
-                    int repeat = data.getIntExtra("repeat", 0);
+                    int repeat = data.getIntExtra("repeat", 9000);
                     String card_title = data.getStringExtra("card_title");
-
+                    adapter = new Setting_Alarm_Adapter();
                     //alarm_name 받아오기
                     if (alarm_name != null) {
                         this.alarm_name = alarm_name;
+//                        adapter = new Setting_Alarm_Adapter();
+                        adapter.addItem("알람 이름",alarm_name);
+
+                    if (this.card_title != null){
+                        adapter.addItem("카드 설정", this.card_title);
+                    }else{
+                        adapter.addItem("카드 설정", "");
+                    }
+
+                    if (this.interval != 0 &&this.repeat != 9999 && this.repeat != 0){
+                        adapter.addItem("분사 설정", String.valueOf(this.interval)+"분 / "+String.valueOf(this.repeat)+"회");
+                    }else if (this.interval != 0 && this.repeat == 9999){
+                        adapter.addItem("분사 설정", String.valueOf(this.interval)+"분 / 무한반복");
+                    }else if (this.repeat == 0 && this.interval != 0){
+                        adapter.addItem("분사 설정", String.valueOf(this.interval)+"분 / 반복없음");
                     } else {
-                        this.alarm_name = "";
-                    }//end if (alarm_name != null)
+                        adapter.addItem("분사 설정", "");
+                    }
+//                    listView.setAdapter(adapter);
+                }
 
                     //interval 받아오기
-                    if (interval != RESULT_NG) {
+                    if (interval !=0) {
                         this.interval = interval;
-                    } else {
-                        this.interval = 0;
-                    }//end if (interval != RESULT_NG)
 
-                    //repeat 받아오기
-                    if (repeat !=0) {
-                        Toast.makeText(this, String.valueOf(repeat), Toast.LENGTH_SHORT).show();
                         this.repeat = repeat;
-                    } else {
-                        this.repeat=0;
-                    }//end if (repeat !=0)
+
+                        if (this.alarm_name != null){
+                            adapter.addItem("알람 이름",this.alarm_name);
+                        }else {
+                            adapter.addItem("알람 이름","");
+                        }
+
+                        if (this.card_title != null){
+                            adapter.addItem("카드 설정", this.card_title);
+                        }else{
+                            adapter.addItem("카드 설정", "");
+                        }
+
+                        if (repeat != 9999 && repeat != 0){
+                            adapter.addItem("분사 설정", String.valueOf(interval)+"분 / "+String.valueOf(repeat)+"회");
+                        }else if (repeat == 0){
+                            adapter.addItem("분사 설정", String.valueOf(interval)+"분 / 반복없음");
+                        }else if (repeat == 9999){
+                            adapter.addItem("분사 설정", String.valueOf(interval)+"분 / 무한반복");
+                        }else {
+                            adapter.addItem("분사 설정", "");
+                        }
+
+                    }
 
                     if (card_title != null) {
                         Toast.makeText(this, card_title, Toast.LENGTH_SHORT).show();
                         this.card_title = card_title;
-                    } else {
-                        this.card_title="";
-                    }//end if (repeat !=0)
+                        Log.i("인터벌과리핏", card_title);
+
+                        if (this.alarm_name != null){
+                            adapter.addItem("알람 이름",this.alarm_name);
+                        }else {
+                            adapter.addItem("알람 이름","");
+                        }
+                        adapter.addItem("카드 설정", card_title);
+
+                        if (this.interval != 0 && this.repeat != 9999 && this.repeat != 0){
+                            adapter.addItem("분사 설정", String.valueOf(this.interval)+"분 / "+String.valueOf(this.repeat)+"회");
+                        }else if (this.interval != 0 && this.repeat == 9999){
+                            adapter.addItem("분사 설정", String.valueOf(this.interval)+"분 / 무한반복");
+                        }else if (this.repeat == 9000 || this.repeat == 0 && this.interval != 0){
+                            adapter.addItem("분사 설정", String.valueOf(this.interval)+"분 / 반복없음");
+                        } else {
+                            adapter.addItem("분사 설정", "");
+                        }
+
+                    }
+                    listView.setAdapter(adapter);
                 } else
                     Toast.makeText(this, "null data", LENGTH_SHORT).show();
             } else
@@ -249,6 +300,13 @@ public class Setting_Alarm extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.submit){
+            if (time == null){
+                Toast.makeText(this, "Please Time Setting", Toast.LENGTH_SHORT).show();
+                return;
+            }else if (card_title == null){
+                Toast.makeText(this, "Please card Setting", Toast.LENGTH_SHORT).show();
+                return;
+            }
             setting_days();
             Intent data = new Intent();
             data.putExtra("alarm_name", alarm_name);
@@ -259,6 +317,8 @@ public class Setting_Alarm extends AppCompatActivity implements View.OnClickList
             data.putExtra("min", min);
             data.putExtra("week", week);
             data.putExtra("card_title", card_title);
+            data.putExtra("interval", interval);
+            data.putExtra("repeat", repeat);
             setResult(MenuAlarm.RESULT_OK, data);
             finish();
 

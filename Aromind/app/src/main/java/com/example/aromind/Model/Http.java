@@ -40,7 +40,7 @@ public class Http {
                         connection.setUseCaches(false);
                         connection.setDefaultUseCaches(false);
                         Log.i("cunn2", "Complite Connection");
-
+                        Log.i("cunn2naew", name);
                         OutputStream os = connection.getOutputStream();
                         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
                         writer.write("name="+name);
@@ -53,6 +53,7 @@ public class Http {
                         }
                         writer.flush();
 
+                        Log.i("cunn29", "Complite Connection");
                         //읽기모드
                         InputStream is = connection.getInputStream();
                         StringBuilder builder = new StringBuilder();

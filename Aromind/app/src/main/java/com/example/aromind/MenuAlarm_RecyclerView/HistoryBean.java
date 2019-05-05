@@ -3,7 +3,7 @@ package com.example.aromind.MenuAlarm_RecyclerView;
 public class HistoryBean {
 
     private String set_am_pm, set_Tiem, set_day, set_alarm_name;
-    private int set_hour, set_min;
+    private int set_hour, set_min, interval, repeat;
     private boolean[] set_week;
     private String card_title;
 
@@ -66,4 +66,12 @@ public class HistoryBean {
     public String getCard_title() { return card_title; }
 
     public void setCard_title(String card_title) { this.card_title = card_title; }
+
+    public int getInterval() { return interval; }
+
+    public void setInterval(int interval) { this.interval = interval; }
+
+    public int getRepeat() { return repeat; }
+
+    public void setRepeat(int repeat) { this.repeat = repeat; }
 }

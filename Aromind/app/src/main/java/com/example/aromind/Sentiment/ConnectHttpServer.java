@@ -25,7 +25,7 @@ public class ConnectHttpServer {
 
     public void connect(final double jsonArray){
         try {
-            URL url = new URL("http://ec2-54-180-103-228.ap-northeast-2.compute.amazonaws.com:8000/emotionvalue");
+            URL url = new URL("http://arominds.com:8000/emotionvalue");
             new AsyncTask<URL, Void, String>() {
                 @Override
                 protected String doInBackground(URL... urls) {

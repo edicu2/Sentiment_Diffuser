@@ -218,54 +218,58 @@ public class CustomAddActivity extends AppCompatActivity implements View.OnClick
     }
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.gradientAdd){
+        if(v.getId() == R.id.gradientAdd) {
             Intent intent = new Intent(this, GradientAddActivity.class);
             intent.putExtra("key", "value");
             startActivityForResult(intent, REQUEST_CODE_ALPHA);
-        } else if(v.getId() == R.id.save_btn){
-            if(custom_name.getText().toString().equals("")) {
-                Toast.makeText(CustomAddActivity.this," Custom 카드 이름을 설정해주세요.",
-                        Toast.LENGTH_LONG).show();
-            }else{
-                int[] colors = mAdapter.getColors();
-                for (int i = 0; i < mAdapter.getColors().length; i++) {
-                    custom_gradient_DB.insert(custom_name.getText().toString(), colors[i]);
-                }
-                custom_powerDB.insert(custom_name.getText().toString(), positive.getProgress(), neutral.getProgress(), negative.getProgress(), bright.getProgress());
-                try {
-                    JSONObject powers = custom_powerDB.getData(custom_name.getText().toString());
-                    JSONArray dbColors = custom_gradient_DB.getData(custom_name.getText().toString());
-                    int[] color_array = null;
-                    String gradient_payload = null;
-                    if ((int)dbColors.length() != 0) {
-                        for (int j = 0; j < dbColors.length(); j++) {
-                            JSONObject color_object = (JSONObject) dbColors.get(j);
-                            int int_c = Integer.parseInt((String) color_object.get("color"));
-                            int r = Color.red(int_c);
-                            int g = Color.green(int_c);
-                            int b = Color.blue(int_c);
-                            if (j == 0) {
-                                color_array = new int[dbColors.length() + 1];
-                                gradient_payload = r + "." + g + "." + b;
-                            } else {
-                                gradient_payload += "," + r + "." + g + "." + b;
-                            }
-                            color_array[j] = Integer.parseInt((String) color_object.get("color"));
+        }else if(v.getId() == R.id.save_btn){
+                if(custom_name.getText().toString().equals("")) {
+                    Toast.makeText(CustomAddActivity.this," Custom 카드 이름을 설정해주세요.",
+                            Toast.LENGTH_LONG).show();
+                }else{
+                    if(custom_powerDB.getData(custom_name.getText().toString()).length() > 0){
+                        Toast.makeText(CustomAddActivity.this," Custom 중복된 카드 이름이 있습니다.",
+                                Toast.LENGTH_LONG).show();
+                    }else {
+                        int[] colors = mAdapter.getColors();
+                        for (int i = 0; i < mAdapter.getColors().length; i++) {
+                            custom_gradient_DB.insert(custom_name.getText().toString(), colors[i]);
                         }
-                        // http로 데이터 전송부분
-                        Http httpConnect = new Http();
-                        httpConnect.connect(custom_name.getText().toString(), toString().valueOf(positive.getProgress()) ,toString().valueOf(neutral.getProgress()),
-                                toString().valueOf(negative.getProgress()), gradient_payload, toString().valueOf(bright.getProgress()));
-                        finish();
+                        custom_powerDB.insert(custom_name.getText().toString(), positive.getProgress(), neutral.getProgress(), negative.getProgress(), bright.getProgress());
+                        try {
+                            JSONArray dbColors = custom_gradient_DB.getData(custom_name.getText().toString());
+                            int[] color_array = null;
+                            String gradient_payload = null;
+                            if ((int) dbColors.length() != 0) {
+                                for (int j = 0; j < dbColors.length(); j++) {
+                                    JSONObject color_object = (JSONObject) dbColors.get(j);
+                                    int int_c = Integer.parseInt((String) color_object.get("color"));
+                                    int r = Color.red(int_c);
+                                    int g = Color.green(int_c);
+                                    int b = Color.blue(int_c);
+                                    if (j == 0) {
+                                        color_array = new int[dbColors.length() + 1];
+                                        gradient_payload = r + "." + g + "." + b;
+                                    } else {
+                                        gradient_payload += "," + r + "." + g + "." + b;
+                                    }
+                                    color_array[j] = Integer.parseInt((String) color_object.get("color"));
+                                }
+                                // http로 데이터 전송부분
+                                Http httpConnect = new Http();
+                                httpConnect.connect(custom_name.getText().toString(), toString().valueOf(positive.getProgress()), toString().valueOf(neutral.getProgress()),
+                                        toString().valueOf(negative.getProgress()), gradient_payload, toString().valueOf(bright.getProgress()));
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }catch (JSONException e) {
-                    e.printStackTrace();
                 }
+            }else if(v.getId() == R.id.back_btn){
+                finish();
             }
-        }else if(v.getId() == R.id.back_btn){
-            finish();
         }
-    }
 
 
     @Override
