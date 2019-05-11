@@ -122,6 +122,7 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
         custom_powerDB = new Custom_power_DBHelper(getContext(), "custom_power", null, 1);
         custom_gradient_DB = new Custom_gradient_DBHelper(getContext(),"custom_color", null, 1);
         pref = getContext().getSharedPreferences("Sentiment", 0);
+
         return view;
     }
 
@@ -131,8 +132,6 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
     }
     public void onResume() {
         super.onResume();
-
-        Mqtt mqttConnect = new Mqtt(getActivity());
 
         if(CustomButton.tempcircleCols != null) {
             colorCheck.setCircleColors(CustomButton.tempcircleCols);
@@ -249,6 +248,7 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
 
                 if(new String(message.getPayload()).split("_")[1].equals("low") ||
                         new String(message.getPayload()).split("_")[1].equals("enough"));
+                Log.i("가즈아",String.valueOf(message.getPayload()));
             }
             @Override
             public void deliveryComplete(IMqttDeliveryToken token) {

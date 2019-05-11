@@ -2,10 +2,17 @@ package com.example.aromind.Model;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
+import com.example.aromind.Activity.MainActivity_fragment.MenuRemote;
 import com.example.aromind.Data.URL;
+import com.example.aromind.R;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -20,18 +27,23 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
 
-public class Mqtt{
+import static org.apache.commons.lang3.StringUtils.split;
+
+public class Mqtt {
 
     private static String clientId;
     private final String CLIENTID = "hyeonbin";
     private final String PASSWORD = "password";
     public static MqttAndroidClient client;
     private static Activity activity;
+    private String mqttGetMessage ="";
     private static Random random = new Random();
+    private View view;
 
     public Mqtt(final Activity activity){
         this.activity = activity;
         clientId = MqttClient.generateClientId();
+
         client = new MqttAndroidClient(activity, URL.MQTTURL, clientId);
 
         MqttConnectOptions options = new MqttConnectOptions();
@@ -76,31 +88,27 @@ public class Mqtt{
             e.printStackTrace();
         }//end connectMQTTServer
 
-
         // 라즈베리파이로부터 값이 올 때.
         client.setCallback(new MqttCallback() {
             @Override
-            public void connectionLost(Throwable cause) {
-
-            }
+            public void connectionLost(Throwable cause) { }
 
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
                 String msg = new String(message.getPayload());
-//                if(topic.equals(URL.MQTTTOPIC)) {
-//
-//                }
-                if (msg.equals("금상원짱장맨")){
-                    Log.i("MATTTTTT", msg);
-                }else {
-                    Http_getCustomCard http_getCustomCard = new Http_getCustomCard(Integer.parseInt(msg));
+                Log.i("콜백을1", msg);
+                Log.i("콜백을2", msg.substring(0,1));
+                if (msg.substring(0,1).equals("%")){
+                    Log.i("콜백을3", msg.substring(1));
+                    int id = Integer.parseInt(msg.substring(1));
+                    Log.i("콜백을4", String.valueOf(id));
+                    Http_getCustomCard http_getCustomCard = new Http_getCustomCard(id);
                 }
+
             }
 
             @Override
-            public void deliveryComplete(IMqttDeliveryToken token) {
-
-            }
+            public void deliveryComplete(IMqttDeliveryToken token) { }
         });
     }
 
@@ -140,7 +148,7 @@ public class Mqtt{
     //mqtt 상태 확인하는 부분
     public static void checkMqtt() {
         byte[] encodedPayload = new byte[0];
-        String payload = "금상원짱장맨";
+        String payload = "위대한4조 취업성공을 기원합니다";
         try {
             encodedPayload = payload.getBytes("UTF-8");
             MqttMessage message = new MqttMessage(encodedPayload);
@@ -151,9 +159,17 @@ public class Mqtt{
     }
 
 
-        public static Activity getActivity(){
+    public static Activity getActivity(){
         return activity;
     }
 
+    public String getMqttGetMessage(){
+        return mqttGetMessage;
+    }
+
+
+//    public void callBackArrived(){
+//
+//    }
 
 }

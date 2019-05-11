@@ -55,6 +55,7 @@ public class MenuEmotion extends Fragment implements View.OnClickListener {
     private CustomGradientButton gradient_positive,gradient_neutral, gradient_negative;
     private PieChart pieChart_positive, pieChart_neutral, pieChart_negative;
     private SharedPreferences pref;
+
     private TextView custom_name_positive, custom_name_neutral, custom_name_negative;
 
     @Nullable
@@ -84,6 +85,7 @@ public class MenuEmotion extends Fragment implements View.OnClickListener {
         custom_name_neutral = (TextView)view.findViewById(R.id.custom_name_neutral);
         custom_name_negative = (TextView)view.findViewById(R.id.custom_name_negative);
 
+        //db검색
         custom_powerDB = new Custom_power_DBHelper(getContext(), "custom_power", null, 1);
         custom_gradient_DB = new Custom_gradient_DBHelper(getContext(),"custom_color", null, 1);
 
@@ -93,6 +95,7 @@ public class MenuEmotion extends Fragment implements View.OnClickListener {
             pieChart_positive.setVisibility(GONE);
         }else{
             custom_name_positive.setText(pref.getString("positive",null));
+
             JSONObject power_object = (JSONObject)custom_powerDB.getData(pref.getString("positive",null));
             ArrayList pie1 = new ArrayList<PieEntry>();
             int[] color = null;

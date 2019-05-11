@@ -5,7 +5,7 @@ public class CheckThread implements Runnable{
     public void run() {
         while (true){
             try {
-                Thread.sleep(10000);
+                Thread.sleep(60000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

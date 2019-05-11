@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final FaceServiceClient faceServiceClient =
             new FaceServiceRestClient(apiEndpoint, subscriptionKey);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 imageView.setImageBitmap(bitmap);
 
                 // Comment out for tutorial
-//                detectAndFrame(bitmap);
+                detectAndFrame(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -90,14 +91,12 @@ public class MainActivity extends AppCompatActivity {
                                     FaceServiceClient.FaceAttributeType.Gender }
                                 */
                             );
-                            if (result == null){
+                            if (result == null) {
                                 publishProgress(
                                         "Detection Finished. Nothing detected");
                                 return null;
                             }
-                            publishProgress(String.format(
-                                    "Detection Finished. %d face(s) detected",
-                                    result.length));
+                            publishProgress(String.format("Detection Finished. %d face(s) detected", result.length));
                             return result;
                         } catch (Exception e) {
                             exceptionMessage = String.format(
@@ -111,17 +110,19 @@ public class MainActivity extends AppCompatActivity {
                         //TODO: show progress dialog
                         detectionProgressDialog.show();
                     }
+
                     @Override
                     protected void onProgressUpdate(String... progress) {
                         //TODO: update progress
                         detectionProgressDialog.setMessage(progress[0]);
                     }
+
                     @Override
                     protected void onPostExecute(Face[] result) {
                         //TODO: update face frames
                         detectionProgressDialog.dismiss();
 
-                        if(!exceptionMessage.equals("")){
+                        if (!exceptionMessage.equals("")) {
                             showError(exceptionMessage);
                         }
                         if (result == null) return;
@@ -142,7 +143,8 @@ public class MainActivity extends AppCompatActivity {
                 .setMessage(message)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                    }})
+                    }
+                })
                 .create().show();
     }
 

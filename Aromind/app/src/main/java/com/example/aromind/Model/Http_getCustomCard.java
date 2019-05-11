@@ -17,8 +17,10 @@ import java.net.URL;
 public class Http_getCustomCard {
 
     public Http_getCustomCard(final int id) {
+
         try {
-            final URL url = new URL(com.example.aromind.Data.URL.SERVERURL);
+            final URL url = new URL(com.example.aromind.Data.URL.GETCUSTOMCARD_SERVER+"/"+String.valueOf(id));
+
             new AsyncTask<URL, Void, String>() {
                 protected void onPreExecute() {                 //작업 실행전 인터페이스 진행률 표시줄을 표시하는데 사용
                     super.onPreExecute();
@@ -34,17 +36,17 @@ public class Http_getCustomCard {
                         HttpURLConnection connection = (HttpURLConnection) urls[0].openConnection();
                         Log.i("cunn2", urls[0].toString());
 
-                        connection.setRequestMethod("POST");//post방식
-                        connection.setDoOutput(true);//쓰기모드 POST강제실행
+                        connection.setRequestMethod("GET");//post방식
+//                        connection.setDoOutput(true);//쓰기모드 POST강제실행
                         connection.setDoInput(true);//읽기모드
                         connection.setUseCaches(false);
                         connection.setDefaultUseCaches(false);
                         Log.i("cunn2", "Complite Connection");
 
-                        OutputStream os = connection.getOutputStream();
-                        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-                        writer.write("id="+String.valueOf(id));
-                        writer.flush();
+//                        OutputStream os = connection.getOutputStream();
+//                        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+//                        writer.write("id="+String.valueOf(id));
+//                        writer.flush();
 
                         Log.i("cunn29", "Complite Connection");
                         //읽기모드
@@ -65,6 +67,7 @@ public class Http_getCustomCard {
                 @Override
                 protected void onPostExecute(String s) {
                     super.onPostExecute(s);
+                    Log.i("카드 받아왔다", s);
                 }
             }.execute(url);
         }catch (MalformedURLException e){

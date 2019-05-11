@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MyRetrofit2 {
 
-    public static final String URL = "http://ec2-54-180-103-228.ap-northeast-2.compute.amazonaws.com:8000/";
+    public static final String URL = "http://arominds.com:8000/";
 
     static Retrofit mRetrofit;
 

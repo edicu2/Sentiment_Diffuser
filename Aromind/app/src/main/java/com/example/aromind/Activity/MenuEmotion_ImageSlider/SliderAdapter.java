@@ -21,6 +21,7 @@ import com.example.aromind.Activity.LoadingActivity;
 import com.example.aromind.Activity.MainActivity;
 import com.example.aromind.Activity.MainActivity_fragment.MenuEmotion;
 import com.example.aromind.Activity.MenuRemote_RecyclerView.PieDataSetCustom;
+import com.example.aromind.CustomView.CustomGradientButton;
 import com.example.aromind.CustomView.CustomGradientCardButton;
 import com.example.aromind.Model.Custom_gradient_DBHelper;
 import com.example.aromind.Model.Custom_power_DBHelper;
@@ -60,8 +61,14 @@ public class SliderAdapter extends PagerAdapter{
     private View v;
     private MenuEmotion activity;
 
+
     private Custom_power_DBHelper custom_powerDB;
     private Custom_gradient_DBHelper custom_gradient_DB;
+
+    private CustomGradientButton gradient_positive,gradient_neutral, gradient_negative;
+    private PieChart pieChart_positive, pieChart_neutral, pieChart_negative;
+
+
 
     public SliderAdapter(MenuEmotion activity, Context context, ArrayList<ArrayList> itemList, ArrayList<int[]> itemList2, ArrayList<String> title, ArrayList<Integer> bright){
         this.activity = activity;

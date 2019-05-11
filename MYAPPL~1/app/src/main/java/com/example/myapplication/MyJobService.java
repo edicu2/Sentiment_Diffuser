@@ -68,7 +68,7 @@ public class MyJobService extends JobService {
                         return null;
                     }
                 }
-                imageUrl = "{\"url\":\"http://ec2-54-180-103-228.ap-northeast-2.compute.amazonaws.com/S3/"+file.getName()+"\"}";
+                imageUrl = "{\"url\":\"http://arominds.com:8000/storage/albumImage/"+file.getName()+"\"}";
                 return  null;
             }
 

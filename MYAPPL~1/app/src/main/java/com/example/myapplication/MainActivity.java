@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                     uploadImage(selectedImage);
                     final File file = new File(String.valueOf(getRealPathFromURI(selectedImage)));
                     Log.i("SelectResult",file.getName());
-                    String imageUrl = "{\"url\":\"http://ec2-54-180-103-228.ap-northeast-2.compute.amazonaws.com:8000/storage/albumImage/"+file.getName()+"\"}";
+                    String imageUrl = "{\"url\":\"http://arominds.com:8000/storage/albumImage/"+file.getName()+"\"}";
                     Log.i("DD", imageUrl);
                     Face face = new Face(imageUrl);
                 }
