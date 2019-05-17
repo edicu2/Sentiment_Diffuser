@@ -139,6 +139,7 @@ import _ from 'lodash';
 import axios from 'axios'
 
 export default {
+  props:['email'],
     components:{
         LineChart,
         PieChart,
@@ -224,7 +225,7 @@ export default {
      },
     methods:{
         day(){
-            axios.get('http://arominds.com:8000/api/day')
+            axios.get('http://arominds.com:8000/api/day/' + this.email)
               .then(response=>{
                   this.data = response.data
                   //this.row = response.data.rows
@@ -232,18 +233,22 @@ export default {
                   this.activeTab = 1;
                   this.feedback = response.data.temp
                   console.log(this.data)
+              }).catch((err)=> {
+                console.log(err)
               })
         },
         week(){
-            axios.get('http://arominds.com:8000/api/week')
+            axios.get('http://arominds.com:8000/api/week/' + this.email)
               .then(response=>{
                   this.activeTab = 2;
                   this.data = response.data
                   this.feedback = response.data.temp
+              }).catch((err)=> {
+                console.log(err)
               })
         },
         month(){
-            axios.get('http://arominds.com:8000/api/month')
+            axios.get('http://arominds.com:8000/api/month/' + this.email)
               .then(response=>{
                   this.activeTab = 3;
                   this.data = response.data
@@ -251,7 +256,7 @@ export default {
               })
         },
         year(){
-           axios.get('http://arominds.com:8000/api/year')
+           axios.get('http://arominds.com:8000/api/year/' + this.email)
               .then(response=>{
                   this.activeTab = 4;
                   this.data = response.data

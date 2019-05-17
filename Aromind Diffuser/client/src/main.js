@@ -11,7 +11,11 @@ import VeeValidate from 'vee-validate'
 import Auth from './packages/auth/Auth.js'
 import cors from 'cors'
 import VueMqtt from 'vue-mqtt';
-Vue.use(VueMqtt, 'ws://172.26.1.15:1884');
+Vue.use(VueMqtt, 'ws://arominds.com:8883', {
+  timeout: 3,
+  username:'hyeonbin',
+  password:'password',
+});
 
 Vue.use(Auth)
 Vue.use(BootstrapVue)

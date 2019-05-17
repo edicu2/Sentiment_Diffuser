@@ -20,7 +20,7 @@
         </tbody>
       </table>
     </div> -->
-    <emotion></emotion>
+    <emotion v-if="email" :email="email"></emotion>
   </div>
 </template>
 
@@ -38,11 +38,15 @@
         //console.log(res)
         this.whole_name = res.user.name
         this.email = res.user.email
+        this.id = res.user.id
+
+        console.log(this.id)
         return res
       })
       return {
         whole_name: '',
-        email: ''
+        email: '',
+        id: ''
       }
     },
     methods: {

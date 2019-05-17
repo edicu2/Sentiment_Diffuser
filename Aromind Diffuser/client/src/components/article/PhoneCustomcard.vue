@@ -73,7 +73,7 @@
             </div>
             <div class="card-title">
              <img src="static/img/light-bulb.png" alt="" style="width:30px; float:left;">
-             <div class="progress" style="width: 80%;margin-top: 7px;font-size: 15px;height: 20px;border-radius: 10px;float: left;margin-left:3px;">
+             <div class="progress" style="width: 80%;margin-top: 7px;font-size: 15px;height: 20px;border-radius: 10px;float: left;margin-left:31px;">
               <div class="progress-bar" role="progressbar" :aria-valuenow="Math.ceil(phoneCustom.bright/255*100)" aria-valuemin="0" aria-valuemax="100" :style="'width:'+Math.ceil(phoneCustom.bright/255*100)+'%; background-color:#00D8FF'">
                 {{Math.ceil(phoneCustom.bright/255*100)}}%
               </div>
@@ -147,7 +147,7 @@
             </div>
             <div class="card-title">
              <img src="static/img/light-bulb.png" alt="" style="width:30px; float:left;">
-             <div class="progress" style="width: 80%;margin-top: 7px;font-size: 15px;height: 20px;border-radius: 10px;float: left;margin-left:3px;">
+             <div class="progress" style="width: 80%;margin-top: 7px;font-size: 15px;height: 20px;border-radius: 10px;float: left;margin-left:31px;">
               <div class="progress-bar" role="progressbar" :aria-valuenow="Math.ceil(phoneCustom.bright/255*100)" aria-valuemin="0" aria-valuemax="100" :style="'width:'+Math.ceil(phoneCustom.bright/255*100)+'%; background-color:#00D8FF'">
                 {{Math.ceil(phoneCustom.bright/255*100)}}%
               </div>

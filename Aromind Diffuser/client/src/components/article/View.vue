@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container" id="view">
-      <h2 id="font">Community-Custom Card</h2>
+      <h2 id="font">Community-Customcard</h2>
       <hr>
       <div class="row" style="margin-left: 0.3%; margin-top: 6%; margin-bottom: 6%;">
         <div>
@@ -84,18 +84,26 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
+              <div v-if="rgb" class="row" style="margin-top: 1%;">
+                <h6 class="col-sm-2 pt-2" style="margin-bottom: 5%; margin-right: 10%;">Mood</h6>
+                <div v-for="(rgb, index) in rgbs" :rgb="rgbs[index]" style="width: 6.3%; height: 40px; border-radius: 15%; margin-left: 0.7%;" :style="{ background : rgb }" ></div>
+              </div>
+              <!-- <div class="row">
                 <h6 class="col-sm-2" style="margin-bottom: 15%;">Mood</h6>
-                <div v-if="customcard_board[0]" id="mood" style="width: 78.5%; height: 25px; margin-left: 2.4%; text-align: center;" :style="'background: conic-gradient('+rgb+')'">
+                <div v-if="customcard_board[0]" id="mood" style="width: 78.5%; height: 25px; margin-left: 2.4%; text-align: center;" :style="'background: linear-gradient(to left,'+rgb+')'">
                   {{Math.ceil(customcard_board[0].bright/255*100)}}%
                 </div>
-              </div>
-              <div class="row" style="margin-top: 1%;">
-                <h6 class="col-sm-2 pt-2" style="margin-bottom: 15%;">Mood</h6>
-                <div id="mood1-1" style="width: 6.3%; height: 40px;"></div>
-                <div id="mood2-1" style="width: 6.3%; height: 40px; margin-left: 2%;"></div>
-                <div id="mood3-1" style="width: 6.3%; height: 40px; margin-left: 2%;"></div>
-                <div class="pt-2" v-if="customcard_board[0]" style="margin-left: 2%;">{{Math.ceil(customcard_board[0].bright/255*100)}}%</div>
+              </div> -->
+              <div v-if="customcard_board[0]">
+                <div class="row" v-if="customcard_board[0].nagative_strength !== 0">
+                  <h6 class="col-sm-3">Bright</h6>
+                  <div class="col-sm-9">
+                    <div class="progress" style="height: 25px;">
+                      <div class="progress-bar" role="progressbar" :style="{ width : bright + '%', background : 'linear-gradient(to left,'+rgb+')' }" v-bind:aria-valuenow="nagative_strength" aria-valuemin="0" aria-valuemax="100">{{ customcard_board[0].bright }}%</div>
+                    </div>
+                    <br>
+                  </div>
+                </div>
               </div>
               <button v-on:click="download" class="btn btn-primary1" style="float: right; width: 23%; height: 42px;"><i class="fas fa-file-download"></i> Download</button>
             </b-media-body>
@@ -104,9 +112,9 @@
       </div>
       <hr>
       <div v-if="customcard_board[0]">
-        <h5 style="float: left; color: rgb(234,119,142);">▶</h5>
-          <h5 style="margin-top: 3%;">{{ customcard_board[0].title }}</h5>
-        <pre>{{ customcard_board[0].content }}</pre>
+        <!-- <h5 style="float: left; color: rgb(234,119,142);">▶</h5>
+          <h5 style="margin-top: 3%;">{{ customcard_board[0].title }}</h5> -->
+        <h4><pre v-if="customcard_board[0]" v-html="rawHtml">{{ customcard_board[0].content }}</pre></h4>
       </div>
       <br>
       <div>
@@ -126,10 +134,13 @@
     data () {
       return {
         customcard_board: {},
+        rgbs:[],
         rgb:[],
         test: {},
         positive_strength: 0,
-        val: '%'+this.$route.params.customcard_board
+        val: '%'+this.$route.params.customcard_board,
+        bright: '',
+        rawHtml: ''
       }
     },
 
@@ -152,9 +163,14 @@
         this.normal_strength = this.customcard_board[0].normal_strength
         this.nagative_strength = this.customcard_board[0].nagative_strength
         this.mood_rgb = this.customcard_board[0].rgb
+        this.rgbs = response.data.rgbs
+        this.bright = this.customcard_board[0].bright
+        this.rawHtml = this.customcard_board[0].content
 
-        
+        /* let regex = /(<([^>]+)>)/ig;
+        return this.customcard_board[0].content.replace(regex, ""); */
 
+        console.log(this.rgbs)
         console.log('tttt')
         console.log(this.customcard_board[0].id)
         console.log(this.rgb)
@@ -165,15 +181,15 @@
         console.log(this.normal_strength)
         console.log(this.nagative_strength)
 
-        var beforRgb = this.mood_rgb;
+        /* var beforRgb = this.mood_rgb;
         var moodRgb = beforRgb.split(',');
-        var dot = ".";
+        var dot = "."; */
         //var moodRgb1 = moodRgb[0].replace("/" + dot + "/g", ",");
 
-        var moodRgb1 = moodRgb[0].replace(/\./g,',');
+        /* var moodRgb1 = moodRgb[0].replace(/\./g,',');
         var moodRgb2 = moodRgb[1].replace(/\./g,',');
         var moodRgb3 = moodRgb[2].replace(/\./g,',');
-
+ */
         //console.log(moodRgb1)
 
        /*  var mood1 = document.getElementById("mood1");
@@ -183,12 +199,12 @@
         var mood3 = document.getElementById("mood3");
         mood3.style.backgroundColor = 'rgb(' + moodRgb3+ ')'; */
 
-        var mood1_1 = document.getElementById("mood1-1");
+        /* var mood1_1 = document.getElementById("mood1-1");
         mood1_1.style.backgroundColor = 'rgb(' + moodRgb1 + ')';
         var mood2_1 = document.getElementById("mood2-1");
         mood2_1.style.backgroundColor = 'rgb(' + moodRgb2 + ')';
         var mood3_1 = document.getElementById("mood3-1");
-        mood3_1.style.backgroundColor = 'rgb(' + moodRgb3+ ')';
+        mood3_1.style.backgroundColor = 'rgb(' + moodRgb3+ ')'; */
 
 
         var ctx = document.getElementById("chartPie");
@@ -221,7 +237,7 @@
         .then(response =>{
           console.log(response)
           console.log("성공")
-            
+
           this.clickPub("dfasdff")
         }).catch((err) => {
           console.log(err.response)
@@ -229,6 +245,12 @@
 
       }
     },
+    /* computed: {
+      strippedContent() {
+        let regex = /(<([^>]+)>)/ig;
+        return this.customcard_board[0].content.rendered.replace(regex, "");
+      }
+    } */
 
   }
 </script>

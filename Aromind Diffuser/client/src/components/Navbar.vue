@@ -60,6 +60,7 @@
     methods: {
       logout () {
         localStorage.removeItem('usertoken')
+        this.$router.push('/')
       }
     },
     mounted () {

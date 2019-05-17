@@ -1,9 +1,10 @@
 <template>
-  <div class="container" style="margin-top: 5%;">
+  <div class="container" style="margin-top: 5%; margin-bottom: 20%;">
     <div class="row">
       <div class="col-md-6 mt-5 mx-auto">
         <form v-on:submit.prevent="login">
           <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+          <hr>
           <div class="form-group">
             <label for="email">Email address</label>
             <input type="email" v-model="email" class="form-control" name="email" placeholder="Enter email">

@@ -45,7 +45,7 @@
               {{ customcard_board.nagative_perfume_name }}
               {{ customcard_board.nagative_strength }}<br>
             </div>
-            Mood {{ customcard_board.bright }}<br>
+            Mood {{ customcard_board.bright }}%<br>
           </div>
           <!-- 이름/아로마이름/강도/밝기 -->
         </div>

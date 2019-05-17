@@ -9,15 +9,13 @@
       <!-- madal-2 -->
       <button class="btn btn-outline-secondary1" v-b-modal.modal-2>LED색 선택</button>
 
-      <div class="targets" v-show="this.led_value !== ''" style="float:right;">
+      <div class="targets" v-show="this.led_value !== ''" style="float:right;margin-left:5px;">
         <div class="target" id="target"></div>
       </div>
     </div>
-    <div  v-show="this.checked[0] === this.checked[1]" class="card" id="first_see">
+    <div  v-show="this.product_send1 === this.product_send2" class="card" id="first_see">
       <div class="card-body" style="padding:145px;">
-        <!-- <div id="square"></div> -->
         <i class="fa fa-check" style="margin-bottom:20px;color:black;font-size:35px;" aria-hidden="true"></i>
-        <!-- <div id="square2"></div> -->
         <h4 style="font-size:30px;">
           추가할 3개의 상품를 선택해주세요
         </h4>
@@ -26,15 +24,15 @@
 
     <!-- 설정값 조정 -->
     <div style="display:inline-block;">
-    <table v-show="this.value1 !== ''">
+    <table v-show="this.value1 !== ''" >
       <!-- 원차트, 도넛 도형 -->
       <tr>
-        <td class="round" rowspan="6">
-          <div class="card" style="width: 430px; height:430px; border-radius: 20px;text-align:center">
+        <td class="round" rowspan="7">
+          <div class="card" style="width: 430px; height:460px; border-radius: 20px;text-align:center">
             <div class="card-body">
 
             <div class="graph_container">
-              <canvas id="Chart1"></canvas>
+              <canvas id="Chart1" style="margin-top:62px;"></canvas>
             </div>
 
             <div style="position:absolute;">
@@ -48,10 +46,26 @@
           </div>
         </td>
 
-        <td colspan="2" style="margin-top:25px">
+        <td colspan="3" style="padding:0px">
           <div id="square"></div>
           <div v-show="this.value1 !== ''">
-            <h4>향 설정값</h4>
+            <h4>커스텀 카드 이름</h4>
+          </div>
+          <div v-show="this.value1 !== ''">
+          <div class="form-input">
+            <label>
+              <input class="title" required v-model="title" placeholder="  커스텀 카드 이름을 입력해주세요">
+            </label>
+          </div>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <div id="square" style="margin-top: 7px"></div>
+          <div v-show="this.value1 !== ''">
+            <h4 style="margin-top: 7px">향 설정값</h4>
           </div>
         </td>
         <td style="padding-right:70px;"></td>
@@ -108,17 +122,18 @@
 
       <tr>
         <td colspan="3">
-          <br>
-          <div id="square" v-show="this.led_value !== ''"></div>
+          <div id="square" v-show="this.led_value !== ''" style="margin-top:15px"></div>
           <h4
-            v-show="this.led_value !== ''">LED등 밝기</h4>
+            v-show="this.led_value !== ''" style="margin-top:15px">LED등 밝기</h4>
 
         <div class="card"
           v-show="this.okmodal == 'false'">
 
           <div class="card-body" style="text-align:center">
-            <i class="fa fa-check" style="margin-bottom:20px;color:black;font-size:35px;" aria-hidden="true"></i>
-            <h4>LED색을 선택해주세요</h4>
+            <h4>
+              <i class="fa fa-check" style="margin-right:5px;color:black;font-size:25px;" aria-hidden="true"></i>
+              LED색을 선택해주세요
+            </h4>
           </div>
         </div>
         </td>
@@ -132,7 +147,6 @@
             v-show="this.led_value !== ''"/>
         </td>
         <td style="padding-top:'20px'">
-          <!-- 이거조건 바꾸기(v-show) -->
           <div class="persent"
             v-show="this.led_value !== ''">{{this.led_value}}%</div>
         </td>
@@ -154,17 +168,17 @@
                                 'pdf-thumb-box-overlay is-active' : product_send1 == product.product_code || product_send2 == product.product_code || product_send3 == product.product_code }">
                     <span class="fa-stack fa-lg">
                       <div>
-                          <input type="checkbox" :value="product.product_name" v-model="checked"
-                              @click="color_product($event, product.product_color, product.product_code)" :id="'box'+index">
+                          <input type="checkbox"
+                              @click="color_product($event, product.product_color, product.product_code, product.aroma_name)" :id="'box'+index">
                           <label :for="'box'+index">
-                            <i class="fa fa-check" style="color:#FA5882;font-size:70px;margin-left:20px;margin-bottom:30px;" aria-hidden="true"></i>
+                            <i class="fa fa-check" aria-hidden="true" style="font-size:70px;margin-left:33px;margin-bottom:30px;"></i>
                           </label>
                       </div>
                     </span>
                     </div>
 
                     <img class="img-responsive" :src="product.product_img" alt="" weight="180" height="180" style="margin:10px 0px;">
-                    <div class="card-title" style="color:black;font-size:18px" v-html="product.product_name"></div>
+                    <div class="card-title" style="color:black;font-size:18px" v-html="product.aroma_name"></div>
                   </div>
               </div>
                   <div class="vertical-social-box"></div>
@@ -173,7 +187,7 @@
         </b-modal>
 
          <!-- Modal Component-2 무드등 색 선택 -->
-        <b-modal id="modal-2" title="무드등 색 선택" @ok="handleOK">
+        <b-modal id="modal-2" title="무드등 색 선택" @ok="handleOK" ok-variant="outline-danger" ok-title-html="확인" cancel-variant="outline-secondary" cancel-title-html="취소">
           <!-- color gradient -->
           <div id="gradX"></div>
         </b-modal>
@@ -200,6 +214,7 @@ export default {
             checked:[],
             phoneCustoms:[],
             customs:1,
+            title:"",
             product_send1:"",
             product_send2:"",
             product_send3:"",
@@ -261,6 +276,10 @@ export default {
 
       $('.carousel').carousel({
         interval:false
+      });
+
+      $('input.title').focus(function(){
+       $(this).removeAttr('placeholder');
       });
   },
     components: {
@@ -325,24 +344,28 @@ export default {
      this.options2.processStyle.backgroundColor = this.color2;
      this.options3.processStyle.backgroundColor = this.color3;
     },
-    color_product(e, description, code){
+    color_product(e, description, code, aroma){
       if(this.checked[0] == null){
         this.color1 = description;
         this.product_send1 = code;
+        this.checked[0] = aroma;
         this.value1 = 50;
       }else if(this.checked[1] == null){
         this.color2 = description;
         this.product_send2 = code;
+        this.checked[1] = aroma;
         this.value2 = 50;
       }else{
         this.color3 = description;
         this.product_send3 = code;
+        this.checked[2] = aroma;
         this.value3= 50;
       }
       //this.color += description;
     },
     create(){
       axios.post('http://arominds.com:8000/api/articles',{
+        customcard_name: this.title,
         positive_perfume: this.product_send1,
         positive_strength : this.value1,
         normal_perfume: this.product_send2,
@@ -377,7 +400,7 @@ export default {
   width: 10px;
   height: 30px;
   background: #FA5882;
-  margin-right: 15px;
+  margin-right: 10px;
   float: left;
 }
 
@@ -438,10 +461,10 @@ input[type=checkbox]:checked + label {
   text-align:center;
   position: absolute;
   background-color: rgb(255, 255, 255, 0.58);
-  color: #fff;
   width:100%;
   height:100%;
   text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+  color:#FA5882;
 }
 
 .is-active{
@@ -451,7 +474,7 @@ input[type=checkbox]:checked + label {
   text-align:center;
   position: absolute;
   background-color: rgb(255, 255, 255, 0.58);
-  color: #fff;
+  color:#FA5882;
   width:100%;
   height:100%;
   text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
@@ -465,13 +488,13 @@ input[type=checkbox]:checked + label {
 }
 
 /* table style */
-/* .container{
+.container{
   margin-bottom: 30px;
-} */
+}
 
 .td_slider{
-  width: 65%;
-  padding: 20px;
+  width: 300px;
+  padding: 4px 17px;
 }
 
 .round{
@@ -487,7 +510,7 @@ input[type=checkbox]:checked + label {
   width: 130px;
   height: 40px;
   font-size: 21px;
-  /* font-weight: bold; */
+  font-weight: bold;
   text-align: center;
   border-radius: 5px;
   padding-bottom: 35px;
@@ -515,7 +538,7 @@ table{
   border-radius: 5px;
   /* margin-top: 40px; */
   width: 130px;
-  height: 40px;
+  height: 38px;
   display:inline-block;
   /* padding-bottom: 35px;  */
 }
@@ -555,4 +578,60 @@ table{
     );
   /* background: -webkit-conic-gradient(red, yellow, lime, aqua, blue, magenta, red); */
 }
+
+/* 커스텀 카드 이름 start */
+.form-input {
+  /* margin: 40px 0px; */
+  width: 100%;
+}
+.form-input label {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 45px;
+  margin-bottom: 5px;
+}
+.form-input .placeholder {
+  position: absolute;
+  display: block;
+  top: -10px;
+  z-index: 2;
+  font-size: 16px;
+  transition: all 200ms ease-in-out;
+  width: 100%;
+  cursor: text;
+  font-size: 20px;
+  color: gray;
+}
+.form-input input {
+  position: absolute;
+  top: 5px;
+  z-index: 1;
+  width: 90%;
+  font-size: 16px;
+  border: 0;
+  border-bottom: 1px solid grey;
+  transition: border-color 200ms ease-in-out;
+  outline: none;
+  padding: 0;
+  margin-left: 20px;
+}
+
+.form-input input {
+  height: 42px;
+}
+.form-input input:focus,
+.form-input input:valid {
+  font-size: 20px;
+  /* margin: 5px; */
+  border-bottom: 2px solid black;
+}
+.form-input input:focus + .placeholder,
+.form-input input:valid + .placeholder {
+  /* top:-20px; */
+  cursor: inherit;
+  font-size: 14px;
+  color: #FA5882;
+}
+/* 커스텀 카드 이름 end */
 </style>
