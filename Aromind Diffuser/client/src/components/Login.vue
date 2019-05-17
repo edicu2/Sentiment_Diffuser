@@ -35,7 +35,7 @@
     methods: {
       login () {
         //axios.defaults.headers.common['Authorization'] = 'Bearer ' + Vue.auth.getToken()
-        axios.post('http://arominds.com:8000/api/login',
+        axios.post('http://localhost:8000/api/login',
           {
             email: this.email,
             password: this.password
@@ -55,6 +55,7 @@
       },
       emitMethod () {
         EventBus.$emit('logged-in', 'loggedin')
+
       }
     }
   }

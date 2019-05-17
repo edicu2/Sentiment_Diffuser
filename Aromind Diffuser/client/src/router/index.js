@@ -15,6 +15,12 @@ import ArticleView from '@/components/article/View.vue'
 
 Vue.use(Router)
 
+const isToken = (to, from, next) => {
+  if(localStorage.getItem('userToken')){
+    
+  }
+}
+
 export default new Router({
   mode: 'history',
   routes: [

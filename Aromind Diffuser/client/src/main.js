@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import refresh from './refresh'
 require('../node_modules/bootstrap/dist/css/bootstrap.css')
 require('../node_modules/bootstrap-vue/dist/bootstrap-vue.css')
 import BootstrapVue from 'bootstrap-vue'
@@ -10,7 +11,8 @@ import axios from 'axios'
 import VeeValidate from 'vee-validate'
 import Auth from './packages/auth/Auth.js'
 import cors from 'cors'
-import VueMqtt from 'vue-mqtt';
+import VueMqtt from 'vue-mqtt'
+
 Vue.use(VueMqtt, 'ws://arominds.com:8883', {
   timeout: 3,
   username:'hyeonbin',
@@ -18,6 +20,7 @@ Vue.use(VueMqtt, 'ws://arominds.com:8883', {
 });
 
 Vue.use(Auth)
+Vue.use(refresh)
 Vue.use(BootstrapVue)
 Vue.use(VeeValidate)
 Vue.use(cors)
@@ -27,6 +30,7 @@ const base = axios.create({
   //baseURL: 'http://localhost:8000'
   baseURL: 'http://arominds.com:8000'
 })
+axios.defaults.baseURL = 'http://localhost:8000'
 Vue.prototype.$http = base;
 
 //axios.defaults.headers.common['Authorization'] = 'Bearer ' + Vue.auth.getToken()
@@ -45,6 +49,9 @@ Vue.prototype.$http = base;
 new Vue({
   el: '#app',
   router,
+  beforeCreate() {
+    this.$refresh.checktoken()
+  },
   components: { App },
   template: '<App/>'
 })
