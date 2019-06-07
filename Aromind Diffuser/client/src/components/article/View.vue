@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container" id="view">
-      <h2 id="font">Community-Customcard</h2>
+      <h2 id="font">Community-Blended Aroma</h2>
       <hr>
       <div class="row" style="margin-left: 0.3%; margin-top: 6%; margin-bottom: 6%;">
         <div>
@@ -46,7 +46,7 @@
             <b-media-body class="ml-5">
               <h3 style="color: white;">dddddddddddddddddddddddddddddDDDdddd</h3>
               <div v-if="customcard_board[0]" style="margin-bottom: 10%;">
-                <h1>{{ customcard_board[0].customcard_name }}</h1>
+                <h1 id="font2">{{ customcard_board[0].customcard_name }}</h1>
                 <h5><i class="fas fa-hat-wizard"></i> {{ customcard_board[0].user_id }} ></h5>
               </div>
               <div>
@@ -114,7 +114,7 @@
       <div v-if="customcard_board[0]">
         <!-- <h5 style="float: left; color: rgb(234,119,142);">▶</h5>
           <h5 style="margin-top: 3%;">{{ customcard_board[0].title }}</h5> -->
-        <h4><pre v-if="customcard_board[0]" v-html="rawHtml">{{ customcard_board[0].content }}</pre></h4>
+        <h4 id="font2"><pre v-if="customcard_board[0]" v-html="rawHtml">{{ customcard_board[0].content }}</pre></h4>
       </div>
       <br>
       <div>
@@ -170,7 +170,7 @@
         /* let regex = /(<([^>]+)>)/ig;
         return this.customcard_board[0].content.replace(regex, ""); */
 
-        console.log(this.rgbs)
+        /* console.log(this.rgbs)
         console.log('tttt')
         console.log(this.customcard_board[0].id)
         console.log(this.rgb)
@@ -179,7 +179,7 @@
         console.log(this.rgb)
         console.log(this.positive_strength)
         console.log(this.normal_strength)
-        console.log(this.nagative_strength)
+        console.log(this.nagative_strength) */
 
         /* var beforRgb = this.mood_rgb;
         var moodRgb = beforRgb.split(',');

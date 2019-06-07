@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container" id="createArticle">
-      <h2 style="font-weight: normal;">Community-Create Customcard</h2>
+      <h2 style="font-weight: normal;">Community-Blending Aroma</h2>
       <hr>
       <br>
       <!-- <div class="row">

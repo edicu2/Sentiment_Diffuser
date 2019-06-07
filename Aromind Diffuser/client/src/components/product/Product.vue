@@ -6,19 +6,21 @@
       </router-link>
 
       <b-card-body>
-        <b-card-title>{{ product.product_name }}</b-card-title>
-        <b-card-sub-title class="mb-2">{{ product.product_price }} 원</b-card-sub-title>
+        <router-link class="view" :to="'/products/' + product.product_code">
+          <b-card-title id="font2">{{ product.product_name }}</b-card-title>
+        </router-link>
+        <b-card-sub-title class="mb-2">{{ product.product_price }} <span id="font2">円</span></b-card-sub-title>
         <b-card-text>
           Made by {{ product.business_number }}
         </b-card-text>
       </b-card-body>
       <b-list-group flush>
         <b-list-group-item>
-          <a href="#" class="btn btn-outline-secondary1" style="margin-left: 5%; width: 45%;">
-            Wish list
+          <a href="#" class="btn btn-outline-secondary1" id="font2" style="margin-left: 3%; margin-right: 2%; width: 45%;">
+            カートに入れる
           </a>
-          <a href="#" class="btn btn-primary1" style="width: 40%;">
-            Buy
+          <a href="#" class="btn btn-primary1" id="font2" style="width: 45%;">
+            今すぐ買う
           </a>
         </b-list-group-item>
         <!-- <b-list-group-item>
@@ -65,5 +67,9 @@
     /* font-family: 'Overpass', sans-serif; */
     font-family: 'Rubik', sans-serif;
     font-weight: bold;
+  }
+
+  #font2 {
+    font-family: 'Kosugi Maru', sans-serif;
   }
 </style>

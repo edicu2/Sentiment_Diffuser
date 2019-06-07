@@ -1,10 +1,10 @@
 <template>
   <div class="container" id="feed">
-    <h2 id="font" style="font-weight: normal;">Community-Customcards</h2>
+    <h2 id="font" style="font-weight: normal;">Community-Blended Aroma</h2>
     <hr>
     <br>
-    <div style="margin-bottom: 6%;">
-      <router-link class="view btn btn-outline-secondary1" id="list" :to="'/articles/create/'">Create Article</router-link>
+    <div style="margin-bottom: 8%; width: 100%;">
+      <router-link class="view btn btn-outline-secondary1" id="list" :to="'/articles/create/'">Blending Aroma</router-link>
     </div>
     <my-articles></my-articles>
   </div>
