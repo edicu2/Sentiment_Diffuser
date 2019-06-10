@@ -2,12 +2,14 @@ package com.example.aromind.Activity.MainActivity_fragment;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +20,11 @@ import android.widget.TextView;
 import com.eftimoff.viewpagertransformers.CubeOutTransformer;
 import com.example.aromind.Activity.MenuEmotion_ImageSlider.SliderAdapter;
 import com.example.aromind.Activity.MenuRemote_RecyclerView.PieDataSetCustom;
+import com.example.aromind.Activity.MenuRemote_RecyclerView.RecyclerViewAdapter;
 import com.example.aromind.CustomView.CustomGradientButton;
 import com.example.aromind.Model.Custom_gradient_DBHelper;
 import com.example.aromind.Model.Custom_power_DBHelper;
+import com.example.aromind.Model.Mqtt;
 import com.example.aromind.R;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -28,18 +32,28 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-public class MenuEmotion extends Fragment implements View.OnClickListener {
+public class MenuEmotion extends Fragment implements View.OnClickListener{
 
     private SliderAdapter adapter;
     private ViewPager viewPager;
@@ -55,7 +69,6 @@ public class MenuEmotion extends Fragment implements View.OnClickListener {
     private CustomGradientButton gradient_positive,gradient_neutral, gradient_negative;
     private PieChart pieChart_positive, pieChart_neutral, pieChart_negative;
     private SharedPreferences pref;
-
     private TextView custom_name_positive, custom_name_neutral, custom_name_negative;
 
     @Nullable
@@ -114,9 +127,9 @@ public class MenuEmotion extends Fragment implements View.OnClickListener {
                 PieDataSet dataSet = new PieDataSetCustom(pie1 ," ");
 
 
-                dataSet.setColors( getContext().getResources().getColor(R.color.aroma1),
+                dataSet.setColors( getContext().getResources().getColor(R.color.aroma3),
                         getContext().getResources().getColor(R.color.aroma2),
-                        getContext().getResources().getColor(R.color.aroma3),
+                        getContext().getResources().getColor(R.color.aroma1),
                         getContext().getResources().getColor(R.color.trans)
                 );
 
@@ -181,9 +194,9 @@ public class MenuEmotion extends Fragment implements View.OnClickListener {
                 PieDataSet dataSet = new PieDataSetCustom(pie2 ," ");
 
 
-                dataSet.setColors( getContext().getResources().getColor(R.color.aroma1),
+                dataSet.setColors( getContext().getResources().getColor(R.color.aroma3),
                         getContext().getResources().getColor(R.color.aroma2),
-                        getContext().getResources().getColor(R.color.aroma3),
+                        getContext().getResources().getColor(R.color.aroma1),
                         getContext().getResources().getColor(R.color.trans)
                 );
 
@@ -326,7 +339,11 @@ public class MenuEmotion extends Fragment implements View.OnClickListener {
         }
         pie = new ArrayList<>();
         itemList.add(pie);
-        itemList2.add(new int[]{Color.WHITE, R.color.aroma1, R.color.aroma2, R.color.aroma3, Color.WHITE});
+        itemList2.add(new int[]{Color.WHITE,
+                R.color.aroma3,
+                R.color.aroma2,
+                R.color.aroma1,
+                Color.WHITE});
         title.add("New Custom Add");
         bright.add(0);
 
@@ -589,6 +606,5 @@ public class MenuEmotion extends Fragment implements View.OnClickListener {
         } else {
         }
     }
-
 
 }

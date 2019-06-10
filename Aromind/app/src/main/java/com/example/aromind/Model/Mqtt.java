@@ -1,7 +1,9 @@
 package com.example.aromind.Model;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.example.aromind.Activity.Loding;
 import com.example.aromind.Activity.MainActivity_fragment.MenuRemote;
 import com.example.aromind.Data.URL;
 import com.example.aromind.R;
@@ -19,6 +22,7 @@ import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
+
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -39,9 +43,11 @@ public class Mqtt {
     private String mqttGetMessage ="";
     private static Random random = new Random();
     private View view;
+    private Context context;
 
-    public Mqtt(final Activity activity){
+    public Mqtt(final Activity activity, final Context context){
         this.activity = activity;
+        this.context = context;
         clientId = MqttClient.generateClientId();
 
         client = new MqttAndroidClient(activity, URL.MQTTURL, clientId);
@@ -88,30 +94,40 @@ public class Mqtt {
             e.printStackTrace();
         }//end connectMQTTServer
 
-        // 라즈베리파이로부터 값이 올 때.
-        client.setCallback(new MqttCallback() {
-            @Override
-            public void connectionLost(Throwable cause) { }
-
-            @Override
-            public void messageArrived(String topic, MqttMessage message) throws Exception {
-                String msg = new String(message.getPayload());
-                Log.i("콜백을1", msg);
-                Log.i("콜백을2", msg.substring(0,1));
-                if (msg.substring(0,1).equals("%")){
-                    Log.i("콜백을3", msg.substring(1));
-                    int id = Integer.parseInt(msg.substring(1));
-                    Log.i("콜백을4", String.valueOf(id));
-                    Http_getCustomCard http_getCustomCard = new Http_getCustomCard(id);
-                }
-
-            }
-
-            @Override
-            public void deliveryComplete(IMqttDeliveryToken token) { }
-        });
+//        // 라즈베리파이로부터 값이 올 때.
+//        client.setCallback(new MqttCallbackExtended() {
+//            @Override
+//            public void connectComplete(boolean reconnect, String serverURI) {
+//
+//            }
+//
+//            @Override
+//            public void connectionLost(Throwable cause) { }
+//
+//            @Override
+//            public void messageArrived(String topic, MqttMessage message) throws Exception {
+////                String msg = new String(message.getPayload());
+////                Log.i("콜백을1", msg);
+////                Log.i("콜백을2", msg.substring(0,1));
+////                if (msg.substring(0,1).equals("%")){
+////                    Log.i("콜백을3", msg.substring(1));
+////                    int id = Integer.parseInt(msg.substring(1));
+////                    Log.i("콜백을4", String.valueOf(id));
+////                    Http_getCustomCard http_getCustomCard = new Http_getCustomCard(id, context);
+//////                    Intent intent = new Intent(activity, Loding.class);
+//////                    activity.startActivity(intent);
+////                }
+//
+//            }
+//
+//            @Override
+//            public void deliveryComplete(IMqttDeliveryToken token) { }
+//        });
     }
 
+//    public void setCallback(MqttCallbackExtended callback) {
+//        client.setCallback(callback);
+//    }
 
     public static void clientPub(final Activity acQtivity,String payload){
         Log.i("Mqtt",payload);
@@ -168,8 +184,6 @@ public class Mqtt {
     }
 
 
-//    public void callBackArrived(){
-//
-//    }
+
 
 }

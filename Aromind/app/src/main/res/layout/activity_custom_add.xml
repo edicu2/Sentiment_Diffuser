@@ -385,7 +385,7 @@
     <View
         android:id="@+id/blur"
         android:layout_width="414dp"
-        android:layout_height="564dp"
+        android:layout_height="590dp"
         android:layout_marginBottom="8dp"
         android:background="#88000000"
         android:text=" "

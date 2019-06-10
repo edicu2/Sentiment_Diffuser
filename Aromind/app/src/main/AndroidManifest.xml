@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -23,6 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionDark">
 
+        <activity android:name=".Activity.Loding"
+            android:launchMode="singleInstance"
+            android:theme="@style/TransparentThemeShadow"></activity>
 
         <service
             android:name=".MyService"
@@ -67,7 +70,7 @@
         <activity
             android:name=".Activity.MenuAlarm_Activity.Popup_alarmCustomCard"
             android:launchMode="singleInstance"
-            android:theme="@style/TransparentThemeShadow"/>
+            android:theme="@style/TransparentThemeShadow" />
         <activity
             android:name=".facebook.Facebook"
             android:launchMode="singleInstance"
@@ -76,23 +79,18 @@
         <service android:name="org.eclipse.paho.android.service.MqttService" />
 
         <receiver android:name=".Activity.MunuAlarm_AlarmManager.AlarmReceiver" />
-
         <receiver android:name=".MyBroadCastReceiver">
             <intent-filter>
-                <action android:name="com.example.aromind.SEND_BROAD_CAST"/>
+                <action android:name="com.example.aromind.SEND_BROAD_CAST" />
             </intent-filter>
         </receiver>
-
         <receiver android:name=".facebook.FacebookBoradcast">
             <intent-filter>
-                <action android:name="com.example.aromind.SEND_FACEBOOK"/>
+                <action android:name="com.example.aromind.SEND_FACEBOOK" />
             </intent-filter>
         </receiver>
 
-
-        <service android:name=".Activity.MunuAlarm_AlarmManager.AlarmService" />
-
-        <!-- facebook -->
+        <service android:name=".Activity.MunuAlarm_AlarmManager.AlarmService" /> <!-- facebook -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -112,10 +110,13 @@
 
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
-        </activity>
-        <!-- ms azure face -->
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-        <service android:name=".Face.MyJobService"
+        </activity> <!-- ms azure face -->
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <service
+            android:name=".Face.MyJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 

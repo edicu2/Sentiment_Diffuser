@@ -34,7 +34,7 @@ public class Check_Sentiment_Thread implements Runnable{
     public void run() {
 
             try {
-                Thread.sleep(8000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

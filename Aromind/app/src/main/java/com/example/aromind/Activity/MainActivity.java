@@ -41,6 +41,7 @@ import com.example.aromind.Activity.MainActivity_fragment.MenuSetting;
 import com.example.aromind.Face.MyJobService;
 import com.example.aromind.Face.MyRetrofit2;
 import com.example.aromind.Face.UploadService;
+import com.example.aromind.Model.Http_getCustomCard;
 import com.example.aromind.Model.Mqtt;
 import com.example.aromind.R;
 import com.facebook.AccessToken;
@@ -51,6 +52,8 @@ import com.facebook.GraphResponse;
 import com.facebook.ProfileTracker;
 import com.facebook.login.widget.LoginButton;
 
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -86,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String message;
 
-    public Context mContext;
+    public Context mContext= this;
 
     @androidx.annotation.RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -94,7 +97,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //mqtt
-        Mqtt mqttConnect = new Mqtt(this);
+        Mqtt mqttConnect = new Mqtt(this, mContext);
+
+
 
         //페이스북 로그인 됬음을 알아오는 콜백 메서드
         callbackManager = CallbackManager.Factory.create();

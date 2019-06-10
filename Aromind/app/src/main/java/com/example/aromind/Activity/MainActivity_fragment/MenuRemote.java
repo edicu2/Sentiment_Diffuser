@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -32,6 +33,7 @@ import com.example.aromind.Activity.MenuRemote_RecyclerView.RecyclerViewAdapter;
 import com.example.aromind.CustomView.CustomButton;
 import com.example.aromind.Model.Custom_gradient_DBHelper;
 import com.example.aromind.Model.Custom_power_DBHelper;
+import com.example.aromind.Model.Http_getCustomCard;
 import com.example.aromind.Model.Mqtt;
 import com.example.aromind.R;
 import com.github.mikephil.charting.data.PieEntry;
@@ -43,6 +45,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.sql.Time;
 import java.util.ArrayList;
 
 
@@ -147,6 +157,8 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
                 }
             }
             Mqtt.clientPub(getActivity(),p);
+
+
         }
 
 
@@ -156,68 +168,68 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
         itemList = new ArrayList<ArrayList>();
         itemList2 = new ArrayList<>();
         title = new ArrayList<>();
-
-        ArrayList<PieEntry> pie;
-        int custom_power_DB_size = (int)custom_powerDB.getDataSize();
-        JSONArray json_db = custom_powerDB.getRecentData(custom_power_DB_size);
-
-        int[] colors = null;
-
-        for(int i=0 ; i < custom_power_DB_size  ; i++){
-            try {
-                JSONObject power_object = (JSONObject) json_db.get(i);
-                pie = new ArrayList<PieEntry>();
-                pie.add(new PieEntry(Integer.parseInt((String) power_object.get("positive")),"aroma1"));
-                pie.add(new PieEntry(Integer.parseInt((String) power_object.get("neutral")),"aroma2"));
-                pie.add(new PieEntry(Integer.parseInt((String) power_object.get("negative")),"aroma3"));
-                itemList.add(pie);
-                title.add((String) power_object.get("custom_name"));
-                JSONArray json_db_color = custom_gradient_DB.getData((String) power_object.get("custom_name"));
-                Log.i("custom_color_size", String.valueOf(json_db_color.length()));
-                if(json_db_color.length() != 0) {
-                    for (int j = 0; j < json_db_color.length(); j++) {
-                        JSONObject color_object = (JSONObject)json_db_color.get(j);
-                        Log.i("colors", (String) color_object.get("color"));
-                        if (j == 0) {
-                            colors = new int[json_db_color.length()+1];
-                        }
-                        colors[j] =Integer.parseInt((String)color_object.get("color"));
-                        Log.i("color_teki", String.valueOf(colors[j]));
-                    }
-                    JSONObject last = (JSONObject)json_db_color.get(0);
-                    colors[json_db_color.length()] = Integer.parseInt((String)last.get("color"));
-                    itemList2.add(colors);
-                }else{
-                    itemList2.add(new int[]{Color.WHITE,Color.BLACK,Color.WHITE});
-                }
-                Log.i("colors", String.valueOf(itemList2));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        pie = new ArrayList<PieEntry>();
-        itemList.add(pie);
-        itemList2.add(new int[]{Color.WHITE, R.color.aroma1, R.color.aroma2, R.color.aroma3, Color.WHITE});
-        title.add("New Custom Add");
-
-
-        adapter = new RecyclerViewAdapter(getContext(),getActivity(), aromaBtn1 ,aromaBtn2,aromaBtn3,color, brightness, colorPower, colorCheck,totalPower,itemList, itemList2, title);
-        listview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listToggleSetFalse();
-            }
-        });
-        listview.setAdapter(adapter);
-        listview.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                listToggleSetFalse();
-            }
-        });
-
-
+//
+//        ArrayList<PieEntry> pie;
+//        int custom_power_DB_size = (int)custom_powerDB.getDataSize();
+//        JSONArray json_db = custom_powerDB.getRecentData(custom_power_DB_size);
+//
+//        int[] colors = null;
+//
+//        for(int i=0 ; i < custom_power_DB_size  ; i++){
+//            try {
+//                JSONObject power_object = (JSONObject) json_db.get(i);
+//                pie = new ArrayList<PieEntry>();
+//                pie.add(new PieEntry(Integer.parseInt((String) power_object.get("positive")),"aroma1"));
+//                pie.add(new PieEntry(Integer.parseInt((String) power_object.get("neutral")),"aroma2"));
+//                pie.add(new PieEntry(Integer.parseInt((String) power_object.get("negative")),"aroma3"));
+//                itemList.add(pie);
+//                title.add((String) power_object.get("custom_name"));
+//                JSONArray json_db_color = custom_gradient_DB.getData((String) power_object.get("custom_name"));
+//                Log.i("custom_color_size", String.valueOf(json_db_color.length()));
+//                if(json_db_color.length() != 0) {
+//                    for (int j = 0; j < json_db_color.length(); j++) {
+//                        JSONObject color_object = (JSONObject)json_db_color.get(j);
+//                        Log.i("colors", (String) color_object.get("color"));
+//                        if (j == 0) {
+//                            colors = new int[json_db_color.length()+1];
+//                        }
+//                        colors[j] =Integer.parseInt((String)color_object.get("color"));
+//                        Log.i("color_teki", String.valueOf(colors[j]));
+//                    }
+//                    JSONObject last = (JSONObject)json_db_color.get(0);
+//                    colors[json_db_color.length()] = Integer.parseInt((String)last.get("color"));
+//                    itemList2.add(colors);
+//                }else{
+//                    itemList2.add(new int[]{Color.WHITE,Color.BLACK,Color.WHITE});
+//                }
+//                Log.i("colors", String.valueOf(itemList2));
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        pie = new ArrayList<PieEntry>();
+//        itemList.add(pie);
+//        itemList2.add(new int[]{Color.WHITE, R.color.aroma1, R.color.aroma2, R.color.aroma3, Color.WHITE});
+//        title.add("New Custom Add");
+//
+//
+//        adapter = new RecyclerViewAdapter(getContext(),getActivity(), aromaBtn1 ,aromaBtn2,aromaBtn3,color, brightness, colorPower, colorCheck,totalPower,itemList, itemList2, title);
+//        listview.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                listToggleSetFalse();
+//            }
+//        });
+//        listview.setAdapter(adapter);
+//        listview.setOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//                listToggleSetFalse();
+//            }
+//        });
+        showListView();
+        mqttSubCallback();
     }
     public static void listToggleSetFalse(){
         Log.i("count", String.valueOf(listview.getChildCount()));
@@ -235,27 +247,6 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
 
         }
     }
-
-
-    public void mqttSubCallback(){
-        Mqtt.client.setCallback(new MqttCallback() {
-            @Override
-            public void connectionLost(Throwable cause) {
-            }
-            @Override
-            public void messageArrived(String topic, MqttMessage message) throws Exception {
-                Log.i("mqttCollback",new String(message.getPayload()));
-
-                if(new String(message.getPayload()).split("_")[1].equals("low") ||
-                        new String(message.getPayload()).split("_")[1].equals("enough"));
-                Log.i("가즈아",String.valueOf(message.getPayload()));
-            }
-            @Override
-            public void deliveryComplete(IMqttDeliveryToken token) {
-            }
-        });
-    }
-
 
     @Override
     public void onClick(View v) {
@@ -399,4 +390,193 @@ public class MenuRemote extends Fragment implements View.OnClickListener, Compou
         colorCheck.circleCols = null;
         colorCheck.setCircleColor(Color.argb(0,0, 0, 0));
     }
+
+    public void mqttSubCallback(){
+        
+        Mqtt.client.setCallback(new MqttCallback() {
+            @Override
+            public void connectionLost(Throwable cause) {
+            }
+
+            @Override
+            public void messageArrived(String topic, MqttMessage message) throws Exception {
+                String msg = new String(message.getPayload());
+                Log.i("메세지바꿔봐", msg);
+                Log.i("메세지바꿔봐", msg.substring(0,1));
+                if (msg.substring(0,1).equals("%")){
+                    Log.i("메세지바꿔봐", msg.substring(1));
+                    int id = Integer.parseInt(msg.substring(1));
+                    Log.i("메세지바꿔봐", String.valueOf(id));
+//                    Http_getCustomCard http_getCustomCard = new Http_getCustomCard(id, getContext(), adapter);
+
+                    try {
+                        final URL url = new URL(com.example.aromind.Data.URL.GETCUSTOMCARD_SERVER+"/"+String.valueOf(id));
+
+                        new AsyncTask<URL, Void, String>() {
+                            protected void onPreExecute() {                 //작업 실행전 인터페이스 진행률 표시줄을 표시하는데 사용
+                                super.onPreExecute();
+                            }
+                            @Override
+                            protected String doInBackground(URL... urls) {
+                                String result = new String();
+                                if (urls == null || urls.length<1){
+                                    Log.i("cunn", "No Http URLS");
+                                    return null;
+                                }
+                                try {
+                                    HttpURLConnection connection = (HttpURLConnection) urls[0].openConnection();
+                                    Log.i("cunn2", urls[0].toString());
+
+                                    connection.setRequestMethod("GET");//post방식
+//                        connection.setDoOutput(true);//쓰기모드 POST강제실행
+                                    connection.setDoInput(true);//읽기모드
+                                    connection.setUseCaches(false);
+                                    connection.setDefaultUseCaches(false);
+                                    Log.i("cunn2", "Complite Connection");
+
+//                        OutputStream os = connection.getOutputStream();
+//                        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+//                        writer.write("id="+String.valueOf(id));
+//                        writer.flush();
+
+                                    Log.i("cunn29", "Complite Connection");
+                                    //읽기모드
+                                    InputStream is = connection.getInputStream();
+                                    StringBuilder builder = new StringBuilder();
+                                    BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                                    String line;
+                                    while ((line = reader.readLine()) != null) {
+                                        builder.append(line + "\n");
+                                    }
+                                    result = builder.toString();
+                                    Log.i("cunn3", result);
+                                }catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                return result;
+                            }
+                            @Override
+                            protected void onPostExecute(String s) {
+                                super.onPostExecute(s);
+                                Log.i("카드 받아왔다", s);
+                                String name, strColor;
+                                int positive, neutral, negative, bright;
+                                String[] color;
+                                try {
+                                    JSONArray jsonArray = new JSONArray(s);
+                                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+                                    Log.i("카드받아왔지롱", jsonObject.toString());
+                                    name = jsonObject.optString("customcard_name");
+                                    Log.i("카드받아왔지롱2", name);
+                                    positive = jsonObject.optInt("positive_strength");
+                                    Log.i("카드받아왔지롱3", String.valueOf(positive));
+                                    neutral = jsonObject.optInt("normal_strength");
+                                    Log.i("카드받아왔지롱3", String.valueOf(neutral));
+                                    negative = jsonObject.optInt("nagative_strength");
+                                    Log.i("카드받아왔지롱3", String.valueOf(positive));
+                                    bright = Integer.parseInt(jsonObject.optString("bright"));
+                                    Log.i("카드받아왔디롱4", String.valueOf(bright));
+                                    strColor = jsonObject.optString("rgb");
+                                    color = strColor.split(",");
+                                    custom_powerDB.insert(name, positive, neutral, negative, bright);
+                                    for (String rgb : color){
+                                        Log.i("카드받아왔디롱5", rgb);
+                                        //특수문자를 구별하기위해 \\.
+                                        String[] colors = rgb.split("\\.");
+                                        Log.i("카드받아왔지롱6", colors[0]);
+                                        Log.i("카드받아왔지롱6", colors[1]);
+                                        Log.i("카드받아왔지롱6", colors[2]);
+
+                                        int rgbs = android.graphics.Color.rgb(Integer.parseInt(colors[0]),Integer.parseInt(colors[1]),Integer.parseInt(colors[2]));
+                                        Log.i("색갈이 나오는중", String.valueOf(rgbs));
+                                        custom_gradient_DB.insert(name, rgbs);
+
+                                        itemList.clear();
+                                        itemList2.clear();
+                                        title.clear();
+                                        showListView();
+
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }.execute(url);
+                    }catch (MalformedURLException e){
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void deliveryComplete(IMqttDeliveryToken token) {
+            }
+        });
+    }
+
+    private void showListView(){
+
+        ArrayList<PieEntry> pie;
+        int custom_power_DB_size = (int)custom_powerDB.getDataSize();
+        JSONArray json_db = custom_powerDB.getRecentData(custom_power_DB_size);
+
+        int[] colors = null;
+
+        for(int i=0 ; i < custom_power_DB_size  ; i++){
+            try {
+                JSONObject power_object = (JSONObject) json_db.get(i);
+                pie = new ArrayList<PieEntry>();
+                pie.add(new PieEntry(Integer.parseInt((String) power_object.get("positive")),"aroma1"));
+                pie.add(new PieEntry(Integer.parseInt((String) power_object.get("neutral")),"aroma2"));
+                pie.add(new PieEntry(Integer.parseInt((String) power_object.get("negative")),"aroma3"));
+                itemList.add(pie);
+                title.add((String) power_object.get("custom_name"));
+                JSONArray json_db_color = custom_gradient_DB.getData((String) power_object.get("custom_name"));
+                Log.i("custom_color_size", String.valueOf(json_db_color.length()));
+                if(json_db_color.length() != 0) {
+                    for (int j = 0; j < json_db_color.length(); j++) {
+                        JSONObject color_object = (JSONObject)json_db_color.get(j);
+                        Log.i("colors", (String) color_object.get("color"));
+                        if (j == 0) {
+                            colors = new int[json_db_color.length()+1];
+                        }
+                        colors[j] =Integer.parseInt((String)color_object.get("color"));
+                        Log.i("color_teki", String.valueOf(colors[j]));
+                    }
+                    JSONObject last = (JSONObject)json_db_color.get(0);
+                    colors[json_db_color.length()] = Integer.parseInt((String)last.get("color"));
+                    itemList2.add(colors);
+                }else{
+                    itemList2.add(new int[]{Color.WHITE,Color.BLACK,Color.WHITE});
+                }
+                Log.i("colors", String.valueOf(itemList2));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        pie = new ArrayList<PieEntry>();
+        itemList.add(pie);
+        itemList2.add(new int[]{Color.WHITE, R.color.aroma1, R.color.aroma2, R.color.aroma3, Color.WHITE});
+        title.add("New Custom Add");
+
+
+        adapter = new RecyclerViewAdapter(getContext(),getActivity(), aromaBtn1 ,aromaBtn2,aromaBtn3,color, brightness, colorPower, colorCheck,totalPower,itemList, itemList2, title);
+        listview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listToggleSetFalse();
+            }
+        });
+        listview.setAdapter(adapter);
+        listview.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                listToggleSetFalse();
+            }
+        });
+    }
+
 }

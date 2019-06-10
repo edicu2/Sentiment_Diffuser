@@ -59,6 +59,7 @@ public class Custom_power_DBHelper extends SQLiteOpenHelper {
 
     //새로운 데이터 입력
     public void insert( String custom_name, int positive, int neutral, int negative, int bright) {
+        Log.i("디비값들어왔어요", custom_name+" / "+String.valueOf(positive) +" / "+String.valueOf(neutral)+" / "+String.valueOf(negative)+" / "+String.valueOf(bright));
         // 읽고 쓰기가 가능하게 DB 열기
         SQLiteDatabase db = getWritableDatabase();
         // DB에 입력한 값으로 행 추가
