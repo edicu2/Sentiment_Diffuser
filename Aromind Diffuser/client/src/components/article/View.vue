@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container" id="view">
-      <h2 id="font">Community-Blended Aroma</h2>
+      <h2 id="font">Community-Aroma Blending</h2>
       <hr>
       <div class="row" style="margin-left: 0.3%; margin-top: 6%; margin-bottom: 6%;">
         <div>

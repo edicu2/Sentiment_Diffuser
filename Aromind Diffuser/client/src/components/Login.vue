@@ -57,7 +57,7 @@
           </div>
           <button type="submit" class="btn btn-lg btn-primary1 btn-block">Look up</button>
           <div class="form-group" style="margin-top: 10%;">
-            <p>아직 아로마인드 회원이 아니세요?</p>
+            <p id="font2">まだアロマインド会員に登録されていない方</p>
             <router-link to="/register" tag="button" class="btn btn-lg btn-outline-secondary1 btn-block">Register</router-link>
           </div>
         </form>

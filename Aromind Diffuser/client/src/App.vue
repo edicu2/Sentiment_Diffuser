@@ -42,4 +42,7 @@ export default {
     color: white;
   }
 
+  #font2, .font2 {
+    font-family: 'Kosugi Maru', sans-serif;
+  }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="container" id="feed">
-    <h2 id="font" style="font-weight: normal;">Community-Blended Aroma</h2>
+    <h2 id="font" style="font-weight: normal;">Community-Aroma Blending</h2>
     <hr>
     <br>
     <div style="margin-bottom: 8%; width: 100%;">

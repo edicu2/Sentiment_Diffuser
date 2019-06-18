@@ -16,10 +16,10 @@
       </b-card-body>
       <b-list-group flush>
         <b-list-group-item>
-          <a href="#" class="btn btn-outline-secondary1" id="font2" style="margin-left: 3%; margin-right: 2%; width: 45%;">
+          <a href="#" class="btn btn-outline-secondary1 box" id="font2" style="margin-left: 3%; margin-right: 2%; width: 45%;">
             カートに入れる
           </a>
-          <a href="#" class="btn btn-primary1" id="font2" style="width: 45%;">
+          <a href="#" class="btn btn-primary1 box" id="font2" style="width: 45%;">
             今すぐ買う
           </a>
         </b-list-group-item>

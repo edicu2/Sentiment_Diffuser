@@ -1,8 +1,25 @@
 <template>
 <div>
-    <div class="row">
-      <!-- <p id="triangle-right"></p>
-      <h3>감정데이터</h3> -->
+  <h2 id="font" style="font-weight: normal;">My Emotion</h2>
+    <hr>
+<div class="back">
+  <br>
+    <div class="profile">
+      <img src="static/img/background8.png" alt="" width="100%" height="170px" style="background">
+      <!-- <div style="width:100%; height:150px; background-color:#EBF6FA"> -->
+      <div>
+        <div class="email_name">
+          <div style="font-size:35px">GoldSangWon</div>
+          <div>GoldSangWon@gmail.com</div>
+        </div>
+      </div>
+
+      <img src="static/img/boss.png" alt="" weight="50px" height="50px" class="user">
+    </div>
+
+    <div>
+      <div class="row">
+        <div class="col-8">
         <div>
            <div class="btn-group mr-2" role="group" aria-label="First group">
            <button class="btn btn-active"
@@ -18,19 +35,6 @@
               <span>Week</span>
             </button>
 
-           <!-- <button class="btn btn-active"
-              @click="month"
-              :class="{'btn': activeTab !== 3, 'is-active' : activeTab === 3}"
-              style="border-left: solid 1px #F87079;">
-              <span>Month</span>
-           </button>
-
-           <button class="btn btn-active"
-              @click="year"
-              :class="{'btn': activeTab !== 3, 'is-active' : activeTab === 4}">
-              <span>Year</span>
-           </button> -->
-
            <button class="btn btn-active"
               @click="month"
               :class="{'btn': activeTab !== 3, 'is-active' : activeTab === 3}"
@@ -39,96 +43,145 @@
            </button>
            </div>
         </div>
-
-        <div class="col-sm-12">
-          <br>
-            <line-chart :chart-data="data"
-                        :height="150"
-                        :options="{responsive: true, maintainAspectRatio: true, scales:{yAxes:[{ticks:{max:1, min:-1, stepSize:1}}]},legend: {display: false}}">
-            </line-chart>
+        <br>
+        <div class="chart">
+          <line-chart :chart-data="data"
+                      :height="150"
+                      :options="{
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        scales:{
+                          yAxes:[{
+                              ticks:{
+                                max:1,
+                                min:-1,
+                                stepSize:4,
+                                display:false
+                              }
+                            }],
+                          xAxes:[{
+                            gridLines:{color: '#EEEEEE'}
+                          }]
+                        },
+                        legend: {display: false}}">
+          </line-chart>
+        </div>
          <div style="position:absolute;">
-          <p style="position:relative; top: -423px; left: -14px;">
-           <img src="static/img/smaile.png" alt="" weight="35" height="35">
+          <p style="position:relative; top: -270px; left: -14px;">
+           <img src="static/img/smaile.png" alt="" weight="30" height="30">
           </p>
         </div>
 
         <div style="position:absolute;">
-          <p style="position:relative; top: -240px; left: -13px;">
-           <img src="static/img/normal.png" alt="" weight="35" height="35">
+          <p style="position:relative; top: -160px; left: -13px;">
+           <img src="static/img/normal.png" alt="" weight="30" height="30">
           </p>
         </div>
 
         <div style="position:absolute;">
           <p style="position:relative; top: -55px; left: -12px;">
-           <img src="static/img/sad.png" alt="" weight="35" height="35">
+           <img src="static/img/sad.png" alt="" weight="30" height="30">
           </p>
         </div>
 
-   <br>
-   <div class="container">
+    <br>
     <div class="card text-center">
       <div class="bubble">
-        <h2 id="feedback"><q>&nbsp; {{this.feedback}}&nbsp; </q></h2>
+        <h2 id="feedback" class="font2"><q>&nbsp; {{this.feedback}}&nbsp; </q></h2>
       </div>
     </div>
-    <!-- 메뉴 선택가능 -->
-    <hr>
+   </div>
 
+  <div class="col-4" style="position:relative;left:30px;">
+    <div class="row">
+      <div class="col-6" id="col">
+        <img src="static/img/smile2.png" alt="" weight="45%" height="45%" class="emotion">
+        <div id="font2" style="font-size:25px;margin-top:15px;">ポジティブ</div>
+        <div class="percent">70%</div>
+      </div>
+      <div class="col-6" id="col">
+        <img src="static/img/sad3.png" alt="" weight="45%" height="45%" class="emotion">
+        <div id="font2" style="font-size:25px;margin-top:15px;">ネガチブ</div>
+        <div class="percent">30%</div>
+      </div>
+    </div>
+      <div class="grap">
+        <canvas id="Chart2"></canvas>
+      </div>
+     </div>
+   </div>
+  </div>
+    <!-- 메뉴 선택가능 -->
+ <div>
+    <hr>
     <br>
     <div class="row">
       <p id="triangle-right"></p>
-      <h3>추천하는 아로마향</h3>
-      <div class="select_box">
-         <b-form-select calss="mb-3" v-model="selected" :options="gender">
+      <h3 id="font2">GoldSangWon様と似た感情の人が買った商品</h3>
+      <div class="select_box" id="font2">
+         <b-form-select calss="mb-3" v-model="selected_gender" :options="gender" @change="select_eventbus">
           <template slot="first">
-            <option :value="null" disabled>&nbsp;성별&nbsp;&nbsp;</option>
+            <option :value="null" disabled>&nbsp;性別&nbsp;&nbsp;</option>
           </template>
          </b-form-select>
-          <!-- <select class="selectpicker">
-            <option>Mustard</option>
-            <option>Ketchup</option>
-            <option>Barbecue</option>
-          </select> -->
+      </div>
 
+      <div class="select_box" id="font2">
+          <b-form-select calss="mb-3" v-model="selected_age" :options="age" @change="select_eventbus">
+            <template slot="first">
+              <option :value="null" disabled>&nbsp;年齢&nbsp;&nbsp;</option>
+            </template>
+         </b-form-select>
+      </div>
+
+      <div class="select_box" id="font2">
+          <b-form-select calss="mb-3" v-model="selected_emotion" :options="emotion" @change="select_eventbus">
+            <template slot="first">
+              <option :value="null" disabled>&nbsp;感情&nbsp;&nbsp;</option>
+            </template>
+         </b-form-select>
       </div>
     </div>
+
     <br>
+    <!-- 슬라이더 뷰 -->
+    <div class="row" style="margin-left:10px height:300px width:300px">
+      <emotionTestdata v-show="this.selected_emotion !== null || this.selected_age !== null || this.selected_gender !== null"></emotionTestdata>
 
-<!-- {{this.selected}} -->
-  <div class="card text-center">
-    <div class="row">
-      <div class="col-lg-3 mb-2" v-for="(product, index) in productItems" @key="index" :key="index">
-        <div class="card h-100" v-if="index < 4">
-          <div class="card-body">
+        <div class="card text-center" v-show="this.selected_emotion == null && this.selected_age == null && this.selected_gender == null">
+          <div class="row">
+            <div class="col-lg-3 mb-2" v-for="(product, index) in productItems" @key="index" :key="index">
+              <div class="card h-100" v-if="index < 4">
+                <div class="card-body">
 
-            <div style="position:absolute;">
-              <p class="card-text" style="position: relative; top: -20px; left: 145px;">
-                <img :src="'static/img/'+index+'.png'" alt="" weight="120" height="120">
-              </p>
+                  <div style="position:absolute;">
+                    <p class="card-text" style="position: relative; top: -20px; left: 145px;">
+                      <img :src="'static/img/'+index+'.png'" alt="" weight="110" height="110">
+                    </p>
+                  </div>
+                </div>
+                <router-link
+                    :to = "'/products/' + product.product_code">
+                  <img :src="product.product_img" alt="" weight="290" height="270">
+                </router-link>
+                <br>
+                <h5 id="font2" class="card-title" v-html="product.product_name"></h5>
+                <h4 id="font2" class="card-title" v-html="product.product_price+'円'"></h4>
+                <div class="card-title" id="font2">
+                  <br>
+                  <router-link class="btn-view"
+                    :to = "'/products/' + product.product_code">詳しく</router-link>
+                    <!-- product.id -->
+                </div>
+              </div>
             </div>
           </div>
-          <router-link
-              :to="'/products/' + product.product_code">
-            <img :src="product.product_img" alt="" weight="290" height="270">
-          </router-link>
-          <br>
-          <h5 class="card-title" v-html="product.product_name"></h5>
-          <h4 class="card-title" v-html="product.product_price+'원'"></h4>
-          <div class="card-title">
-            <br>
-            <router-link class="btn-view"
-              :to="'/products/' + product.product_code">자세히 보기</router-link>
-              <!-- product.id -->
-          </div>
         </div>
-      </div>
+      <!-- /.row -->
     </div>
-    </div>
-    <!-- /.row -->
+   </div>
   </div>
-</div>
-</div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -138,55 +191,45 @@ import BarChart from '@/components/chart/BarChart.js'
 import _ from 'lodash';
 import axios from 'axios'
 
+import EventBus from '@/components/my_page2/EventBus'
+import Emotion_Testdata from '@/components//my_page/Emotion_Testdata.vue'
+
 export default {
   props:['email'],
     components:{
-        LineChart,
-        PieChart,
-        BarChart
+      LineChart,
+      PieChart,
+      BarChart,
+      'emotionTestdata':Emotion_Testdata
     },
     data(){
         return {
-            data:[],
-            // row:[],
-            // label:[],
-            products:[],
             feedback: "",
+            data:[],
+            products:[],
             gender: [
-              {text:'여성',value:'woman'},
-              {text:'남성',value:'man'}
+              {text:'女性',value:'woman'},
+              {text:'男性',value:'man'}
             ],
 
             age: [
-              {text:'20대', value:'id_a'},
-              {text:'30대', value:'user_id'},
-              {text:'40대', value:'name_a'}
+              {text:'20代', value:'20'},
+              {text:'30代', value:'30'},
+              {text:'40代', value:'40'}
             ],//value에 값이 같은 경우 다른 것도 따라서 적용됨
 
             emotion: [
-              {text:'슬픔', value:'id_e'},
-              {text:'기쁨', value:'user_id_e'},
-              {text:'보통', value:'name_e'}
+              {text:'悲しみ', value:'sad'},
+              {text:'喜び', value:'happy'},
+              {text:'普通', value:'normal'}
             ],
-            selected: null,
-        options: [
-          { value: null, text: 'Please select an option' },
-          { value: 'a', text: 'This is First option' },
-          { value: 'b', text: 'Selected Option' },
-          { value: { C: '3PO' }, text: 'This is an option with object value' },
-          { value: 'd', text: 'This one is disabled', disabled: true }
-        ],
-            activeTab: 0,
-
-
+            selected_gender: null,
+            selected_age: null,
+            selected_emotion: null,
+            activeTab: 0
         }
     },
     beforeMount(){//mounted()
-        // this.gradient = this.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 450)
-        // this.gradient.addColorStop(0, 'rgba(255, 0,0, 0.5)')
-        // this.gradient.addColorStop(0.5, 'rgba(255, 0, 0, 0.25)');
-        // this.gradient.addColorStop(1, 'rgba(255, 0, 0, 0)');
-
         axios.get('http://arominds.com:8000/api/products')
             .then(response => {
                 this.products = response.data
@@ -196,6 +239,20 @@ export default {
             })
 
       this.day()//기본세팅
+     },
+     mounted(){
+        var ctx = document.getElementById("Chart2");
+        var myChart = new Chart(ctx, {
+          type: 'pie',
+
+          data: {
+              datasets: [{
+                data: [30,70],
+                backgroundColor: ['#EC6C5A', '#4BB3E3'],
+                border:0
+              }]
+          },options: {responsive: true, maintainAspectRatio: false},
+        });
      },
      computed:{
        productItems(){
@@ -220,7 +277,6 @@ export default {
             return this.products
           //  return _.orderBy(this.products, this.selected)
          }
-
        }
      },
     methods:{
@@ -262,7 +318,19 @@ export default {
                   this.data = response.data
                   this.feedback = response.data.temp
               })
-         }
+         },
+       select_eventbus(){
+        this.$nextTick(function() {
+          if(this.selected_emotion !== null){
+            EventBus.$emit('select_emotion', this.selected_emotion)
+          }else if(this.selected_age !== null){
+            EventBus.$emit('select_age', this.selected_age)
+          }else{
+            EventBus.$emit('select_gender', this.selected_gender)
+          }
+
+        });
+       }
     }
 }
 </script>
@@ -325,7 +393,7 @@ export default {
 }
 
 h3{
-  width: 85%;
+  width: 66%;
   float: left;
   font-weight: bold;
 }
@@ -354,7 +422,7 @@ h3{
 .bubble
 {
 position: relative;
-width: 90%;/*750px*/
+width: 750px;/*750px*/
 height: 120px;
 padding: 0px;
 margin: 0 auto;
@@ -394,5 +462,64 @@ width: 0;
 z-index: 0;
 top: -20px;
 left: 358px;
+}
+
+.row{
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.profile{
+  /* width: 100%; */
+  height: 210px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.user{
+  background-color: white;
+  /* border: solid 5px lightgray; */
+  border-radius: 50%;
+  width: 130px;
+  height: 130px;
+  padding: 10px;
+  position: relative;
+  top: -230px;
+  left: 130px;
+}
+
+.email_name{
+  width: 400px;
+  position: relative;
+  left: 310px;
+  top: -130px;
+  color: white;
+}
+
+.grap{
+  width: 280px;
+  height: 250px;
+  margin: 0 auto;
+  /* margin-left: 58px; */
+}
+
+#col{
+  border: 2px solid white;
+  border-radius: 30px;
+  text-align: center;
+  background-color: #EBF6FA;
+  height: 270px;
+}
+
+.emotion{
+  margin-top: 10px;
+}
+
+.percent{
+  font-size: 45px;
+  margin:0px 0px 10px 5px;
+}
+.chart{
+  margin-left: 20px;
 }
 </style>

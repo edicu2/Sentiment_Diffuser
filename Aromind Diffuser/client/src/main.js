@@ -11,13 +11,18 @@ import axios from 'axios'
 import VeeValidate from 'vee-validate'
 import Auth from './packages/auth/Auth.js'
 import cors from 'cors'
-import VueMqtt from 'vue-mqtt'
+import VueMqtt from 'vue-mqtt';
 
 Vue.use(VueMqtt, 'ws://arominds.com:8883', {
   timeout: 3,
   username:'hyeonbin',
   password:'password',
 });
+
+// animation (ksw)
+import SequentialEntrance from 'vue-sequential-entrance'
+import 'vue-sequential-entrance/vue-sequential-entrance.css'
+Vue.use(SequentialEntrance);
 
 Vue.use(Auth)
 Vue.use(refresh)
@@ -30,7 +35,7 @@ const base = axios.create({
   //baseURL: 'http://localhost:8000'
   baseURL: 'http://arominds.com:8000'
 })
-axios.defaults.baseURL = 'http://localhost:8000'
+//axios.defaults.baseURL = 'http://localhost:8000' 보민이형
 Vue.prototype.$http = base;
 
 //axios.defaults.headers.common['Authorization'] = 'Bearer ' + Vue.auth.getToken()

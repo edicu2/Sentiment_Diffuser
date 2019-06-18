@@ -3,7 +3,7 @@
     <div id="footBack" style="padding: 3%; margin-top: 8%;">
       <div>
         <div class="container text-center">
-          <img src="./logo1-8.png" width="150" class="d-inline-block align-top" alt="">
+          <img src="/static/img/logo1-8.png" width="150" class="d-inline-block align-top" alt="">
         </div>
         <div class="container text-center" style="padding-top: 0.5%;">
           Developed Team Diffuser

@@ -5,7 +5,7 @@ export default function (Vue) {
   Vue.refresh = {
     checktoken () {
       axios
-        .get("api/profile/",{
+        .get("http://arominds.com:8000/api/profile/",{
           headers: { Authorization: `Bearer ${localStorage.usertoken}` }
         })
         .then((res) => {

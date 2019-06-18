@@ -45,7 +45,6 @@ module.exports = {
     // set this to false - it *may* help
     // https://vue-loader.vuejs.org/en/options.html#cachebusting
     cacheBusting: true,
-        refreshData: { enabled: false },
 
     cssSourceMap: true
   },

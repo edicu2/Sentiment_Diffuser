@@ -12,12 +12,14 @@ import Community from '@/components/Community.vue'
 import ArticleCreate from '@/components/article/Create.vue'
 import ArticleEdit from '@/components/article/Edit.vue'
 import ArticleView from '@/components/article/View.vue'
+import Order from '@/components/my_page/Order.vue'
+import WishList from '@/components/my_page/WishList.vue'
 
 Vue.use(Router)
 
 const isToken = (to, from, next) => {
   if(localStorage.getItem('userToken')){
-    
+
   }
 }
 
@@ -75,6 +77,14 @@ export default new Router({
     {
       path: "/articles/:customcard_board",
       component: ArticleView
+    },
+    {
+      path:"/order",
+      component: Order
+    },
+    {
+      path:"/wishlist",
+      component: WishList
     }
   ]
 })

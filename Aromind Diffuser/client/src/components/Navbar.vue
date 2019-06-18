@@ -14,7 +14,7 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <router-link class="navbar-brand" to="/">
-            <img src="./logo1-7.png" width="150" class="d-inline-block align-top" alt="">
+            <img src="/static/img/logo1-7.png" width="150" class="d-inline-block align-top" alt="">
           </router-link>
         </li>
         <li class="nav-item">

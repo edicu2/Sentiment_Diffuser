@@ -1,58 +1,18 @@
 <template>
   <div class="col-md-4" style="margin-bottom: 1%;">
-    <b-card no-body style="height: 450px;">
+    <b-card no-body style="height: 453px;">
       <router-link class="view" :to="'/articles/' + customcard_board.id">
-        <!-- <img :src="'http://localhost:8000/' + article.image" alt="" style="width: 87%; padding-top: 15%; margin-bottom: 13%;" class="card-img-top rounded mx-auto d-block"> -->
+        <img :src="customcard_board.customcard_img" alt="" style="width: 99.932%; height: 235px; padding-top: 0.03%; margin-left:0.02%; margin-right: 0.02%; margin-bottom: 1.5%;" class="card-img-top mx-auto d-block">
         <div class="graph_container" v-if="customcard_board">
           <!-- <canvas id="chartPie" style="width: 1000px; height: 400"></canvas> -->
           <!-- 커스텀카드 이미지 -->
-          <img src="https://doiydesign.com/wp-content/uploads/DOIY-Home-Scent-Rainbow-01.jpg" class="card-img-top" alt="">
-          <!-- 커스텀카드 -->
-          <!-- <div v-if="rgb" style="position:absolute;">
-            <span style="position:relative; top: -46px; left: 15px;">
-              <div class="targets">
-                <div id="doughnutList" :style="'background: conic-gradient('+rgb+')'"></div>
-              </div>
-            </span>
-          </div>
-
-          <div class="pie_layout" style="margin-top: 22%;">
-            <pie-chart
-                :chart-data="{
-                    datasets: [
-                      {
-                        backgroundColor: [customcard_board.positive_color_name, customcard_board.normal_color_name, customcard_board.nagative_color_name],
-                        data: [customcard_board.positive_strength, customcard_board.normal_strength, customcard_board.nagative_strength],
-                        borderWidth:0
-                      }
-                    ]
-                  }"
-                :height="250"
-                :options="{responsive: true, maintainAspectRatio: true}">
-            </pie-chart>
-          </div> -->
+          <!-- <img src="https://capstonearomind.s3.ap-northeast-2.amazonaws.com/customcard/customcard_01.jpg" class="card-img-top" alt=""> -->
+          <!-- <img :src="customcard_board.customcard_img" alt="" class="card-img-top" style="width: 100%;"> -->
 
           <!-- 커스텀카드 정보 -->
-          <div v-if="customcard_board" class="card-body">
+          <div class="card-body align-middle" v-if="customcard_board">
             <h5 class="card-title" id="font2">{{ customcard_board.customcard_name }}</h5>
             <p class="card-text"><b>By</b> {{ customcard_board.user_id }}</p>
-            <!-- <div class="row" style="margin-top: 3%; margin-left: 0.5%;">
-              <h6 class="mt-2">Aroma Oils&nbsp;&nbsp;</h6>
-              <div v-if="customcard_board.positive_strength !== 0" style="width: 13%; height: 44px; border-radius: 15%; margin-right: 2%;" :style="{ background : customcard_board.positive_color_name }">
-              </div> -->
-              <!-- <div class="overlay2" :id="customcard_board.positive_perfume_name" @mouseover="$emit('view-oil')" @mouseleave="$emit('out-oil')">
-                {{ customcard_board.positive_perfume_name }}
-                {{ customcard_board.positive_strength }}
-              </div> -->
-              <!-- <div v-if="customcard_board.normal_strength !== 0" style="width: 13%; height: 44px; border-radius: 15%; margin-right: 2%;" :style="{ background : customcard_board.normal_color_name }">
-              </div>
-              <div v-if="customcard_board.nagative_strength !== 0" style="width: 13%; height: 44px; border-radius: 15%;" :style="{ background : customcard_board.nagative_color_name }">
-              </div>
-            </div>
-            <div v-if="rgb" class="row" style="margin-left: 0.5%; margin-top: 2%;">
-              <h6 class="mt-2" style="margin-right: 14.2%;">Mood</h6>
-              <div v-for="(rgb, index) in rgbs" :rgb="rgbs[index]" style="width: 13%; height: 44px; border-radius: 15%; margin-right: 2%;" :style="{ background : rgb }" ></div>
-            </div> -->
 
             <!-- 커스텀카드 정보(아로마오일) -->
             <div class="row" style="margin-top: 3%; margin-left: 0.5%;">
@@ -64,41 +24,13 @@
               <div v-if="customcard_board.nagative_strength !== 0" style="width: 13%; height: 44px; border-radius: 50%;" :style="{ background : customcard_board.nagative_color_name }">
               </div>
             </div>
-            <!-- <div style="margin-top: 3%;">
-              <div v-if="customcard_board.normal_strength !== 0" style="width: 13%; height: 46px; border-radius: 15%;" :style="{ background : customcard_board.normal_color_name }">
-              </div>
-            </div>
-            <div style="margin-top: 3%;">
-              <div v-if="customcard_board.nagative_strength !== 0" style="width: 13%; height: 46px; border-radius: 15%;" :style="{ background : customcard_board.nagative_color_name }">
-              </div>
-            </div> -->
 
             <!-- 커스텀카드 정보(무드등) -->
             <div v-if="rgb" class="row" style="margin-left: 0.5%; margin-top: 2%;">
               <h6 class="mt-2" style="margin-right: 14.2%;">Mood</h6>
               <div v-for="(rgb, index) in rgbs" :rgb="rgbs[index]" style="width: 13%; height: 44px; border-radius: 15%; margin-right: 2%;" :style="{ background : rgb }" ></div>
             </div>
-
-            <!-- <div style="margin-top: 3%;">
-              <div v-if="customcard_board.positive_strength !== 0">
-                {{ customcard_board.positive_perfume_name }}
-                {{ customcard_board.positive_strength }}<br>
-              </div>
-              <div v-if="customcard_board.normal_strength !== 0">
-                {{ customcard_board.normal_perfume_name }}
-                {{ customcard_board.normal_strength }}<br>
-              </div>
-              <div v-if="customcard_board.nagative_strength !== 0">
-                {{ customcard_board.nagative_perfume_name }}
-                {{ customcard_board.nagative_strength }}<br>
-              </div>
-            </div> -->
           </div>
-
-          <!-- <div v-if="customcard_board" style="margin-top: 19%;">
-            {{ customcard_board.customcard_name }}<br>
-            By {{ customcard_board.user_id }}
-          </div> -->
         </div>
 
         <!-- hover부분 -->
@@ -121,16 +53,6 @@
           </div>
         </div>
       </router-link>
-      <!-- <b-list-group flush>
-        <b-list-group-item>
-          <a href="#" class="btn btn-danger" role="button" @click="$emit('delete-article')" style="margin-left: 8%;width: 40%;">
-            Delete
-          </a>
-          <router-link class="btn btn-outline-info" :to="'/article/' + article.id + '/edit'" style="width: 40%;">
-            Edit
-          </router-link>
-        </b-list-group-item>
-      </b-list-group> -->
     </b-card>
   </div>
 </template>

@@ -92,7 +92,7 @@
     </b-carousel> -->
 
     <div>
-      <img src="./ex4.jpg" width="100%;">
+      <img src="/static/img/ex4.jpg" width="100%;">
     </div>
 
     <main role="main" id="main">

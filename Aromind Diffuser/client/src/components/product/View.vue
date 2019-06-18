@@ -72,8 +72,8 @@
                 </tbody>
               </table>
               <hr>
-              <button class="btn btn-outline-secondary1 btn-lg" id="font2" style="width: 44%; margin-left: 3%;">カートに入れる</button>
-              <button class="btn btn-primary1 btn-lg" id="font2" style="width: 44%; margin-left: 3%;">今すぐ買う</button>
+              <button class="btn btn-outline-secondary1 btn-lg" id="font2" style="width: 44%; margin-left: 3%;" @click="addCart">カートに入れる</button>
+              <button class="btn btn-primary1 btn-lg" id="font2" style="width: 44%; margin-left: 3%;" @click="placeOrder">今すぐ買う</button>
             </b-media-body>
           </b-media>
         </div>
@@ -141,9 +141,25 @@
 
     data () {
       return {
-        product: {}
+        product: {},
+        count:0
       }
     },
+    methods:{
+      placeOrder(){
+        localStorage.setItem('cart'+this.count, this.$route.params.product)
+        this.cartItems = localStorage.getItem('cart'+this.count)
+        this.count = this.count+1;
+        this.$router.push('/wishlist')//feed
+      },
+      addCart(){
+        if(confirm('카트에 추가하겠습니까?')){
+          localStorage.setItem('cart'+this.count, this.$route.params.product)
+          this.cartItems = localStorage.getItem('cart'+this.count)
+          this.count = this.count+1;
+        }
+      }
+    }
   }
 </script>
 
